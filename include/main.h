@@ -40,8 +40,8 @@
  * You should add more #includes here
  */
 
-#include "globals.h"
-//#include "okapi/api.hpp"
+
+// #include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 
 /**
@@ -52,7 +52,7 @@
  * concurrently! The okapi namespace will export all symbols inside the pros
  * namespace.
  */
-// using namespace pros;
+using namespace pros;
 // using namespace pros::literals;
 // using namespace okapi;
 
@@ -78,6 +78,8 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+#include "globals.h"
+
 #endif
 
 #endif  // _PROS_MAIN_H_
