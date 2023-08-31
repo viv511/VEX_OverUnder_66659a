@@ -39,6 +39,8 @@
 /**
  * You should add more #includes here
  */
+
+#include "globals.h"
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 
