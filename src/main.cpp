@@ -59,8 +59,6 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	float leftPower, rightPower;
-
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		//Bind longitude and latitude from -1 to 1 from the controller
@@ -70,9 +68,9 @@ void opcontrol() {
 		//Find scaled bounded maximum for drivetrain %'s
 		float mag = fmax(1.0, fmax(fabs(lon + lat), fabs(lon - lat)));
 
-		//-1.0 <--  0.0 --> 1.0 scale to voltage (-12000 <-- 0 --> 12000 mV)
-		leftPower = ((lon + lat) / mag) * 600;
-		rightPower = ((lon - lat) / mag) * 600;
+		//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
+		float leftPower = ((lon + lat) / mag) * 600;
+		float rightPower = ((lon - lat) / mag) * 600;
 
 		//Assign power
 		LeftDT.move_velocity(leftPower);
