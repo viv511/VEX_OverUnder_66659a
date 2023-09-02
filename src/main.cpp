@@ -59,18 +59,55 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	float axisOne;
+	float axisTwo;
+	float leftPower;
+	float rightPower;
+
+	//For different driving formats: Split Arcade (s), Arcade (a), and Tank (t)
+	char driveStyle = 't';
+
+	//For joystick exponential curving
+	bool expoDrive = false;
+
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
-		//Bind longitude and latitude from -1 to 1 from the controller
-		float lon = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-		float lat = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+		switch(driveStyle) {
+			case 's':
+			case 'a':
+				//Bind from -1 <-- 0 --> 1
+				axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+				if(driveStyle == 'a') {
+					axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
+				}
 
-		//Find scaled bounded maximum for drivetrain %'s
-		float mag = fmax(1.0, fmax(fabs(lon + lat), fabs(lon - lat)));
+				//Find scaled bounded maximum for drivetrain %'s
+				float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
-		//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
-		float leftPower = ((lon + lat) / mag) * 600;
-		float rightPower = ((lon - lat) / mag) * 600;
+				//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
+				leftPower = ((axisOne + axisTwo) / mag) * 600;
+				rightPower = ((axisOne - axisTwo) / mag) * 600;
+			break;
+
+			case 't':
+				//Bind from -600 <-- 0 --> 600
+				axisOne = 600 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = 600 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
+
+				if(expoDrive) {
+					// MATOME INSERT CODE HERE
+				}
+				
+				leftPower = axisOne;
+				rightPower = axisTwo;
+			break; 
+
+			default:
+				leftPower = 0;
+				rightPower = 0;
+			break;
+		}
 
 		//Assign power
 		LeftDT.move_velocity(leftPower);
