@@ -68,7 +68,7 @@ void opcontrol() {
 	char driveStyle = 't';
 
 	//For joystick exponential curving
-	bool expoDrive = false;
+	bool expoDrive = true;
 
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
@@ -91,16 +91,17 @@ void opcontrol() {
 			break;
 
 			case 't':
-				//Bind from -600 <-- 0 --> 600
-				axisOne = 600 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-				axisTwo = 600 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
+				//Bind from -100 <-- 0 --> 100
+				axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
 
 				if(expoDrive) {
-					// MATOME INSERT CODE HERE
+					axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
+					axisTwo = exp((fabs(axisTwo)-100)/50)*axisTwo;
 				}
 				
-				leftPower = axisOne;
-				rightPower = axisTwo;
+				leftPower = axisOne*6;
+				rightPower = axisTwo*6;
 			break; 
 
 			default:
