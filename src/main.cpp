@@ -59,6 +59,8 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+    RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	float axisOne;
 	float axisTwo;
 	float leftPower;
@@ -72,42 +74,37 @@ void opcontrol() {
 
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
-		switch(driveStyle) {
-			case 's':
-			case 'a':
-				//Bind from -1 <-- 0 --> 1
-				axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
-				if(driveStyle == 'a') {
-					axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
-				}
+		if((driveStyle == 's') || (driveStyle == 'a')) {
+			//Bind from -1 <-- 0 --> 1
+			axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+			axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+			if(driveStyle == 'a') {
+				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
+			}
 
-				//Find scaled bounded maximum for drivetrain %'s
-				float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
+			//Find scaled bounded maximum for drivetrain %'s
+			float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
-				//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
-				leftPower = ((axisOne + axisTwo) / mag) * 600;
-				rightPower = ((axisOne - axisTwo) / mag) * 600;
-			break;
+			//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
+			leftPower = ((axisOne + axisTwo) / mag) * 600;
+			rightPower = ((axisOne - axisTwo) / mag) * 600;
+		}
+		else if(driveStyle =='t') {
+			//Bind from -100 <-- 0 --> 100
+			axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+			axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
 
-			case 't':
-				//Bind from -100 <-- 0 --> 100
-				axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-				axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
-
-				if(expoDrive) {
-					axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
-					axisTwo = exp((fabs(axisTwo)-100)/50)*axisTwo;
-				}
-				
-				leftPower = axisOne*6;
-				rightPower = axisTwo*6;
-			break; 
-
-			default:
-				leftPower = 0;
-				rightPower = 0;
-			break;
+			if(expoDrive) {
+				axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
+				axisTwo = exp((fabs(axisTwo)-100)/50)*axisTwo;
+			}
+			
+			leftPower = axisOne*6;
+			rightPower = axisTwo*6;
+		}
+		else {
+			leftPower = 0;
+			rightPower = 0;
 		}
 
 		//Assign power
