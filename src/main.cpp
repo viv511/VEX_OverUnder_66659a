@@ -67,7 +67,7 @@ void opcontrol() {
 	float rightPower;
 
 	//For different driving formats: Split Arcade (s), Arcade (a), and Tank (t)
-	char driveStyle = 't';
+	char driveStyle = 's';
 
 	//For joystick exponential curving
 	bool expoDrive = true;
@@ -89,7 +89,7 @@ void opcontrol() {
 			leftPower = ((axisOne + axisTwo) / mag) * 600;
 			rightPower = ((axisOne - axisTwo) / mag) * 600;
 		}
-		else if(driveStyle =='t') {
+		else if(driveStyle == 't') {
 			//Bind from -100 <-- 0 --> 100
 			axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
 			axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
