@@ -111,6 +111,6 @@ void opcontrol() {
 		LeftDT.move_velocity(leftPower);
 		RightDT.move_velocity(rightPower);
 		
-		pros::delay(20);
+		pros::delay(15);
 	}
 }
