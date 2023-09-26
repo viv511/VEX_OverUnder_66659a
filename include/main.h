@@ -79,6 +79,8 @@ void opcontrol(void);
  */
 //#include <iostream>
 #include "globals.h"
+#include "pid.h"
+#include "tracking.h"
 
 #endif
 
