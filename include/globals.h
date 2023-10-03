@@ -21,6 +21,7 @@ extern pros::Rotation leftRot;
 extern pros::Rotation rightRot;
 
 extern pros::ADIDigitalOut wings;
+extern pros::ADIDigitalOut intake;
 
 extern pros::Motor_Group LeftDT;
 extern pros::Motor_Group RightDT;

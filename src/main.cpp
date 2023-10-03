@@ -12,6 +12,7 @@ void initialize() {
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
 	wings.set_value(false);
+	intake.setvalue(false);
 	// pros::Task cataControl(cataCtrl);
 }
 
@@ -79,6 +80,10 @@ void opcontrol() {
 	bool wingState = false;
 	bool wingLast = false;
 
+	//Intake
+	bool intakeState = false;
+	bool intakeLast = false;
+
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
@@ -124,11 +129,11 @@ void opcontrol() {
 		}
 
 		//WINGS
-		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !wingLast) {
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) && !wingLast) {
 			wingState = !wingState;
 			wingLast = true;
 		}
-		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)))) {
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)))) {
 			wingLast = false;
 		}
 
@@ -137,6 +142,22 @@ void opcontrol() {
 		}
 		else {
 			wings.set_value(false);
+		}
+
+		//INTAKE
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) && !intakeLast) {
+			intakeState = !intakeState;
+			intakeLast = true;
+		}
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)))) {
+			intakeLast = false;
+		}
+
+		if(intakeState) {
+			intake.set_value(true);
+		}
+		else {
+			intake.set_value(false);
 		}
 
 

@@ -18,6 +18,7 @@ pros::Rotation leftRot(10);
 pros::Rotation rightRot(11);
 
 pros::ADIDigitalOut wings('A');
+pros::ADIDigitalOut intake('B');
 
 pros::Motor_Group LeftDT ({FL, ML, BL});
 pros::Motor_Group RightDT ({FR, MR, BR});
