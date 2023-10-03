@@ -20,6 +20,8 @@ extern pros::IMU inertial;
 extern pros::Rotation leftRot;
 extern pros::Rotation rightRot;
 
+extern pros::ADIDigitalOut wings;
+
 extern pros::Motor_Group LeftDT;
 extern pros::Motor_Group RightDT;
 extern pros::Motor_Group cata;

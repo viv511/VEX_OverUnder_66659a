@@ -11,6 +11,8 @@
 void initialize() {
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
+	wings.set_value(false);
+	// pros::Task cataControl(cataCtrl);
 }
 
 /**
@@ -73,6 +75,10 @@ void opcontrol() {
 	//For joystick exponential curving
 	bool expoDrive = true;
 
+	//Wings
+	bool wingState = false;
+	bool wingLast = false;
+
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
@@ -111,7 +117,30 @@ void opcontrol() {
 		//Assign power
 		LeftDT.move_velocity(leftPower);
 		RightDT.move_velocity(rightPower);
+
+		//CATA
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+			cata.move_voltage(12000);
+		}
+
+		//WINGS
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !wingLast) {
+			wingState = !wingState;
+			wingLast = true;
+		}
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)))) {
+			wingLast = false;
+		}
+
+		if(wingState) {
+			wings.set_value(true);
+		}
+		else {
+			wings.set_value(false);
+		}
+
+
 		
-		pros::delay(15);
+		pros::delay(10);
 	}
 }

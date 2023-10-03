@@ -17,8 +17,11 @@ void tracking() {
     initializeTracking();
 
     while(true) {
+        
+        pros::lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
+		pros::lcd::print(1, "Left: %f\n", leftRot.get_position());
+        pros::lcd::print(2, "Right: %f\n", rightRot.get_position());
 
-
-        Task::delay(10);
+        pros::delay(10);
     }
 }
