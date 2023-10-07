@@ -12,7 +12,7 @@ void initialize() {
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
 	wings.set_value(false);
-	intake.setvalue(false);
+	intake.set_value(false);
 	// pros::Task cataControl(cataCtrl);
 }
 
