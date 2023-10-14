@@ -7,8 +7,17 @@ const float INTEGRAL_TURN_THRESHOLD = 3;
 const float INTEGRAL_DRIVE_THRESHOLD = -1000; //Disabled with any negative number
 const int PID_DELAY_TIME = 15; 
 
+const float lin_kP = 850;
+const float lin_kD = 100;
+
 PID::PID() {
     resetPlease();
+}
+
+PID::PID(bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime) {
+    resetPlease();
+    setType(isTurnPID);
+    setExitConditions(sErr, sExit, lErr, lExit, maxAllowedTime);
 }
 
 PID::PID(float kP, float kI, float kD, bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime) {
@@ -59,9 +68,86 @@ float PID::getTarget() {
 
 void PID::setTarget(float t) {
     this->target = t;
+    if(this->isTurn) {
+        this->target += inertial.get_rotation();
+    }
     this->smallTimeCounter = 0;
     this->largeTimeCounter = 0;
     this->maxCounter = 0;
+
+    /*
+    Figure out the ideal PID constants depending on the target & type of PID
+
+    **** MICHAEL MATOME AND I NEED TO TUNE THIS AREA THE MOST ****
+    **** BIG PART OF CODE NOTEBOOK ****
+
+    NOTE: Only when all the PID constants aren't defined and/or set to 0.
+    */
+
+    if((this->kP == 0) && (this->kI == 0) && (this->kD == 0)) {
+        //Beethoven 5th Symph fr fr
+        controller.rumble("... -");
+        if(this->isTurn == true) {
+            turnLookupPID(this->target);
+        }
+        else {
+            moveLookupPID(this->target);
+        }
+    }
+}
+
+void PID::turnLookupPID(float t) {
+    t = fabs(t);
+
+    if(t <= 10) {
+        setConstants(450, 0, 50);
+    }
+    else if(t <= 20) {
+        setConstants(250, 0, 100);
+    }
+    else if(t <= 30) {
+        setConstants(255, 0, t*31);
+    }
+    else if(t <= 40) {
+        setConstants(277, 0, t*31);
+    }
+    else if(t <= 50) {
+        setConstants(350, 0, t*40);
+    }
+    else if(t <= 60) {
+        setConstants(400, 0, t*43);
+    }
+    else if(t <= 70) {
+        setConstants(425, 0, t*44);
+    }
+    else if(t <= 80) {
+        setConstants(470, 0, t*45);
+    }
+    else if(t <= 90) {
+        setConstants(550, 0, t*40);
+    }
+    else if(t <= 105) {
+        setConstants(560, 0, t*26);
+    }
+    else if(t <= 120) {
+        setConstants(570, 0, t*25);
+    }
+    else if(t <= 135) {
+        setConstants(570, 0, t*19);
+    }
+    else if(t <= 150) {
+        setConstants(450, 0, t*20);
+    }
+    else if(t <= 165) {
+        setConstants(450, 0, t*20);
+    }
+    else {
+       setConstants(500, 0, t*25);
+    }
+}
+
+void PID::moveLookupPID(float t) {
+    setConstants(lin_kP, 0, lin_kD*fabs(t));
 }
 
 void PID::setType(bool turn) {

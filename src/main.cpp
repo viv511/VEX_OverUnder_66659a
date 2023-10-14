@@ -84,6 +84,9 @@ void opcontrol() {
 	bool intakeState = false;
 	bool intakeLast = false;
 
+	PID turnPID = PID(true, 1, 100, 3, 300, 3000);
+	PID movePID = PID(false, 1, 100, 3, 500, 6000);
+
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
@@ -124,16 +127,19 @@ void opcontrol() {
 		RightDT.move_velocity(rightPower);
 
 		//CATA
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			cata.move_voltage(12000);
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+			cata.move_voltage(9000);
+		}
+		else {
+			cata.move_voltage(0);
 		}
 
 		//WINGS
-		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) && !wingLast) {
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) && !wingLast) {
 			wingState = !wingState;
 			wingLast = true;
 		}
-		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)))) {
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)))) {
 			wingLast = false;
 		}
 
@@ -160,7 +166,16 @@ void opcontrol() {
 			intake.set_value(false);
 		}
 
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+			turnPID.setTarget(90);
 
+			while(!turnPID.isSettled()) {
+				float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
+				LeftDT.move_voltage(turnSpeed);
+        		RightDT.move_voltage(-turnSpeed);
+				pros::delay(10);
+			}
+		}
 		
 		pros::delay(10);
 	}

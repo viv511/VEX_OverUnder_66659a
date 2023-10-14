@@ -1,6 +1,7 @@
 #include "main.h"
 
-#pragma once
+#ifndef PID_H
+#define PID_H
 
 using namespace pros;
 
@@ -31,6 +32,7 @@ class PID {
 
     public:
         PID();
+        PID(bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime);
         PID(float kP, float kI, float kD, bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime);
         PID(float kP, float kD, bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime);
         void resetPlease();
@@ -38,6 +40,8 @@ class PID {
         void setConstants(float p, float i, float d);
         float getTarget();
         void setTarget(float t);
+        void turnLookupPID(float t);
+        void moveLookupPID(float t);
         void setType(bool turn);
         void setExitConditions(float sErr, float sExit, float lErr, float lExit, float maxOut);
         float calculateOutput(float current);
@@ -45,3 +49,6 @@ class PID {
         bool isSettled();
         int numbersign(float num);
 };
+
+
+#endif

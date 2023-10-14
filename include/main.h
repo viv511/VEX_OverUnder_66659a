@@ -81,7 +81,7 @@ void opcontrol(void);
 #include "globals.h"
 #include "pid.h"
 #include "tracking.h"
-#include "cata.h
+#include "cata.h"
 
 #endif
 
