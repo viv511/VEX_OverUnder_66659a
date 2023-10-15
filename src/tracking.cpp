@@ -19,7 +19,9 @@ float rightLast = 0;
 
 void initializeTracking() {
     inertial.reset();
-    pros::delay(2000);
+    while(inertial.is_calibrating()){
+        pros::delay(10);
+    }
     inertial.set_rotation(0);
 
     leftRot.reset_position();
@@ -49,6 +51,6 @@ void tracking() {
 		pros::lcd::print(1, "Left: %f\n", leftAbsolute);
         pros::lcd::print(2, "Right: %f\n", rightAbsolute);
 
-        pros::delay(150);
+        pros::delay(10);
     }
 }
