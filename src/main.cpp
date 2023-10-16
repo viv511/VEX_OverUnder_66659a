@@ -159,7 +159,7 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			turnPID.setTarget(180);
+			turnPID.setTarget(40);
 
 			while(!turnPID.isSettled()) {
 				float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
