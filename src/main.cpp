@@ -135,15 +135,7 @@ void opcontrol() {
 		}
 
 		//WINGS
-		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) && !wingLast) {
-			wingState = !wingState;
-			wingLast = true;
-		}
-		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)))) {
-			wingLast = false;
-		}
-
-		if(wingState) {
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 			wings.set_value(true);
 		}
 		else {
@@ -167,7 +159,7 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			turnPID.setTarget(90);
+			turnPID.setTarget(180);
 
 			while(!turnPID.isSettled()) {
 				float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());

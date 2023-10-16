@@ -5,7 +5,7 @@ using namespace pros;
 
 const float INTEGRAL_TURN_THRESHOLD = 3; 
 const float INTEGRAL_DRIVE_THRESHOLD = -1000; //Disabled with any negative number
-const int PID_DELAY_TIME = 15; 
+const int PID_DELAY_TIME = 10; 
 
 const float lin_kP = 850;
 const float lin_kD = 100;
@@ -85,8 +85,6 @@ void PID::setTarget(float t) {
     */
 
     if((this->kP == 0) && (this->kI == 0) && (this->kD == 0)) {
-        //Beethoven 5th Symph fr fr
-        controller.rumble("... -");
         if(this->isTurn == true) {
             turnLookupPID(this->target);
         }
@@ -100,49 +98,49 @@ void PID::turnLookupPID(float t) {
     t = fabs(t);
 
     if(t <= 10) {
-        setConstants(450, 0, 50);
+        setConstants(450, 2, 200);
     }
     else if(t <= 20) {
-        setConstants(250, 0, 100);
+        setConstants(250, 0, 50);
     }
     else if(t <= 30) {
-        setConstants(255, 0, t*31);
+        setConstants(180, 1, 40);
     }
     else if(t <= 40) {
-        setConstants(277, 0, t*31);
+        setConstants(277, 0, 0);
     }
     else if(t <= 50) {
-        setConstants(350, 0, t*40);
+        setConstants(350, 0, 0);
     }
     else if(t <= 60) {
-        setConstants(400, 0, t*43);
+        setConstants(400, 0, 0);
     }
     else if(t <= 70) {
-        setConstants(425, 0, t*44);
+        setConstants(425, 0, 0);
     }
     else if(t <= 80) {
-        setConstants(470, 0, t*45);
+        setConstants(470, 0, 0);
     }
     else if(t <= 90) {
-        setConstants(550, 0, t*40);
+        setConstants(550, 0, 0);
     }
     else if(t <= 105) {
-        setConstants(560, 0, t*26);
+        setConstants(560, 0, 0);
     }
     else if(t <= 120) {
-        setConstants(570, 0, t*25);
+        setConstants(570, 0, 0);
     }
     else if(t <= 135) {
-        setConstants(570, 0, t*19);
+        setConstants(570, 0, 0);
     }
     else if(t <= 150) {
-        setConstants(450, 0, t*20);
+        setConstants(450, 0, 0);
     }
     else if(t <= 165) {
-        setConstants(450, 0, t*20);
+        setConstants(450, 0, 0);
     }
     else {
-       setConstants(500, 0, t*25);
+       setConstants(250, 1, 50);
     }
 }
 
