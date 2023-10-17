@@ -238,3 +238,58 @@ int PID::numbersign(float num) {
 		return 0;
 	}
 }
+
+float PID::autoTuneAngle() {
+  bool consistentGood = false;
+  int tries = 0;
+  float t = this->target;
+  
+  float pGain = 200;
+  float pMin = 0;
+  float pMax = 400;
+
+  while (consistentGood == false) { 
+    this->resetPlease();
+    this->setConstants(pGain, 0, 0);
+    this->setTarget(t);
+
+    while (!isSettled()) {
+      float o = this->calculateOutput(inertial.get_rotation());
+      LeftDT.move_voltage(o);
+      RightDT.move_voltage(-o);
+      pros::delay(10);
+    }
+
+    LeftDT.move_voltage(0);
+    RightDT.move_voltage(0);
+    LeftDT.brake();
+    RightDT.brake();
+
+    if ((this->error) < 1) {
+      tries++;
+    }
+    else {
+
+      tries = 0;
+
+      if (this->error < 0) {
+        pMin = pGain;
+        pGain = (pGain + pMax) / 2.0;
+      } 
+      else if (this->error > 0) {
+        pMax = pGain;
+        pGain = (pGain + pMin) / 2.0;
+      }
+
+    }
+
+    if (tries == 3) {
+      return pGain;
+    }
+    
+    std::cout << pGain << "\n";
+    pros::delay(10);
+  }
+
+  return 100;
+}

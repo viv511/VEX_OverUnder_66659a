@@ -48,6 +48,7 @@ class PID {
         void updateTimers();
         bool isSettled();
         int numbersign(float num);
+        float autoTuneAngle();
 };
 
 

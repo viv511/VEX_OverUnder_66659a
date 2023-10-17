@@ -87,6 +87,9 @@ void opcontrol() {
 	PID turnPID = PID(true, 1, 100, 3, 300, 3000);
 	PID movePID = PID(false, 1, 100, 3, 500, 6000);
 
+	float optimalValueP = 0;
+	long long controllerTime = 0;
+
 	while(1) {
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
@@ -159,16 +162,26 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			turnPID.setTarget(40);
+			turnPID.setTarget(90);
+			// while(!turnPID.isSettled()) {
+			// 	float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
 
-			while(!turnPID.isSettled()) {
-				float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
-				LeftDT.move_voltage(turnSpeed);
-        		RightDT.move_voltage(-turnSpeed);
-				pros::delay(10);
-			}
+			// 	LeftDT.move_voltage(turnSpeed);
+			// 	RightDT.move_voltage(-turnSpeed);
+
+			// 	pros::delay(10);
+			// }
+
+
+			optimalValueP = turnPID.autoTuneAngle();
+			controller.rumble("--");
 		}
 		
+		if(!(controllerTime % 10)) {
+			controller.print(0, 0, "Optimal Value: ", optimalValueP);
+		}
+
 		pros::delay(10);
+		controllerTime++;
 	}
 }
