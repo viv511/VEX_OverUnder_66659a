@@ -44,6 +44,8 @@ void PID::resetPlease() {
     this->derivative = 0;
     this->integral = 0;
     resetConstants();
+
+    this->cross = 0;
 }
 
 void PID::resetConstants() {
@@ -68,9 +70,9 @@ float PID::getTarget() {
 
 void PID::setTarget(float t) {
     this->target = t;
-    if(this->isTurn) {
-        this->target += inertial.get_rotation();
-    }
+    // if(this->isTurn) {
+    //     this->target += inertial.get_rotation();
+    // }
     this->smallTimeCounter = 0;
     this->largeTimeCounter = 0;
     this->maxCounter = 0;
@@ -84,13 +86,8 @@ void PID::setTarget(float t) {
     NOTE: Only when all the PID constants aren't defined and/or set to 0.
     */
 
-    if((this->kP == 0) && (this->kI == 0) && (this->kD == 0)) {
-        if(this->isTurn == true) {
-            turnLookupPID(this->target);
-        }
-        else {
-            moveLookupPID(this->target);
-        }
+    if(this->isTurn == true) {
+        turnLookupPID(this->target);
     }
 }
 
@@ -110,37 +107,37 @@ void PID::turnLookupPID(float t) {
         setConstants(100, 0, 45);
     }
     else if(t <= 50) {
-        setConstants(350, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 60) {
-        setConstants(400, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 70) {
-        setConstants(425, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 80) {
-        setConstants(470, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 90) {
-        setConstants(550, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 105) {
-        setConstants(560, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 120) {
-        setConstants(570, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 135) {
-        setConstants(570, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 150) {
-        setConstants(450, 0, 0);
+        setConstants(100, 0, 0);
     }
     else if(t <= 165) {
-        setConstants(450, 0, 0);
+        setConstants(100, 0, 0);
     }
     else {
-       setConstants(250, 1, 50);
+       setConstants(100, 1, 50);
     }
 }
 
@@ -179,9 +176,11 @@ float PID::calculateOutput(float current) {
             }
         }
 
-        if(numbersign(this->error) != numbersign(this->previousError)) {
-            this->integral = 0;
-        }
+    }
+
+    if(numbersign(this->error) != numbersign(this->previousError)) {
+        this->integral = 0;
+        this->cross++;
     }
 
     this->output = (this->kP * this->error) + (this->kI*this->integral) + (this->kD * this->derivative);
@@ -265,22 +264,27 @@ float PID::autoTuneAngle() {
     LeftDT.brake();
     RightDT.brake();
 
-    if ((this->error) < 1) {
-      tries++;
-    }
-    else {
-
-      tries = 0;
-
-      if (this->error < 0) {
-        pMin = pGain;
-        pGain = (pGain + pMax) / 2.0;
-      } 
-      else if (this->error > 0) {
+    if(this->cross > 2) {
+        tries = 0;
+       
         pMax = pGain;
         pGain = (pGain + pMin) / 2.0;
-      }
 
+    }
+    else if ((this->error) < 1) {
+        tries++;
+    }
+    else {
+        tries = 0;
+
+        if (this->error > 0) {
+            pMin = pGain;
+            pGain = (pGain + pMax) / 2.0;
+        } 
+        else if (this->error < 0) {
+            pMax = pGain;
+            pGain = (pGain + pMin) / 2.0;
+        }
     }
 
     if (tries == 3) {

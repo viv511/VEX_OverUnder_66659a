@@ -54,3 +54,11 @@ void tracking() {
         pros::delay(10);
     }
 }
+
+std::pair<float, float> getDist() {
+    return std::make_pair(leftAbsolute, rightAbsolute);
+}
+
+float avgDist() {
+    return ((leftAbsolute + rightAbsolute) / 2.0);
+}

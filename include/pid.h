@@ -30,6 +30,8 @@ class PID {
         float maxCounter;
         float maxTime;
 
+        int cross;
+
     public:
         PID();
         PID(bool isTurnPID, float sErr, float sExit, float lErr, float lExit, float maxAllowedTime);

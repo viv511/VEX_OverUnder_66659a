@@ -82,6 +82,8 @@ void opcontrol(void);
 #include "pid.h"
 #include "tracking.h"
 #include "cata.h"
+#include "autofuncs.h"
+#include "routes.h"
 
 #endif
 
