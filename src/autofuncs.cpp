@@ -30,11 +30,7 @@ void driveDist(float l, float r, float limit, float ang) {
             RightDT.move_voltage((o + kT)*limit);
             pros::delay(10);
         }
-        LeftDT.move_voltage(0);
-        RightDT.move_voltage(0);
-        LeftDT.brake();
-        RightDT.brake();
-
+        stopMotors();
     }
     else {
         float o = 0;
@@ -46,10 +42,7 @@ void driveDist(float l, float r, float limit, float ang) {
             
                 pros::delay(10);
             }
-            LeftDT.move_voltage(0);
-            RightDT.move_voltage(0);
-            LeftDT.brake();
-            RightDT.brake();
+            stopMotors();
         }
         else {
             swingPID.setTarget(ang + inertial.get_rotation());
@@ -59,10 +52,7 @@ void driveDist(float l, float r, float limit, float ang) {
                 
                 pros::delay(10);
             }
-            LeftDT.move_voltage(0);
-            RightDT.move_voltage(0);
-            LeftDT.brake();
-            RightDT.brake();
+            stopMotors();
         }
     }
     
@@ -79,4 +69,12 @@ void turn(float ang) {
 
         pros::delay(10);
     }
+    stopMotors();
+}
+
+void stopMotors() {
+    LeftDT.move_voltage(0);
+    RightDT.move_voltage(0);
+    LeftDT.brake();
+    RightDT.brake();
 }

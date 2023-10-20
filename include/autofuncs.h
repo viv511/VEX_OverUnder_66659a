@@ -7,5 +7,6 @@ using namespace pros;
 
 void driveDist(float l, float r, float limit, float ang);
 void turn(float ang);
+void stopMotors();
 
 #endif

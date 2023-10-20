@@ -46,7 +46,9 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-
+	defenseRoute();
+	// offensiveSneak();
+	// offensiveRush();
 }
 
 /**
@@ -148,7 +150,7 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			turn(90);
+			turn(45);
 		}
 	
 

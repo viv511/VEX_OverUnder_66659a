@@ -101,21 +101,15 @@ void PID::turnLookupPID(float t) {
         setConstants(250, 0, 50);
     }
     else if(t <= 30) {
-        setConstants(180, 1, 40);
+        setConstants(180, 1, 40); //
     }
-    else if(t <= 40) {
+    else if(t <= 45) {
         setConstants(100, 0, 45);
-    }
-    else if(t <= 50) {
-        setConstants(100, 0, 0);
     }
     else if(t <= 60) {
         setConstants(100, 0, 0);
     }
-    else if(t <= 70) {
-        setConstants(100, 0, 0);
-    }
-    else if(t <= 80) {
+    else if(t <= 75) {
         setConstants(100, 0, 0);
     }
     else if(t <= 90) {
