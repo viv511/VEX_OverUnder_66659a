@@ -6,28 +6,34 @@ using namespace pros;
 
 void defenseRoute() {
     //Start 45 degree diagonal w/ Alliance triball touching bot
-    //Drive backwards
-    //Turn 45 degrees/Swing 45 degrees
-    //Drive backwards
+    driveDist(-15, -15, 1, 0);
+    turn(45);
+    driveDist(-18, -18, 1, 0);
     
 
 }
 
 void offensiveSneak() {
     //Start near elevation facing triball w/ alliance triball touching bot
-    //Drive forwards
-    //Intake
-    //Drive backwards while pushing AT
-    //Turn -45
-    //Drive backward
-    //Turn -45
-    //Score AT
-    //Turn 180 & Score triball
+    driveDist(27, 27, 1, 0);
+    intake.set_value(1);
+    driveDist(-33, -33, 1, 0);
+    turn(-45);
+    driveDist(-45, -45, 1, 0);
+    turn(-45);
+    driveDist(-10, -10, 1, 0);
+    driveDist(10, 10, 1, 0);
+    turn(180);
+    intake.set_value(0);
+    driveDist(10, 10, 1, 0);
 
-    //Manuever to get the close triball
-    //Fowards
-    //Intake
-    //Turn to goal (< ?)
+    driveDist(-11, -11, 1, 0);
+    turn(-45);
+    driveDist(65, 65, 1, 0);
+    turn(45);
+    intake.set_value(1);
+    turn(-90);
+    driveDist(65, 65, 1, 0);
     //Forward
     //Intake open
     //Score

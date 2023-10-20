@@ -44,8 +44,6 @@ void PID::resetPlease() {
     this->derivative = 0;
     this->integral = 0;
     resetConstants();
-
-    this->cross = 0;
 }
 
 void PID::resetConstants() {
@@ -101,10 +99,10 @@ void PID::turnLookupPID(float t) {
         setConstants(250, 0, 50);
     }
     else if(t <= 30) {
-        setConstants(180, 1, 40); //
+        setConstants(150, 1, 40); //
     }
     else if(t <= 45) {
-        setConstants(100, 0, 45);
+        setConstants(200, 0, 0);
     }
     else if(t <= 60) {
         setConstants(100, 0, 0);
@@ -133,6 +131,7 @@ void PID::turnLookupPID(float t) {
     else {
        setConstants(100, 1, 50);
     }
+    // controller.rumble(".");
 }
 
 void PID::moveLookupPID(float t) {
@@ -174,7 +173,6 @@ float PID::calculateOutput(float current) {
 
     if(numbersign(this->error) != numbersign(this->previousError)) {
         this->integral = 0;
-        this->cross++;
     }
 
     this->output = (this->kP * this->error) + (this->kI*this->integral) + (this->kD * this->derivative);

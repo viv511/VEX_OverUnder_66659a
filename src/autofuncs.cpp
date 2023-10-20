@@ -60,7 +60,8 @@ void driveDist(float l, float r, float limit, float ang) {
 }
 
 void turn(float ang) {
-    turnPID.setTarget(ang + inertial.get_rotation());
+    inertial.set_rotation(0);
+    turnPID.setTarget(ang);
     while(!turnPID.isSettled()) {
         float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
 

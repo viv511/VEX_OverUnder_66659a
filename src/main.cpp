@@ -9,10 +9,14 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::Task trackRobot(tracking);
 	wings.set_value(false);
 	intake.set_value(false);
+	pros::lcd::initialize();
+	pros::Task trackRobot(tracking);
+
+	LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
+	RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
+
 	// pros::Task cataControl(cataCtrl);
 }
 
