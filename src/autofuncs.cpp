@@ -4,10 +4,10 @@
 
 using namespace pros;
 
-float thetaPID = 100;
-PID movePID = PID(400, 0, 800, false, 1, 300, 3, 500, 4000);
+float thetaPID = 160;
+PID movePID = PID(false, 1, 300, 3, 500, 4000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
-PID turnPID = PID(true, 1, 100, 3, 300, 3000);
+PID turnPID = PID(true, 1, 100, 3, 300, 1500);
 
 void driveDist(float l, float r, float limit, float ang) {
     std::pair<float, float> v = getDist();
@@ -23,11 +23,11 @@ void driveDist(float l, float r, float limit, float ang) {
             cur = avgDist();
             float o = movePID.calculateOutput(cur);
 
-            if(movePID.error < 4) {
-                kT = 0;
-            }
-            LeftDT.move_voltage((o - kT)*limit);
-            RightDT.move_voltage((o + kT)*limit);
+            // if(movePID.error < 5) {
+            //     kT = 0;
+            // }
+            LeftDT.move_voltage((o + kT)*limit);
+            RightDT.move_voltage((o - kT)*limit);
             pros::delay(10);
         }
         stopMotors();

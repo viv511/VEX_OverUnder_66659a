@@ -7,6 +7,5 @@ using namespace pros;
 
 void defenseRoute();
 void offensiveSneak();
-void offensiveRush();
 
 #endif
