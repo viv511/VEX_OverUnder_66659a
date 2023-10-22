@@ -6,12 +6,12 @@ using namespace pros;
 
 void defenseRoute() {
     //Start 45 degree diagonal w/ Alliance triball touching bot
-    driveDist(-40, -40, 1, 0);
+    driveDist(-40, -40, 0.8, 0);
     pros::delay(200);
     turn(45);
     LeftDT.move_voltage(-12000);
     RightDT.move_voltage(-12000);
-    pros::delay(600);
+    pros::delay(700);
     stopMotors();
     pros::delay(50);
     driveDist(17.5, 17.5, 1, 0);
@@ -69,7 +69,7 @@ void offensiveSneak() {
     intake.set_value(0);
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(12000);
-    pros::delay(1000);
+    pros::delay(2000);
     stopMotors();
 }
 

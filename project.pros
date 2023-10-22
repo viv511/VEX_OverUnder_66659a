@@ -309,7 +309,8 @@
       }
     },
     "upload_options": {
-      "description": "FrankDaTank"
+      "description": "FrankDaTank",
+      "slot": 1
     }
   }
 }

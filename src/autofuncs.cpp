@@ -7,7 +7,7 @@ using namespace pros;
 float thetaPID = 160;
 PID movePID = PID(false, 1, 300, 3, 500, 4000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
-PID turnPID = PID(true, 1, 100, 3, 300, 1500);
+PID turnPID = PID(true, 1, 100, 3, 300, 1200);
 
 void driveDist(float l, float r, float limit, float ang) {
     std::pair<float, float> v = getDist();

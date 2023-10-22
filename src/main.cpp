@@ -81,79 +81,156 @@ void opcontrol() {
 	//For joystick exponential curving
 	bool expoDrive = true;
 
-	//Wings
+	//Vibes
+	bool endState = false;
+	bool endLast = false;
+
 	bool wingState = false;
 	bool wingLast = false;
 
-	//Intake
-	bool intakeState = false;
-	bool intakeLast = false;
-
 	while(1) {
-		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
-		if((driveStyle == 's') || (driveStyle == 'a')) {
-			//Bind from -1 <-- 0 --> 1
-			axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-			axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
-			if(driveStyle == 'a') {
-				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) && !endLast) {
+			endState = !endState;
+			endLast = true;
+		}
+		else if(!(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))) {
+			endLast = false;
+		}
+
+		if(!endState) {
+			// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
+			if((driveStyle == 's') || (driveStyle == 'a')) {
+				//Bind from -1 <-- 0 --> 1
+				axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = 0.8 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+				if(driveStyle == 'a') {
+					axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
+				}
+
+				//Find scaled bounded maximum for drivetrain %'s
+				float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
+
+				//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
+				leftPower = ((axisOne + axisTwo) / mag) * 600;
+				rightPower = ((axisOne - axisTwo) / mag) * 600;
+			}
+			else if(driveStyle == 't') {
+				//Bind from -100 <-- 0 --> 100
+				axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
+
+				if(expoDrive) {
+					axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
+					axisTwo = exp((fabs(axisTwo)-100)/25)*axisTwo;
+				}
+				
+				leftPower = axisOne*6;
+				rightPower = axisTwo*6;
+			}
+			else {
+				leftPower = 0;
+				rightPower = 0;
 			}
 
-			//Find scaled bounded maximum for drivetrain %'s
-			float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
+			//Assign power
+			LeftDT.move_velocity(leftPower);
+			RightDT.move_velocity(rightPower);
 
-			//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
-			leftPower = ((axisOne + axisTwo) / mag) * 600;
-			rightPower = ((axisOne - axisTwo) / mag) * 600;
-		}
-		else if(driveStyle == 't') {
-			//Bind from -100 <-- 0 --> 100
-			axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-			axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
-
-			if(expoDrive) {
-				axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
-				axisTwo = exp((fabs(axisTwo)-100)/25)*axisTwo;
+			//CATA
+			if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+				cata.move_voltage(9000);
 			}
-			
-			leftPower = axisOne*6;
-			rightPower = axisTwo*6;
-		}
-		else {
-			leftPower = 0;
-			rightPower = 0;
-		}
+			else {
+				cata.move_voltage(0);
+			}
 
-		//Assign power
-		LeftDT.move_velocity(leftPower);
-		RightDT.move_velocity(rightPower);
+			//WINGS
+			if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+				wings.set_value(true);
+			}
+			else {
+				wings.set_value(false);
+			}
 
-		//CATA
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(9000);
+			//INTAKE
+			if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+				intake.set_value(true);
+			}
+			else {
+				intake.set_value(false);
+			}
 		}
-		else {
-			cata.move_voltage(0);
-		}
+		else { //ENDGAMMEMEMEMMEE
+			// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
+			if((driveStyle == 's') || (driveStyle == 'a')) {
+				//Bind from -1 <-- 0 --> 1
+				axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+				if(driveStyle == 'a') {
+					axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
+				}
 
-		//WINGS
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			wings.set_value(true);
-		}
-		else {
-			wings.set_value(false);
-		}
+				//Find scaled bounded maximum for drivetrain %'s
+				float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
-		//INTAKE
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-			intake.set_value(true);
-		}
-		else {
-			intake.set_value(false);
-		}
+				//-1.0 <--  0.0 --> 1.0 scale to velocity (-600 <-- 0 --> 600 RPM)
+				leftPower = ((axisOne + axisTwo) / mag) * 600;
+				rightPower = ((axisOne - axisTwo) / mag) * 600;
+			}
+			else if(driveStyle == 't') {
+				//Bind from -100 <-- 0 --> 100
+				axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+				axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
 
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			driveDist(30, 30, 1, 0);
+				if(expoDrive) {
+					axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
+					axisTwo = exp((fabs(axisTwo)-100)/25)*axisTwo;
+				}
+				
+				leftPower = axisOne*6;
+				rightPower = axisTwo*6;
+			}
+			else {
+				leftPower = 0;
+				rightPower = 0;
+			}
+
+			//Assign power
+			LeftDT.move_velocity(0.60 * leftPower);
+			RightDT.move_velocity(0.60 * rightPower);
+
+			//CATA
+			if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+				cata.move_voltage(9000);
+			}
+			else {
+				cata.move_voltage(0);
+			}
+
+			//WINGS
+			//L1
+			if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) && !wingLast) {
+				wingState = !wingState;
+				wingLast = true;
+			}
+			else if(!(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))) {
+				wingLast = false;
+			}
+
+			if(wingState) {
+				wings.set_value(1);
+			}
+			else {
+				wings.set_value(0);
+			}
+
+			//INTAKE
+			if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+				intake.set_value(true);
+			}
+			else {
+				intake.set_value(false);
+			}
 		}
 	
 
