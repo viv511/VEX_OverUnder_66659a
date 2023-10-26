@@ -60,10 +60,19 @@ void driveDist(float l, float r, float limit, float ang) {
 }
 
 void turn(float ang) {
-    inertial.set_rotation(0);
-    turnPID.setTarget(ang);
+    // set inertial to 0 at the start of each route instead of each turn  
+    
+    float targetAngle = inertial.get_rotation() + ang;
+    while (targetAngle <= -180) {
+        targetAngle += 360;
+    }
+    while (targetAngle > 180) {
+        targetAngle -= 360;
+    }
+
+    turnPID.setTarget(targetAngle);
     while(!turnPID.isSettled()) {
-        float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
+        float turnSpeed = turnPID.calculateOutput(targetAngle - inertial.get_rotation());
 
         LeftDT.move_voltage(turnSpeed);
         RightDT.move_voltage(-turnSpeed);

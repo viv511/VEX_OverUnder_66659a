@@ -73,3 +73,6 @@ void offensiveSneak() {
     stopMotors();
 }
 
+void offensiveGreed() {
+    //five triball route
+}
