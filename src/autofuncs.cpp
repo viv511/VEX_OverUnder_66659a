@@ -1,17 +1,20 @@
 #include "autofuncs.h"
 #include "tracking.h"
 #include <cmath>
+#include <vector>
+#include <utility>
 
 using namespace pros;
 
 float thetaPID = 160;
+double degToRad = 3.14159265358979323846/180; //M_PI sobad
 float expectedAngle = 0;
 PID movePID = PID(false, 1, 300, 3, 500, 4000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
 
 void driveDist(float l, float r, float limit, float ang) {
-    std::pair<float, float> v = getDist();
+    pair<float, float> v = getDist();
 
     if(l == r) {
         float cur = avgDist();
@@ -89,4 +92,22 @@ void stopMotors() {
     RightDT.move_voltage(0);
     LeftDT.brake();
     RightDT.brake();
+}
+
+vector<pair<float, float>> generatePath(float carrotDist, float startX, float startY, float startAng, float endX, float endY, float endAng){
+	float actualDist = sqrt(pow((endX - startX), 2) + pow((endY - startY), 2));
+
+	//Calculate carrot point
+	float carrotX = endX - actualDist * sin(endAng * degToRad) * carrotDist;  
+	float carrotY = endY - actualDist * cos(endAng * degToRad) * carrotDist;
+
+	vector<pair<float, float>> follow;
+	for(float t=0.00; t<=1.00; t+=0.01) {
+		float oneMinus = 1 - t;
+		float pathX = oneMinus * (oneMinus * startX + t * carrotX) + t * (oneMinus * carrotX + t * endX);
+		float pathY = oneMinus * (oneMinus * startY + t * carrotY) + t * (oneMinus * carrotY + t * endY);
+		follow.push_back(make_pair(pathX, pathY));
+	}
+
+    return follow;
 }
