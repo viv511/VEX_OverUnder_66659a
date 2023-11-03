@@ -17,6 +17,13 @@ float rightCurrent = 0;
 float rightChange = 0;
 float rightLast = 0;
 
+float deltaDist = 0;
+float deltaTheta = 0;
+float rX = 0;
+float rY = 0;
+
+float lastTheta = 0;
+
 void initializeTracking() {
     inertial.reset();
     while(inertial.is_calibrating()){
@@ -30,7 +37,6 @@ void initializeTracking() {
     rightRot.set_position(0);
 }
 
-
 void tracking() {
     initializeTracking();
 
@@ -41,15 +47,32 @@ void tracking() {
         leftChange = (leftCurrent - leftLast) * RATIO;
         rightChange = (rightCurrent - rightLast) * RATIO;
 
-        leftLast = leftCurrent;
-        rightLast = rightCurrent;
+        /*
+        Approximating X and Y position using two parallel wheels:
+        
+        Infinite small segement is a linear path.
+        Because it is linear, L and R dist is the same. To better approx. this, let's average dL and dR at dT.
+
+        By calculating the angular offset and applying sin and cos to theta, we find the offset in x and y.
+        */
+
+        deltaDist = (leftChange + rightChange)/2;
+        deltaTheta = inertial.get_rotation() - lastTheta;
+
+        rX += (sin(deltaTheta) * d);
+        rY += (cos(deltaTheta) * d);
+
+        lastTheta = inertial.get_rotation();
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
 
+        leftLast = leftCurrent;
+        rightLast = rightCurrent;
+
         pros::lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
-		pros::lcd::print(1, "Left: %f\n", leftAbsolute);
-        pros::lcd::print(2, "Right: %f\n", rightAbsolute);
+		pros::lcd::print(1, "X: %f\n", rX);
+        pros::lcd::print(2, "Y: %f\n", rY);
 
         pros::delay(10);
     }
