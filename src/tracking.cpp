@@ -59,8 +59,8 @@ void tracking() {
         deltaDist = (leftChange + rightChange)/2;
         deltaTheta = inertial.get_rotation() - lastTheta;
 
-        rX += (sin(deltaTheta) * d);
-        rY += (cos(deltaTheta) * d);
+        rX += (sin(deltaTheta) * deltaDist);
+        rY += (cos(deltaTheta) * deltaDist);
 
         lastTheta = inertial.get_rotation();
 
