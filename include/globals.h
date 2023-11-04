@@ -4,27 +4,27 @@
 #define GLOBALS
 using namespace pros;
 
-extern pros::Motor FL;
-extern pros::Motor FR;
-extern pros::Motor ML;
-extern pros::Motor MR;
-extern pros::Motor BL;
-extern pros::Motor BR;
+extern Motor FL;
+extern Motor FR;
+extern Motor ML;
+extern Motor MR;
+extern Motor BL;
+extern Motor BR;
 
-extern pros::Motor Cata1;
-extern pros::Motor Cata2;
+extern Motor Cata1;
+extern Motor Cata2;
 
-extern pros::Controller controller;
+extern Controller controller;
 
-extern pros::IMU inertial;
-extern pros::Rotation leftRot;
-extern pros::Rotation rightRot;
+extern IMU inertial;
+extern Rotation leftRot;
+extern Rotation rightRot;
 
-extern pros::ADIDigitalOut wings;
-extern pros::ADIDigitalOut intake;
+extern ADIDigitalOut wings;
+extern ADIDigitalOut intake;
 
-extern pros::Motor_Group LeftDT;
-extern pros::Motor_Group RightDT;
-extern pros::Motor_Group cata;
+extern Motor_Group LeftDT;
+extern Motor_Group RightDT;
+extern Motor_Group cata;
 
 #endif
