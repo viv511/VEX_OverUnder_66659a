@@ -6,6 +6,8 @@
 
 using namespace pros;
 
+constexpr float WHEEL_BASE = 10000.0; //pls measure dist between Left and right wheel in inches :)
+
 float thetaPID = 160;
 double degToRad = 3.14159265358979323846/180; //M_PI sobad
 float expectedAngle = 0;
@@ -101,7 +103,7 @@ vector<pair<float, float>> generatePath(float carrotDist, float startX, float st
 	float carrotX = endX - actualDist * sin(endAng * degToRad) * carrotDist;  
 	float carrotY = endY - actualDist * cos(endAng * degToRad) * carrotDist;
 
-	vector<pair<float, float>> follow;
+	vector<std::pair<float, float>> follow;
 	for(float t=0.00; t<=1.00; t+=0.01) {
 		float oneMinus = 1 - t;
 		float pathX = oneMinus * (oneMinus * startX + t * carrotX) + t * (oneMinus * carrotX + t * endX);
@@ -110,4 +112,35 @@ vector<pair<float, float>> generatePath(float carrotDist, float startX, float st
 	}
 
     return follow;
+}
+
+
+
+std::pair<float, float> calculateWheelVelocity(float sX, float sY, float eX, float eY) {
+    float d = distDiff(sX, sY, eX, eY);
+    float theta = angDiff(sX, sY, eX, eY);
+
+    //10 = dT = 10msec wait time
+    float v = d / 10;
+    float w = v * std::tan(theta);
+
+    float leftVel = v - w * WHEEL_BASE / 2;
+    float rightVel = v + w * WHEEL_BASE / 2;
+
+    return make_pair(leftVel, rightVel);
+}
+
+vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>> path) {
+    vector<std::pair<float, float>> velocities;
+
+    for(int i=0; i<path.size()-1; i++) {
+        float startX = path[i].first;
+        float startY = path[i].second;
+        float endX = path[i+1].first;
+        float endY = path[i+1].second;
+
+        velocities.push_back(calculateWheelVelocity(startX, startY, endX, endY));
+    }
+
+    return velocities;
 }

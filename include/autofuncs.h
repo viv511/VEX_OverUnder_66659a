@@ -8,5 +8,8 @@ using namespace pros;
 void driveDist(float l, float r, float limit, float ang);
 void turn(float ang);
 void stopMotors();
+vector<std::pair<float, float>> generatePath(float carrotDist, float startX, float startY, float startAng, float endX, float endY, float endAng);
+std::pair<float, float> calculateWheelVelocity(float sX, float sY, float eX, float eY);
+vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>> path);
 
 #endif

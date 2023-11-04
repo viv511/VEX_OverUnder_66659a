@@ -5,7 +5,8 @@ using namespace pros;
 constexpr float PI = 3.141592;
 constexpr float DIAMETER = 3.32;
 constexpr float TICKS = 36000.0;
-constexpr float RATIO = (PI * DIAMETER)/TICKS; 
+constexpr float RATIO = (PI * DIAMETER)/TICKS;
+constexpr float DEGTORAD = PI/180; 
 
 float leftAbsolute = 0;
 float leftCurrent = 0;
@@ -57,7 +58,7 @@ void tracking() {
         */
 
         deltaDist = (leftChange + rightChange)/2;
-        deltaTheta = inertial.get_rotation() - lastTheta;
+        deltaTheta = (inertial.get_rotation() - lastTheta) * DEGTORAD;
 
         rX += (sin(deltaTheta) * deltaDist);
         rY += (cos(deltaTheta) * deltaDist);
@@ -84,4 +85,17 @@ std::pair<float, float> getDist() {
 
 float avgDist() {
     return ((leftAbsolute + rightAbsolute) / 2.0);
+}
+
+std::pair<float, float> getCoords() {
+    return std::make_pair(rX, rY);
+}
+
+float distDiff(float startX, float startY, float endX, float endY) {
+    return (std::sqrt(std::pow(endX - startX, 2) + std::pow(endY - startY, 2))) / 10;
+}
+
+float angDiff(float startX, float startY, float endX, float endY) {
+    //RETURNS IN RADIANS
+    return std::atan2(endY - startY, endX - startX);
 }
