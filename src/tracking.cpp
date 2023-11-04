@@ -27,7 +27,7 @@ float lastTheta = 0;
 void initializeTracking() {
     inertial.reset();
     while(inertial.is_calibrating()){
-        pros::delay(10);
+        delay(10);
     }
     inertial.set_rotation(0);
 
@@ -70,11 +70,11 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-        pros::lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
-		pros::lcd::print(1, "X: %f\n", rX);
-        pros::lcd::print(2, "Y: %f\n", rY);
+        lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
+		lcd::print(1, "X: %f\n", rX);
+        lcd::print(2, "Y: %f\n", rY);
 
-        pros::delay(10);
+        delay(10);
     }
 }
 
