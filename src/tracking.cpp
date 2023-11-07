@@ -2,7 +2,10 @@
 
 using namespace pros;
 
-constexpr float PI = 3.141592;
+
+constexpr float PI = 3.14159265358979323846;
+constexpr float degToRad = PI/180;
+constexpr float radToDeg = 180/PI;
 constexpr float DIAMETER = 3.32;
 constexpr float TICKS = 36000.0;
 constexpr float RATIO = (PI * DIAMETER)/TICKS;
@@ -42,8 +45,8 @@ void tracking() {
     initializeTracking();
 
     while(true) {
-        leftCurrent = -1 * leftRot.get_position();
-        rightCurrent = -1 * rightRot.get_position();
+        leftCurrent = leftRot.get_position();
+        rightCurrent = rightRot.get_position();
 
         leftChange = (leftCurrent - leftLast) * RATIO;
         rightChange = (rightCurrent - rightLast) * RATIO;
@@ -72,8 +75,8 @@ void tracking() {
         rightLast = rightCurrent;
 
         lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
-		lcd::print(1, "X: %f\n", rX);
-        lcd::print(2, "Y: %f\n", rY);
+		lcd::print(1, "L: %f\n", leftAbsolute);
+        lcd::print(2, "R: %f\n", rightAbsolute);
 
         delay(10);
     }
@@ -87,6 +90,11 @@ float avgDist() {
     return ((leftAbsolute + rightAbsolute) / 2.0);
 }
 
+void set() {
+    leftAbsolute = 0;
+    rightAbsolute = 0;
+}
+
 std::pair<float, float> getCoords() {
     return std::make_pair(rX, rY);
 }
@@ -96,6 +104,15 @@ float distDiff(float startX, float startY, float endX, float endY) {
 }
 
 float angDiff(float startX, float startY, float endX, float endY) {
-    //RETURNS IN RADIANS
-    return std::atan2(endY - startY, endX - startX);
+    float angleDiff = atan2(endY - startY, endX - startX);
+
+    angleDiff *= radToDeg;
+    if (angleDiff < 0) {
+        angleDiff += 360;
+    }
+
+    angleDiff -= 90;
+    angleDiff *= -1;
+
+    return angleDiff;
 }

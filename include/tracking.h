@@ -11,3 +11,4 @@ float avgDist();
 std::pair<float, float> getCoords();
 float distDiff(float startX, float startY, float endX, float endY);
 float angDiff(float startX, float startY, float endX, float endY);
+void set();

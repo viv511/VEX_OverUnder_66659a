@@ -97,6 +97,10 @@ void opcontrol() {
 			endLast = false;
 		}
 
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+			driveDist(40, 40, 1, 0);
+		}
+
 		if(!endState) {
 			// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 			if((driveStyle == 's') || (driveStyle == 'a')) {

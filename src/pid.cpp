@@ -88,7 +88,10 @@ void PID::setTarget(float t) {
         turnLookupPID(this->target);
     }
     else {
-        setConstants(450, 0, 22*this->target);
+        setConstants(15*this->target, 0, 100);
+        if(this->target >= 35) {
+            setConstants(15*this->target, 0, 200);
+        }
     }
 }
 

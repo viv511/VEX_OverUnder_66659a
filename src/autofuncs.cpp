@@ -6,17 +6,18 @@
 
 using namespace pros;
 
-constexpr float WHEEL_BASE = 10000.0; //pls measure dist between Left and right wheel in inches :)
+constexpr float WHEEL_BASE = 12.1; //pls measure dist between Left and right wheel in inches :)
 
 float thetaPID = 160;
 double degToRad = 3.14159265358979323846/180; //M_PI sobad
 float expectedAngle = 0;
-PID movePID = PID(false, 1, 300, 3, 500, 4000);
+
+PID movePID = PID(false, 1, 300, 3, 500, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
 
 void driveDist(float l, float r, float limit, float ang) {
-    pair<float, float> v = getDist();
+    set();
 
     if(l == r) {
         float cur = avgDist();
@@ -122,10 +123,13 @@ std::pair<float, float> calculateWheelVelocity(float sX, float sY, float eX, flo
 
     //10 = dT = 10msec wait time
     float v = d / 10;
-    float w = v * std::tan(theta);
+    float w = theta / 10;
 
-    float leftVel = v - w * WHEEL_BASE / 2;
-    float rightVel = v + w * WHEEL_BASE / 2;
+    v *= 100000;
+    w *= 1000;
+    
+    float leftVel = v - (w * WHEEL_BASE) / 2;
+    float rightVel = v + (w * WHEEL_BASE) / 2;
 
     return make_pair(leftVel, rightVel);
 }
@@ -143,4 +147,21 @@ vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>>
     }
 
     return velocities;
+}
+
+void boomerang(float dX, float dY, float sAng, float eAng, float carrotD) {
+    //{X,Y} Coordinates
+    vector<std::pair<float, float>> path = generatePath(carrotD, 0, 0, sAng, dX, dY, eAng);
+
+    //{X, Y} ==> {L, R} Velocities
+    path = computeVelocites(path);
+
+
+    for(int i=0; i<path.size(); i++) {
+        LeftDT.move_voltage(path[i].first);
+        RightDT.move_voltage(path[i].second);
+
+        pros::delay(10);
+    }
+
 }
