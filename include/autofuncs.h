@@ -5,6 +5,7 @@
 
 using namespace pros;
 
+void arc(float dist, float ang, float time);
 void driveDist(float l, float r, float limit, float ang);
 void turn(float ang);
 void stopMotors();

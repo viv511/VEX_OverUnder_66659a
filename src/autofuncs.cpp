@@ -165,3 +165,34 @@ void boomerang(float dX, float dY, float sAng, float eAng, float carrotD) {
     }
 
 }
+
+void arc(float dist, float ang, float time) {
+    set();
+    inertial.set_rotation(0);
+    movePID.setTarget(dist);
+    float oAng = 0;
+    float timer = 0;
+    float kT = 0;
+
+    while(!movePID.isSettled()) {
+        float cur = avgDist();
+        float output = movePID.calculateOutput(cur);
+
+        if(timer < time) {
+            //straight
+            kT = -inertial.get_rotation() * thetaPID;
+        }
+        else {
+            //turn
+            kT = (ang-inertial.get_rotation()) * thetaPID;
+        }
+
+        LeftDT.move_voltage(output + kT);
+        RightDT.move_voltage(output - kT);
+
+        timer += 10;
+        pros::delay(10);
+    }
+
+    stopMotors();
+}
