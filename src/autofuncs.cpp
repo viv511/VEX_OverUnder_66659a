@@ -10,7 +10,6 @@ constexpr float WHEEL_BASE = 12.1; //pls measure dist between Left and right whe
 
 float thetaPID = 160;
 double degToRad = 3.14159265358979323846/180; //M_PI sobad
-float expectedAngle = 0;
 
 PID movePID = PID(false, 1, 300, 3, 500, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
@@ -66,19 +65,25 @@ void driveDist(float l, float r, float limit, float ang) {
     controller.rumble(".");
 }
 
+float expectedAngle = 0;
+
 void turn(float ang) {
     // set inertial to 0 at the start of each route instead of each turn  
-    
-    expectedAngle += ang;
-    float turnAngle = expectedAngle - inertial.get_rotation();
-    while (turnAngle <= -180) { // ensures it lies between -180 and 180
-        turnAngle += 360;
-    }
-    while (turnAngle > 180) {
-        turnAngle -= 360;
-    }
+    inertial.set_rotation(0);
+    LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+    RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 
-    turnPID.setTarget(turnAngle);
+    //Michael im sorry it doesnt work i dont have time to debug sry
+    // expectedAngle += ang;
+    // float turnAngle = expectedAngle - inertial.get_rotation();
+    // while (turnAngle <= -180) { // ensures it lies between -180 and 180
+    //     turnAngle += 360;
+    // }
+    // while (turnAngle > 180) {
+    //     turnAngle -= 360;
+    // }
+
+    turnPID.setTarget(ang);
     while(!turnPID.isSettled()) {
         float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
 
@@ -167,32 +172,75 @@ void boomerang(float dX, float dY, float sAng, float eAng, float carrotD) {
 }
 
 void arc(float dist, float ang, float time) {
-    set();
-    inertial.set_rotation(0);
-    movePID.setTarget(dist);
-    float oAng = 0;
-    float timer = 0;
-    float kT = 0;
-
-    while(!movePID.isSettled()) {
-        float cur = avgDist();
-        float output = movePID.calculateOutput(cur);
-
-        if(timer < time) {
-            //straight
-            kT = -inertial.get_rotation() * thetaPID;
+    float t = 0;
+    while(t < ang) {
+        LeftDT.move_voltage(10000);
+        RightDT.move_voltage(10000);
+        pros::delay(10);
+        t+=10;
+    }
+    t = 0;
+    while(t < dist-ang) {
+        if(time > 0) {
+            LeftDT.move_voltage(10000);
+            RightDT.move_voltage(2000);
         }
         else {
-            //turn
-            kT = (ang-inertial.get_rotation()) * thetaPID;
+            LeftDT.move_voltage(2000);
+            RightDT.move_voltage(10000);
         }
-
-        LeftDT.move_voltage(output + kT);
-        RightDT.move_voltage(output - kT);
-
-        timer += 10;
         pros::delay(10);
+        t+=10;
     }
 
+
+//     set();
+//     inertial.set_rotation(0);
+//     movePID.setTarget(dist);
+//     float oAng = 0;
+//     float timer = 0;
+//     float kT = 0;
+
+//     float lSpd = 0;
+//     float rSpd = 0;
+
+//     while(!movePID.isSettled()) {
+//         float cur = avgDist();
+//         float output = movePID.calculateOutput(cur);
+
+
+//         if(timer < time) {
+//             //straight
+//             kT = -inertial.get_rotation() * thetaPID;
+//         }
+//         else {
+//             if(ang > 0) {
+//                 lSpd+=10;
+//             }
+//             else {
+//                 rSpd+=10;
+//             }
+//         //     //turn
+//         //     kT = (ang-inertial.get_rotation()) * thetaPID;
+//         }
+
+//         // if(ang > 0) {
+//         //     LeftDT.move_voltage(output + kT);
+//         //     RightDT.move_voltage(output);
+//         // }
+//         // else {
+//         //     LeftDT.move_voltage(output);
+//         //     RightDT.move_voltage(output - kT);
+//         // }
+//         LeftDT.move_voltage(0.5*output + kT + lSpd);
+//         RightDT.move_voltage(0.5*output - kT + rSpd);
+
+//         timer += 10;
+//         pros::delay(10);
+//     }
+    LeftDT.move_voltage(0);
+    RightDT.move_voltage(0);
+    LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+    RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
     stopMotors();
 }

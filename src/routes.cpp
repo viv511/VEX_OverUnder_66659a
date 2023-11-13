@@ -101,3 +101,8 @@ void offensiveSneak() {
 void offensiveGreed() {
     //five triball route
 }
+
+
+
+
+//			arc(1000, 650, 1); this might work

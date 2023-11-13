@@ -98,44 +98,41 @@ void PID::setTarget(float t) {
 void PID::turnLookupPID(float t) {
     t = fabs(t);
 
-    if(t <= 10) {
-        setConstants(450, 2, 200);
-    }
-    else if(t <= 20) {
-        setConstants(250, 0, 50);
+    if(t <= 15) {
+        setConstants(250, 0, t*15); //TUNED
     }
     else if(t <= 30) {
-        setConstants(150, 1, 40); 
+        setConstants(200, 0, t*26); //TUNED
     }
     else if(t <= 45) {
-        setConstants(230, 0, t*18);
+        setConstants(250, 0, t*35); //TUNED
     }
     else if(t <= 60) {
-        setConstants(350, 0, t*15);
+        setConstants(300, 0, t*32); //TUNED
     }
     else if(t <= 70) {
-        setConstants(330, 0, t*20); 
+        setConstants(330, 0, t*32); //TUNED
     }
     else if(t <= 80) {
-        setConstants(310, 0, t*25);
+        setConstants(342, 0, t*30); //TUNED
     }
     else if(t <= 90) {
-        setConstants(325, 0, t*27);
+        setConstants(350, 1.5, t*27); //TUNED
     }
     else if(t <= 105) {
-        setConstants(350, 0, t*27);
+        setConstants(370, 0, t*25); //TUNED
     }
     else if(t <= 120) {
-        setConstants(375, 0, t*24);
+        setConstants(380, 0, t*24); //TUNED
     }
     else if(t <= 135) {
-        setConstants(400, 0, t*22);
+        setConstants(400, 0, t*22); //TUNED
     }
     else if(t <= 150) {
-        setConstants(425, 0, t*20);
+        setConstants(425, 0, t*25); //TUNED
     }
     else if(t <= 165) {
-        setConstants(450, 0, t*19);
+        setConstants(450, 0, t*19); //TUNED
     }
     else {
         setConstants(500, 0, t*21.5);

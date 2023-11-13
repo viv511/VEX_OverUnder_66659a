@@ -89,6 +89,8 @@ void opcontrol() {
 	bool wingLast = false;
 
 	while(1) {
+		LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+    	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) && !endLast) {
 			endState = !endState;
 			endLast = true;
@@ -98,7 +100,8 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			driveDist(40, 40, 1, 0);
+			// turn(15);
+			// driveDist(40, 40, 1, 0);
 		}
 
 		if(!endState) {
