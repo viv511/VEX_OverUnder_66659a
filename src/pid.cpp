@@ -88,9 +88,9 @@ void PID::setTarget(float t) {
         turnLookupPID(this->target);
     }
     else {
-        setConstants(9.5*fabs(this->target), 0, 100);
+        setConstants(14*fabs(this->target), 0, 100);
         if(this->target >= 35) {
-            setConstants(10*fabs(this->target), 0, 200);
+            setConstants(11*fabs(this->target), 0, 200);
         }
     }
 }
