@@ -7,6 +7,7 @@ using namespace pros;
 
 void arc(float dist, float ang, float time);
 void driveDist(float d, float limit);
+void driveTime(int time, int dir);
 void turn(float ang);
 void stopMotors();
 void boomerang(float dX, float dY, float sAng, float eAng, float carrotD);

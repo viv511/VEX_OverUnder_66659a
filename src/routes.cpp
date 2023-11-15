@@ -66,34 +66,68 @@ void offensiveSneak() {
     intake.set_value(1);
     driveDist(-48, 1);
     turn(-45);
-    driveDist(-35, 1);
-    wings.set_value(1);
+    //wings.set_value(1);
+    driveDist(-36, 1);
     turn(-45);
-    wings.set_value(0);
+    //wings.set_value(0);
 
-    LeftDT.move_voltage(-12000);
-    RightDT.move_voltage(-12000);
-    pros::delay(700);
-    stopMotors();
+    driveTime(700, -1);
     // +2 Balls
 
-    driveDist(12, 1);
-    turn(180);
-    intake.set_value(0);
-    pros::delay(150);
-    LeftDT.move_voltage(12000);
-    RightDT.move_voltage(12000);
-    pros::delay(500);
-    stopMotors();
-    // +1 Ball
 
     /*    
     6. turn 180
     7. open intake and push triball in
     */
 
+    driveDist(13, 1);
+    turn(180);
+    intake.set_value(0);
+    pros::delay(200);
+    driveTime(400, 1);
+    // +1 Ball
+
+    /*
+    8. drive backwards
+    9. turn -90 & use fancy "arc" function OR turn angle more than -90 (i.e. -75 ish) that gets you pointed at the triball at the bar
+    10. get to that triball and intake it
+    11. drive backwards
+    12. point towards goal & open intake
+    13. drive a little forward not all the way ==> causes triball to roll
+    14. turn towards direct middle middle bar triball 
+    15. drive forward and close intake on the triball
+    16. face OPPOSITE the goal & open wings
+    17. push the 2 triballs in
+    18. go forward & 180 degrees
+    19. Open intake and drive forward forever (we will be cut out by the 15 sec time limit so we want to make sure we drive full force until then)
+    */
+   
+    driveDist(-20, 1);
+    turn(-72);
+    driveDist(65, 1);
+    intake.set_value(1);
 
     
+    turn(135);
+    intake.set_value(0);
+    driveDist(20, 1);
+    turn(-90);
+    driveDist(30, 1);
+    intake.set_value(1);
+    wings.set_value(1);
+    turn(-20);
+    pros::delay(200);
+
+    driveTime(600, 1);
+
+    wings.set_value(0);
+
+    driveTime(200, 1);
+
+    turn(180);
+    intake.set_value(0);
+
+    driveTime(20000, 1);
     //   ~~~~~~~~~~~~~~~~~~~~~~~~ Mashpee code ~~~~~~~~~~~~~~~~~~~~~~~~
     // intake.set_value(1);
     // driveDist(-48, -48, 1, 0);

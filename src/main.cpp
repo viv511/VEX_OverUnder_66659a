@@ -92,28 +92,25 @@ void opcontrol() {
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
 			// turn(15);
-			// driveDist(40, 40, 1, 0);
+			driveDist(-15, -1);
 		}
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
 			//Bind from -100 <-- 0 --> 100
-			axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-			axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+			axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+			axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
 			if(driveStyle == 'a') {
 				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
 			}
 
-			if(expoDrive) {
-				axisTwo = exp((fabs(axisTwo)-100)/25)*axisTwo;
-			}
+			//Find scaled bounded maximum for drivetrain %'s63.
 
-			//Find scaled bounded maximum for drivetrain %'s
 			float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
 			//-100 <--  0.0 --> 100 scale to velocity (-600 <-- 0 --> 600 RPM)
-			leftPower = ((axisOne + axisTwo) / mag) * 6;
-			rightPower = ((axisOne - axisTwo) / mag) * 6;
+			leftPower = ((axisOne + axisTwo) / mag) * 600;
+			rightPower = ((axisOne - axisTwo) / mag) * 600;
 		}
 		else if(driveStyle == 't') {
 			//Bind from -100 <-- 0 --> 100
