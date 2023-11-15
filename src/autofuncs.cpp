@@ -15,54 +15,27 @@ PID movePID = PID(false, 1, 300, 3, 500, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
 
-void driveDist(float l, float r, float limit, float ang) {
+void driveDist(float d, float limit) {
     set();
 
-    if(l == r) {
-        float cur = avgDist();
-        float tAng = inertial.get_rotation();
+    float cur = avgDist();
+    float tAng = inertial.get_rotation();
 
-        //Drive forward/backward
-        movePID.setTarget(l + cur);
-        while(!movePID.isSettled()) {
-            float kT = (tAng - inertial.get_rotation()) * thetaPID;
-            cur = avgDist();
-            float o = movePID.calculateOutput(cur);
+    //Drive forward/backward
+    movePID.setTarget(d + cur);
+    while(!movePID.isSettled()) {
+        float kT = (tAng - inertial.get_rotation()) * thetaPID;
+        cur = avgDist();
+        float o = movePID.calculateOutput(cur);
 
-            // if(movePID.error < 5) {
-            //     kT = 0;
-            // }
-            LeftDT.move_voltage((o + kT)*limit);
-            RightDT.move_voltage((o - kT)*limit);
-            pros::delay(10);
-        }
-        stopMotors();
+        LeftDT.move_voltage((o + kT)*limit);
+        RightDT.move_voltage((o - kT)*limit);
+        pros::delay(10);
     }
-    else {
-        float o = 0;
-        if(l == 0) {
-            swingPID.setTarget(ang + inertial.get_rotation());
-            while(!swingPID.isSettled()) {
-                o = swingPID.calculateOutput(inertial.get_rotation());
-                RightDT.move_voltage(-(o*limit));
-            
-                pros::delay(10);
-            }
-            stopMotors();
-        }
-        else {
-            swingPID.setTarget(ang + inertial.get_rotation());
-            while(!swingPID.isSettled()) {
-                o = swingPID.calculateOutput(inertial.get_rotation());
-                LeftDT.move_voltage(o*limit);
-                
-                pros::delay(10);
-            }
-            stopMotors();
-        }
-    }
+
+    stopMotors();
     
-    controller.rumble(".");
+    controller.rumble("-");
 }
 
 float expectedAngle = 0;
