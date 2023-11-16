@@ -82,6 +82,7 @@ void offensiveSneak() {
     */
 
     driveTime(200, 1);
+    pros::delay(50);
     turn(180);
     intake.set_value(0);
     pros::delay(200);
@@ -103,11 +104,10 @@ void offensiveSneak() {
     19. Open intake and drive forward forever (we will be cut out by the 15 sec time limit so we want to make sure we drive full force until then)
     */
    
-    driveDist(-17, 1);
+    driveDist(-17, 1); //this point on the values in yellow (aka the #'s need to be tested)
     turn(-65);
     driveDist(65, 1);
     intake.set_value(1);
-
     
     turn(135);
     intake.set_value(0);
@@ -117,20 +117,19 @@ void offensiveSneak() {
     turn(-101);
     driveDist(40, 1);
     intake.set_value(1);
+    turn(-45); //turn back to the goal
     wings.set_value(1);
-    turn(-45);
-    pros::delay(200);
 
-    driveTime(600, -1);
+    driveTime(1000, -1);
 
     wings.set_value(0);
 
-    driveTime(200, 1);
+    driveTime(300, 1);
 
     turn(180);
     intake.set_value(0);
 
-    driveTime(20000, 1);
+    driveTime(1000, 1);
     //   ~~~~~~~~~~~~~~~~~~~~~~~~ Mashpee code ~~~~~~~~~~~~~~~~~~~~~~~~
     // intake.set_value(1);
     // driveDist(-48, -48, 1, 0);
