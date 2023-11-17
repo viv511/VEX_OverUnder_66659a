@@ -64,72 +64,57 @@ void offensiveSneak() {
     */
 
     intake.set_value(1);
-    driveDist(-48, 1);
+    pros::delay(150);
+    driveDist(-48);
     turn(-45);
     pros::delay(100);
     //wings.set_value(1);
-    driveDist(-36, 1);
+    driveDist(-36);
     turn(-45);
     //wings.set_value(0);
-
-    driveTime(700, -1);
+    driveTime(-700);
     // +1 Balls
 
-
-    /*    
-    6. turn 180
-    7. open intake and push triball in
-    */
-
-    driveTime(200, 1);
+    driveTime(200);
     pros::delay(50);
     turn(180);
     intake.set_value(0);
     pros::delay(200);
-    driveTime(500, 1);
+    driveTime(500);
     // +1 Ball
 
     /*
-    8. drive backwards
-    9. turn -90 & use fancy "arc" function OR turn angle more than -90 (i.e. -75 ish) that gets you pointed at the triball at the bar
-    10. get to that triball and intake it
-    11. drive backwards
-    12. point towards goal & open intake
-    13. drive a little forward not all the way ==> causes triball to roll
-    14. turn towards direct middle middle bar triball 
-    15. drive forward and close intake on the triball
-    16. face OPPOSITE the goal & open wings
-    17. push the 2 triballs in
-    18. go forward & 180 degrees
-    19. Open intake and drive forward forever (we will be cut out by the 15 sec time limit so we want to make sure we drive full force until then)
+    past 8
     */
-   
-    driveDist(-17, 1); //this point on the values in yellow (aka the #'s need to be tested)
-    turn(-65);
-    driveDist(65, 1);
+
+    driveDist(-17); //this point on the values in yellow (aka the #'s need to be tested)
+    turn(-70);
+    driveDist(67);
     intake.set_value(1);
-    
+    pros::delay(200);
+
+
     turn(135);
     intake.set_value(0);
-
-    driveTime(250, 1);
-
-    turn(-101);
-    driveDist(40, 1);
+    driveTime(450);
+    driveTime(-250);
+    turn(-95);
+    
+    driveTime(350);
     intake.set_value(1);
-    turn(-45); //turn back to the goal
+    pros::delay(200);
+    turn(-40); //turn back to the goal
     wings.set_value(1);
-
-    driveTime(1000, -1);
-
+    driveTime(-1000);
     wings.set_value(0);
-
-    driveTime(300, 1);
-
+    driveTime(300);
     turn(180);
     intake.set_value(0);
+    driveTime(1000);
 
-    driveTime(1000, 1);
+
+
+    
     //   ~~~~~~~~~~~~~~~~~~~~~~~~ Mashpee code ~~~~~~~~~~~~~~~~~~~~~~~~
     // intake.set_value(1);
     // driveDist(-48, -48, 1, 0);

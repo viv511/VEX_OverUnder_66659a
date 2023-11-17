@@ -11,9 +11,30 @@ constexpr float WHEEL_BASE = 12.1; //pls measure dist between Left and right whe
 float thetaPID = 160;
 double degToRad = 3.14159265358979323846/180; //M_PI sobad
 
-PID movePID = PID(false, 1, 300, 3, 500, 2000);
+PID movePID = PID(false, 1, 100, 3, 300, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
+
+void driveDist(float d) {
+    set();
+   
+    float cur = avgDist();
+    float tAng = inertial.get_rotation();
+    //Drive forward/backward
+    movePID.setTarget(d + cur);
+    while(!movePID.isSettled()) {
+        float kT = (tAng - inertial.get_rotation()) * thetaPID;
+        cur = avgDist();
+        float o = movePID.calculateOutput(cur);
+        LeftDT.move_voltage((o + kT));
+        RightDT.move_voltage((o - kT));
+        pros::delay(10);
+    }
+    stopMotors();
+
+    controller.rumble(".");
+}
+
 void driveDist(float d, float limit) {
     set();
    
@@ -32,6 +53,20 @@ void driveDist(float d, float limit) {
     stopMotors();
 
     controller.rumble(".");
+}
+
+void driveTime(int time) {
+    int dir;
+    if(time < 0){
+        dir = -1;
+        time *= -1;
+    } else{
+        dir = 1;
+    }
+    LeftDT.move_voltage(12000*dir);
+    RightDT.move_voltage(12000*dir);
+    pros::delay(time);
+    stopMotors();
 }
 
 float expectedAngle = 0;
@@ -214,9 +249,3 @@ void arc(float dist, float ang, float time) {
     stopMotors();
 }
 
-void driveTime(int time, int dir) {
-    LeftDT.move_voltage(12000*dir);
-    RightDT.move_voltage(12000*dir);
-    pros::delay(time);
-    stopMotors();
-}

@@ -88,10 +88,7 @@ void PID::setTarget(float t) {
         turnLookupPID(this->target);
     }
     else {
-        setConstants(14*fabs(this->target), 0, 100);
-        if(this->target >= 35) {
-            setConstants(11*fabs(this->target), 0, 200);
-        }
+        moveLookupPID(this->target);
     }
 }
 
@@ -141,7 +138,24 @@ void PID::turnLookupPID(float t) {
 }
 
 void PID::moveLookupPID(float t) {
-    setConstants(lin_kP, 0, lin_kD*fabs(t));
+    t = fabs(t);
+    if(t <= 20){
+        setConstants(19*fabs(this->target), 0, 100);
+    }
+    else if(t <= 25) {
+        setConstants(14*fabs(this->target), 0, 100);
+    }
+    else if(t <= 40) {
+        setConstants(11*fabs(this->target), 0, 200);
+    }
+    else if (t <= 50){
+        setConstants(9*fabs(this->target), 0, 200);        
+    }
+    else {
+        setConstants(6*fabs(this->target), 0, 200);
+    }
+    
+   
 }
 
 void PID::setType(bool turn) {

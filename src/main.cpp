@@ -92,7 +92,7 @@ void opcontrol() {
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
 			// turn(15);
-			driveDist(-15, -1);
+			driveTime(-700);
 		}
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
