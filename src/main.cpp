@@ -157,9 +157,7 @@ void opcontrol() {
 		else {
 			intake.set_value(false);
 		}
-	
 
-		
 		pros::delay(10);
 	}
 }
