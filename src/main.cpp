@@ -50,7 +50,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	// defenseRoute();
+	// skillz();
 	offensiveSneak();
 }
 
@@ -90,10 +90,6 @@ void opcontrol() {
     	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 
 
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			// turn(15);
-			driveTime(-700);
-		}
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
@@ -136,7 +132,7 @@ void opcontrol() {
 
 		//CATA
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(9000);
+			cata.move_voltage(12000*0.8);
 		}
 		else {
 			cata.move_voltage(0);

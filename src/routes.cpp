@@ -65,11 +65,13 @@ void offensiveSneak() {
 
     intake.set_value(1);
     pros::delay(150);
+
     driveDist(-48);
+
     turn(-45);
     pros::delay(100);
     //wings.set_value(1);
-    driveDist(-36);
+    driveTime(-450);
     turn(-45);
     //wings.set_value(0);
     driveTime(-700);
@@ -91,21 +93,41 @@ void offensiveSneak() {
     turn(-70);
     driveDist(67);
     intake.set_value(1);
-    pros::delay(200);
+    pros::delay(250);
 
 
     turn(135);
     intake.set_value(0);
-    driveTime(450);
-    driveTime(-250);
-    turn(-95);
+
+    //**
+    LeftDT.move_voltage(12000 * 4.5/6);
+    RightDT.move_voltage(12000 * 4.5/6);
+    pros::delay(450);
+    stopMotors();
+    pros::delay(250);
+    LeftDT.move_voltage(-12000 * 4.5/6);
+    RightDT.move_voltage(-12000 * 4.5/6);
+    pros::delay(150);
+    stopMotors();
+    //**
+
+    turn(-90);
     
-    driveTime(350);
+    LeftDT.move_voltage(8000);
+    RightDT.move_voltage(8000);
+    pros::delay(300);
+    LeftDT.move_voltage(2000);
+    RightDT.move_voltage(12000);
+    pros::delay(350);
+    stopMotors();
+    
     intake.set_value(1);
-    pros::delay(200);
-    turn(-40); //turn back to the goal
+    // turn(-55);
+    pros::delay(150);
+
+    turn(-30); //turn back to the goal
     wings.set_value(1);
-    driveTime(-1000);
+    driveTime(-900);
     wings.set_value(0);
     driveTime(300);
     turn(180);
@@ -113,7 +135,7 @@ void offensiveSneak() {
     driveTime(1000);
 
 
-
+    controller.rumble("...");
     
     //   ~~~~~~~~~~~~~~~~~~~~~~~~ Mashpee code ~~~~~~~~~~~~~~~~~~~~~~~~
     // intake.set_value(1);
@@ -157,8 +179,27 @@ void offensiveSneak() {
     // stopMotors();
 }
 
-void offensiveGreed() {
-    //five triball route
+void skillz() {
+    long long timeout = 60000;
+    long long timer = 0;
+    bool first = false;
+    intake.set_value(1);
+    while(timer < timeout) {
+        if(timer < 2000) {
+            LeftDT.move_voltage(-4000);
+            RightDT.move_voltage(-4000);
+        }   
+        else {
+            if(first == false) {
+                wings.set_value(1);
+            }
+            cata.move_voltage(12000 * 0.65);
+            first = true;
+        }
+
+        timer+=10;
+        pros::delay(10);
+    }
 }
 
 
