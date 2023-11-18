@@ -71,7 +71,7 @@ void offensiveSneak() {
     turn(-45);
     pros::delay(100);
     //wings.set_value(1);
-    driveTime(-450);
+    driveTime(-530);
     turn(-45);
     //wings.set_value(0);
     driveTime(-700);
@@ -125,11 +125,10 @@ void offensiveSneak() {
     // turn(-55);
     pros::delay(150);
 
-    turn(-30); //turn back to the goal
     wings.set_value(1);
     driveTime(-900);
     wings.set_value(0);
-    driveTime(300);
+    driveTime(200);
     turn(180);
     intake.set_value(0);
     driveTime(1000);
@@ -184,18 +183,29 @@ void skillz() {
     long long timer = 0;
     bool first = false;
     intake.set_value(1);
+    driveTime(-450);
+    turn(-45);
+    driveTime(-1000);
+
+    driveTime(270);
+    pros::delay(50);
+    
+    turn(90);
+    LeftDT.move_voltage(-6000);
+    RightDT.move_voltage(-6000);
+    pros::delay(300);
+
+    wings.set_value(1);
+    // bool intakeVal = true;
+
     while(timer < timeout) {
-        if(timer < 2000) {
-            LeftDT.move_voltage(-4000);
-            RightDT.move_voltage(-4000);
-        }   
-        else {
-            if(first == false) {
-                wings.set_value(1);
-            }
-            cata.move_voltage(12000 * 0.65);
-            first = true;
-        }
+        // if(timer % 2500) {
+        //     intakeVal = !intakeVal;
+        //     intake.set_value(intakeVal);
+        // }
+        LeftDT.move_voltage(-1000);
+        RightDT.move_voltage(-1000);
+        cata.move_voltage(12000*0.65);
 
         timer+=10;
         pros::delay(10);
