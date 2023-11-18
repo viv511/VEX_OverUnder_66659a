@@ -132,7 +132,7 @@ void opcontrol() {
 
 		//CATA
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(12000*0.8);
+			cata.move_voltage(12000*0.72);
 		}
 		else {
 			cata.move_voltage(0);
