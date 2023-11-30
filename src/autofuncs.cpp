@@ -249,3 +249,36 @@ void arc(float dist, float ang, float time) {
     stopMotors();
 }
 
+//pivot func
+
+// void pivot(double angle) {
+//     //theta = total turn
+//     //angle = target angle (0 to 360 degrees)
+//     //startAngle = current angle of robot -inf < degrees < inf
+//     double theta = 0;
+//     double startAngle = inertial.get_rotation();
+
+//     // startAngle mod stuff - getting relative to (0 to 360 degrees)
+//     int quotient;
+//     if(startAngle < 0){
+//         quotient = -1 * int(startAngle / 360) + 1;
+//         startAngle = startAngle + quotient * 360;
+//     }
+//     else{
+//         quotient = int(startAngle / 360);
+//         startAngle = startAngle - quotient * 360;
+//     }
+
+//     // target angle fr
+//     theta = angle - startAngle;
+//     if(fabs(theta) >= 180){
+//         if(theta > 0){
+//             theta = -1 * (360 - theta);
+//         }
+//         else{
+//             theta = 360 + theta;
+//         }
+//     }
+
+//     turn(theta);
+// }
