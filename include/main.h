@@ -85,6 +85,9 @@ void opcontrol(void);
 #include "cata.h"
 #include "autofuncs.h"
 #include "routes.h"
+// #include "profile.h"
+#include "waypoint.h"
+#include "pursuit.h"
 
 #endif
 

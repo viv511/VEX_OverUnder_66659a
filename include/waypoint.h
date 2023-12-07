@@ -31,17 +31,14 @@ class Waypoint {
         void setDist(float newDist);
         void setVel(float newVel);
         void setCurv(float newCurv);
-
-        Waypoint scalarMult(Waypoint P, float s);
-        float distance(Waypoint A, Waypoint B);
-        float angle(Waypoint A, Waypoint B);
-        Waypoint normalizeVect(Waypoint P);
-        Waypoint getDirVector(Waypoint A, Waypoint B);
-        float dotProduct(Waypoint A, Waypoint B);
-        float getLength(Waypoint P);
-        int numbersign(float num);
-        
 };
 
+Waypoint scalarMult(Waypoint P, float s);
+float distance(Waypoint A, Waypoint B);
+float angle(Waypoint A, Waypoint B);
+Waypoint normalizeVect(Waypoint P);
+Waypoint getDirVector(Waypoint A, Waypoint B);
+float dotProduct(Waypoint A, Waypoint B);
+float getLength(Waypoint P);
 
 #endif
