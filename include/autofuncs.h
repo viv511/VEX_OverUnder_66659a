@@ -16,4 +16,6 @@ vector<std::pair<float, float>> generatePath(float carrotDist, float startX, flo
 std::pair<float, float> calculateWheelVelocity(float sX, float sY, float eX, float eY);
 vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>> path);
 
+void arcade(double a, double b);
+
 #endif

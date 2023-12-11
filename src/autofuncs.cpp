@@ -282,3 +282,11 @@ void arc(float dist, float ang, float time) {
 
 //     turn(theta);
 // }
+
+void arcade(double a, double b){
+    double leftPower = (a+b);
+    double rightPower = (a-b);
+
+    LeftDT.move_voltage(leftPower);
+    RightDT.move_voltage(rightPower);
+}
