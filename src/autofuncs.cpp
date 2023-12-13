@@ -1,5 +1,6 @@
 #include "autofuncs.h"
 #include "tracking.h"
+#include "waypoint.h"
 #include <cmath>
 #include <vector>
 #include <utility>
@@ -292,19 +293,17 @@ void arcade(double a, double b){
     RightDT.move_voltage(rightPower);
 }
 
-void moveToPoint(float targetX, float targetY, bool isReversed) {
-    movePID.resetPlease(); 
-    turnPID.resetPlease();
-
+void moveToPoint(Waypoint target, bool isReversed) {
     float currentX, currentY, currentTheta;
     float distanceToTarget, targetTheta;
     float lateralOutput, angularOutput;
 
     do {
-        auto currentPos = getCoords();
-        currentX = currentPos.first;
-        currentY = currentPos.second;
-        currentTheta = inertial.get_rotation();
+        Waypoint currentPos = getCurrentPose();
+
+        currentX = currentPos.x;
+        currentY = currentPos.y;
+        currentTheta = currentPos.theta;
 
         if (isReversed) {
             currentTheta -= 180;
@@ -315,11 +314,16 @@ void moveToPoint(float targetX, float targetY, bool isReversed) {
         while (currentTheta < -180) currentTheta += 360;
 
         // Calculate distance and heading to the target
-        distanceToTarget = sqrt(pow(targetX - currentX, 2) + pow(targetY - currentY, 2));
-        targetTheta = atan2(targetY - currentY, targetX - currentX) * radToDeg;
+        distanceToTarget = distance(currentPos, target);
+        targetTheta = angle(currentPos, target);
+
+        //Set targets
+        movePID.setTarget(distanceToTarget);
+        turnPID.setTarget(targetTheta);
 
         // Calculate heading error
         float headingError = targetTheta - currentTheta;
+
         while (headingError > 180) headingError -= 360;
         while (headingError < -180) headingError += 360;
 

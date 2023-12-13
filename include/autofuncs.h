@@ -18,4 +18,6 @@ vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>>
 
 void arcade(double a, double b);
 
+void moveToPoint(Waypoint target, bool isReversed);
+
 #endif

@@ -2,14 +2,12 @@
 
 using namespace pros;
 
-
 constexpr float PI = 3.14159265358979323846;
 constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
 constexpr float DIAMETER = 3.32;
 constexpr float TICKS = 36000.0;
 constexpr float RATIO = (PI * DIAMETER)/TICKS;
-constexpr float DEGTORAD = PI/180; 
 
 float leftAbsolute = 0;
 float leftCurrent = 0;
@@ -23,10 +21,10 @@ float rightLast = 0;
 
 float deltaDist = 0;
 float deltaTheta = 0;
-float rX = 0;
-float rY = 0;
 
 float lastTheta = 0;
+
+Waypoint robotPose = Waypoint(0, 0, 0);
 
 void initializeTracking() {
     inertial.reset();
@@ -40,6 +38,7 @@ void initializeTracking() {
     leftRot.set_position(0);
     rightRot.set_position(0);
 }
+
 
 void tracking() {
     initializeTracking();
@@ -61,10 +60,11 @@ void tracking() {
         */
 
         deltaDist = (leftChange + rightChange)/2;
-        deltaTheta = (inertial.get_rotation() - lastTheta) * DEGTORAD;
+        deltaTheta = (inertial.get_rotation() - lastTheta) * degToRad;
 
-        rX += (sin(deltaTheta) * deltaDist);
-        rY += (cos(deltaTheta) * deltaDist);
+        robotPose.x += (sin(deltaTheta) * deltaDist);
+        robotPose.y += (cos(deltaTheta) * deltaDist);
+        robotPose.theta = inertial.get_rotation();
 
         lastTheta = inertial.get_rotation();
 
@@ -74,16 +74,12 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-        lcd::print(0, "Inertial: %f\n", inertial.get_rotation());
-		lcd::print(1, "L: %f\n", leftAbsolute);
-        lcd::print(2, "R: %f\n", rightAbsolute);
+		lcd::print(1, "X: %f\n", robotPose.x);
+        lcd::print(2, "Y: %f\n", robotPose.y);
+        lcd::print(3, "Inertial: %f\n", robotPose.theta);
 
         delay(10);
     }
-}
-
-std::pair<float, float> getDist() {
-    return std::make_pair(leftAbsolute, rightAbsolute);
 }
 
 float avgDist() {
@@ -95,8 +91,8 @@ void set() {
     rightAbsolute = 0;
 }
 
-std::pair<float, float> getCoords() {
-    return std::make_pair(rX, rY);
+Waypoint getCurrentPose() {
+    return (Waypoint)robotPose;
 }
 
 float distDiff(float startX, float startY, float endX, float endY) {
