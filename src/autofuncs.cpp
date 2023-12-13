@@ -7,10 +7,11 @@
 using namespace pros;
 
 constexpr float WHEEL_BASE = 12.1; //pls measure dist between Left and right wheel in inches :)
+constexpr float PI = 3.14159265358979323846;
+constexpr float degToRad = PI/180;
+constexpr float radToDeg = 180/PI;
 
 float thetaPID = 160;
-double degToRad = 3.14159265358979323846/180; //M_PI sobad
-
 PID movePID = PID(false, 1, 100, 3, 300, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
@@ -289,4 +290,51 @@ void arcade(double a, double b){
 
     LeftDT.move_voltage(leftPower);
     RightDT.move_voltage(rightPower);
+}
+
+void moveToPoint(float targetX, float targetY, bool isReversed) {
+    movePID.resetPlease(); 
+    turnPID.resetPlease();
+
+    float currentX, currentY, currentTheta;
+    float distanceToTarget, targetTheta;
+    float lateralOutput, angularOutput;
+
+    do {
+        auto currentPos = getCoords();
+        currentX = currentPos.first;
+        currentY = currentPos.second;
+        currentTheta = inertial.get_rotation();
+
+        if (isReversed) {
+            currentTheta -= 180;
+        }
+
+        // Normalize the current angle
+        while (currentTheta > 180) currentTheta -= 360;
+        while (currentTheta < -180) currentTheta += 360;
+
+        // Calculate distance and heading to the target
+        distanceToTarget = sqrt(pow(targetX - currentX, 2) + pow(targetY - currentY, 2));
+        targetTheta = atan2(targetY - currentY, targetX - currentX) * radToDeg;
+
+        // Calculate heading error
+        float headingError = targetTheta - currentTheta;
+        while (headingError > 180) headingError -= 360;
+        while (headingError < -180) headingError += 360;
+
+        // PID calculations
+        lateralOutput = movePID.calculateOutput(distanceToTarget) * cos(headingError * degToRad);
+        angularOutput = turnPID.calculateOutput(headingError);
+
+        if (distanceToTarget < 1) {
+            angularOutput = 0; // Stop angular adjustment if too close
+        }
+
+        arcade(lateralOutput, angularOutput); // Robot movement
+
+        pros::delay(20);
+    } while (!movePID.isSettled());
+
+    arcade(0, 0); // Stop the robot
 }
