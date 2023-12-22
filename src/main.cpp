@@ -10,14 +10,13 @@
  */
 void initialize() {
 	wings.set_value(false);
-	intake.set_value(false);
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
+	pros::Task cataControl(cataCtrl);
 
 	LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
 	RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
 
-	// pros::Task cataControl(cataCtrl);
 }
 
 /**
@@ -89,8 +88,6 @@ void opcontrol() {
 		LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
     	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 
-
-
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		if((driveStyle == 's') || (driveStyle == 'a')) {
 			//Bind from -100 <-- 0 --> 100
@@ -132,14 +129,14 @@ void opcontrol() {
 
 		//CATA
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(12000*0.75);
+			cata.move_voltage(12000 * 0.8);
 		}
 		else {
 			cata.move_voltage(0);
 		}
 
 		//WINGS
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 			wings.set_value(true);
 		}
 		else {
@@ -147,11 +144,14 @@ void opcontrol() {
 		}
 
 		//INTAKE
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-			intake.set_value(true);
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+			intake.move_voltage(12000);
+		}
+		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+			intake.move_voltage(-12000);
 		}
 		else {
-			intake.set_value(false);
+			intake.move_voltage(0);
 		}
 
 		pros::delay(10);

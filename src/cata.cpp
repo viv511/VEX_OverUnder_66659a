@@ -21,7 +21,7 @@ bool getState() {
 
 
 void cataCtrl() {
-    cata.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+    cata.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
     while(true) {
 

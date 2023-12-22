@@ -63,7 +63,7 @@ void offensiveSneak() {
     5. -45 again, and drive backwards full speed to push both triballs in
     */
 
-    intake.set_value(1);
+    // intake.set_value(1);
     pros::delay(150);
 
     driveDist(-48);
@@ -80,7 +80,7 @@ void offensiveSneak() {
     driveTime(200);
     pros::delay(50);
     turn(180);
-    intake.set_value(0);
+    // intake.set_value(0);
     pros::delay(200);
     driveTime(500);
     // +1 Ball
@@ -92,12 +92,12 @@ void offensiveSneak() {
     driveDist(-17); //this point on the values in yellow (aka the #'s need to be tested)
     turn(-70);
     driveDist(67);
-    intake.set_value(1);
+    // intake.set_value(1);
     pros::delay(250);
 
 
     turn(135);
-    intake.set_value(0);
+    // intake.set_value(0);
 
     //**
     LeftDT.move_voltage(12000 * 4.5/6);
@@ -121,7 +121,7 @@ void offensiveSneak() {
     pros::delay(350);
     stopMotors();
     
-    intake.set_value(1);
+    // intake.set_value(1);
     // turn(-55);
     pros::delay(150);
 
@@ -130,7 +130,7 @@ void offensiveSneak() {
     wings.set_value(0);
     driveTime(200);
     turn(180);
-    intake.set_value(0);
+    // intake.set_value(0);
     driveTime(1000);
 
 
@@ -182,7 +182,7 @@ void skillz() {
     long long timeout = 60000;
     long long timer = 0;
     bool first = false;
-    intake.set_value(1);
+    // intake.set_value(1);
     driveTime(-450);
     turn(-45);
     driveTime(-1000);
