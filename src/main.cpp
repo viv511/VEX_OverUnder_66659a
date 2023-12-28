@@ -144,10 +144,10 @@ void opcontrol() {
 		}
 
 		//INTAKE
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 			intake.move_voltage(12000);
 		}
-		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
 			intake.move_voltage(-12000);
 		}
 		else {
