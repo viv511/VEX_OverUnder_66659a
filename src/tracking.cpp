@@ -28,8 +28,15 @@ Waypoint robotPose = Waypoint(0, 0, 0);
 
 void initializeTracking() {
     inertial.reset();
+    int timer = 0;
     while(inertial.is_calibrating()){
         delay(10);
+        timer += 10;
+
+        if(timer > 4000) {
+            controller.rumble("--..--");
+            break;
+        }
     }
     inertial.set_rotation(0);
 
@@ -62,8 +69,8 @@ void tracking() {
         deltaDist = (leftChange + rightChange)/2;
         deltaTheta = (inertial.get_rotation() - lastTheta) * degToRad;
 
-        robotPose.x += (sin(deltaTheta) * deltaDist);
-        robotPose.y += (cos(deltaTheta) * deltaDist);
+        robotPose.x += (sin(inertial.get_rotation() * degToRad) * deltaDist);
+        robotPose.y += (cos(inertial.get_rotation() * degToRad) * deltaDist);
         robotPose.theta = inertial.get_rotation();
 
         lastTheta = inertial.get_rotation();

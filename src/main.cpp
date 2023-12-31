@@ -74,12 +74,6 @@ void opcontrol() {
 	float leftPower;
 	float rightPower;
 
-	//For different driving formats: Split Arcade (s), Arcade (a), and Tank (t)
-	char driveStyle = 's';
-
-	//For joystick exponential curving
-	bool expoDrive = true;
-
 	//Vibes
 	bool wingState = false;
 	bool wingLast = false;
@@ -89,39 +83,20 @@ void opcontrol() {
     	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
-		if((driveStyle == 's') || (driveStyle == 'a')) {
-			//Bind from -100 <-- 0 --> 100
-			axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-			axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
-			if(driveStyle == 'a') {
-				axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0);
-			}
+		axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
+		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
 
-			//Find scaled bounded maximum for drivetrain %'s63.
+		//Secret Sauce
+		axisTwo *= 100;
+		axisTwo = exp((fabs(axisTwo)-100)/100) * axisTwo;
+		axisTwo /= 100;
 
-			float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
-			//-100 <--  0.0 --> 100 scale to velocity (-600 <-- 0 --> 600 RPM)
-			leftPower = ((axisOne + axisTwo) / mag) * 600;
-			rightPower = ((axisOne - axisTwo) / mag) * 600;
-		}
-		else if(driveStyle == 't') {
-			//Bind from -100 <-- 0 --> 100
-			axisOne = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-			axisTwo = 100 * ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0);
+		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
-			if(expoDrive) {
-				axisOne = exp((fabs(axisOne)-100)/50)*axisOne;
-				axisTwo = exp((fabs(axisTwo)-100)/25)*axisTwo;
-			}
-			
-			leftPower = axisOne*6;
-			rightPower = axisTwo*6;
-		}
-		else {
-			leftPower = 0;
-			rightPower = 0;
-		}
+		//-1 <--  0 --> 1 scale to velocity (-600 <-- 0 --> 600 RPM)
+		leftPower = ((axisOne + axisTwo) / mag) * 600;
+		rightPower = ((axisOne - axisTwo) / mag) * 600;
 
 		//Assign power
 		LeftDT.move_velocity(leftPower);
@@ -129,7 +104,7 @@ void opcontrol() {
 
 		//CATA
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(12000 * 0.8);
+			cata.move_voltage(12000 * 0.95);
 		}
 		else {
 			cata.move_voltage(0);
@@ -144,7 +119,7 @@ void opcontrol() {
 		}
 
 		//INTAKE
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			intake.move_voltage(12000);
 		}
 		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){

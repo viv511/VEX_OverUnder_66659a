@@ -14,12 +14,15 @@ Motor intake(1, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
 
 Controller controller(E_CONTROLLER_MASTER);
 
-IMU inertial(4); //!!!
+IMU inertial(7); //!!!
 Rotation leftRot(11);
 Rotation rightRot(12);
 
 //think these are ok
-ADIDigitalOut wings('F');
+ADIDigitalOut wings('A');
+ADIDigitalOut elev('B');
+ADIDigitalOut blocker('C');
+
 
 Motor_Group LeftDT ({FL, ML, BL});
 Motor_Group RightDT ({FR, MR, BR});

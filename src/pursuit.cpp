@@ -4,6 +4,8 @@
 
 using namespace std;
 
+constexpr float lookaheadDist = 10;
+
 std::vector<Waypoint> path = {{1, 1}, {100, 100}, {300, 50}, {500, 200}};
 
 void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float maximumVel, float maximumA, float constantK) {
@@ -173,37 +175,18 @@ float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float l
    //https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm/1084899#1084899
 }
 
-Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, int prevLookAheadIndex, float lookaheadRadius) {
-    Waypoint curLookAhead = prevLookAhead;
-
-    float t;
-    float fracIndex;
-
-    for(int i=0; i<pathToFollow.size()-1; i++) {
-        t = circleLineIntersect(pathToFollow[i], pathToFollow[i+1], curPos, lookaheadRadius);
-        
-        //If valid point
-        if((t >= 0) && (t <= 1)) {
-            //TODO: Optimize by starting at last lookahead point index
-            
-            fracIndex = i + t;
-            if(fracIndex > prevLookAheadIndex) {
-                curLookAhead = Waypoint(pathToFollow[i].getX() + t * (pathToFollow[i+1].getX() - pathToFollow[i].getX()), pathToFollow[i].getY() + t * (pathToFollow[i+1].getY() - pathToFollow[i].getY()));
-            }
-        }
-    }
-
-    return curLookAhead;
+Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, float lookaheadRadius) {
+    return curPos;
 }
 
 float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation) {
     //Signed Curvature = curvature * side
+    float robotAngle = curPos.getTheta(); //CONVERT DEG TO RAD??
 
     //Curvature = 2x/L^2 (use DAWGMA document)
-    float a = -std::tan(curPos.getTheta());
-    float b = 1;
-    float c = std::tan(curPos.getTheta()) * curPos.getX() - curPos.getY();
-    float L = std::hypot(lookAhead.getX()-curPos.getX(), lookAhead.getY()-curPos.getY());
+    float a = -std::tan(robotAngle);
+    float c = std::tan(robotAngle) * curPos.getX() - curPos.getY();
+    float L = distance(curPos, lookAhead);
 
     //x = |ax+by+c| / sqrt(a^2+b^2), b = 1
     //x = |ax + y + c| / sqrt(a^2 + 1)
@@ -211,7 +194,7 @@ float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation)
     float curvature = ((2 * x) / pow(L, 2));
 
     float side;
-    ((std::sin(curPos.getTheta()) * (lookAhead.getX()-curPos.getX()) - std::cos(curPos.getTheta()) * (lookAhead.getY()-curPos.getY())) >= 0) ? side = 1 : side = -1;
+    (std::sin(robotAngle) * (lookAhead.getX()-curPos.getX()) - std::cos(robotAngle) * (lookAhead.getY()-curPos.getY()) >= 0) ? side = 1 : side = -1;
 
     return curvature * side;
 }

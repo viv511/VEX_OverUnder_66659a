@@ -12,7 +12,7 @@ vector<Waypoint> smooth(vector<Waypoint> roughPath, float a, float b, float tole
 
 int findClosestPoint(Waypoint P,  vector<Waypoint> path);
 float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float lookaheadRadius);
-Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, int prevLookAheadIndex, float lookaheadRadius);
+Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, float lookaheadRadius);
 float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation);
 
 #endif
