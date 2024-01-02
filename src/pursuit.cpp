@@ -6,7 +6,10 @@ using namespace std;
 
 constexpr float PI = 3.14159265358979323846;
 constexpr float lookaheadDist = 10;
-constexpr float trackWidth = 1000000; //MICHAEL NEED TO TUNE!!
+constexpr float trackWidth = 1000000; //VIVEK NEED TO TUNE!!
+constexpr float kV = 0.0001; //VIVEK NEED TO TUNE!!
+constexpr float kA = 0.0001; //VIVEK NEED TO TUNE!!
+constexpr float kP = 0.0001; //VIVEK NEED TO TUNE!!
 //TUNE MAX VEL 
 //TUNE MAX ACCEL
 //TUNE VELOCITY K 
@@ -27,13 +30,15 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
     
     float currentCurvature;
     float targetVel;
+    float prevLeftVel = 0;
+    float prevRightVel = 0;
 
-    for(int i=0; i<pathToFollow.size(); i++) {
+    for(int i=0; i<pathToFollow.size();  i++) {
         currentPos = getCurrentPose();
 
-        if(!fwd) {
-            currentPos.setTheta(currentPos.getTheta() - PI);
-        }
+        // if(!fwd) {
+        //     currentPos.setTheta(currentPos.getTheta() - PI);
+        // }
 
         //update dist travelled for our weird task 
         lastPos = currentPos;
@@ -48,7 +53,7 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
          
         currentCurvature = getSignedCurvature(currentPos, lookPos, currentPos.getTheta());
 
-        targetVel = closestPoint.getVel(); //MICHAEL RATE LIMITER OR SMTH HERE
+        targetVel = closestPoint.getVel(); //maybe RATE LIMITER OR SMTH HERE
 
         //L = V * (2 + CT) / 2
         //R = V * (2 - CT) / 2
@@ -60,13 +65,28 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
         leftVel = leftVel / biggest * 12000;
         rightVel = rightVel / biggest * 12000;
 
+        // float leftTargetAccel = leftVel; // fix these lol
+        // float rightTargetAccel = rightVel;
+
+        // prevLeftVel = leftVel;
+        // prevRightVel = rightVel;
+
+        // float ffLeft = kV * leftVel + kA * leftTargetAccel;
+        // float ffRight = kV * rightVel + kA * rightTargetAccel;
+
+        // float fbLeft = kP * (leftVel - );
+        // float fbRight = kP * (rightVel - );
+
+        // LeftDT.move_voltage(ffLeft + fbLeft);
+        // RightDT.move_voltage(ffRight + fbRight);
+
         if(fwd) {
             LeftDT.move_voltage(leftVel);
             RightDT.move_voltage(rightVel);
         }
         else {
-            LeftDT.move_voltage(leftVel);
-            RightDT.move_voltage(rightVel);
+            LeftDT.move_voltage(-leftVel);
+            RightDT.move_voltage(-rightVel);
         }
 
         pros::delay(10);
