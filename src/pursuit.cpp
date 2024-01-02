@@ -176,12 +176,33 @@ float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float l
 }
 
 Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, float lookaheadRadius) {
-    return curPos;
+    //Uses LemLib's optimizations
+    int lastIndex = -1;
+    for(int i=0; i<pathToFollow.size(); i++) {
+        if(areSame(prevLookAhead, pathToFollow[i])) {
+            lastIndex = i;
+        }
+    }
+
+    //Reverse Search
+    for(int i = pathToFollow.size()-1; i >= lastIndex; i--) {
+        //Due to RevSearch, need to compare current and previous
+        Waypoint cur = pathToFollow[i];
+        Waypoint prev = pathToFollow[i-1];
+
+        float fracValue_t = circleLineIntersect(cur, prev, curPos, lookaheadRadius);
+
+        if(fracValue_t != -1) {
+            return lerp(prev, cur, fracValue_t);
+        }   
+    }
+
+    return prevLookAhead; //Else failed
 }
 
 float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation) {
     //Signed Curvature = curvature * side
-    float robotAngle = curPos.getTheta(); //CONVERT DEG TO RAD??
+    float robotAngle = curPos.getTheta(); 
 
     //Curvature = 2x/L^2 (use DAWGMA document)
     float a = -std::tan(robotAngle);

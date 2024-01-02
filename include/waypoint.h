@@ -40,5 +40,7 @@ Waypoint normalizeVect(Waypoint P);
 Waypoint getDirVector(Waypoint A, Waypoint B);
 float dotProduct(Waypoint A, Waypoint B);
 float getLength(Waypoint P);
+bool areSame(Waypoint A, Waypoint B);
+Waypoint lerp(Waypoint A, Waypoint B, float frac);
 
 #endif

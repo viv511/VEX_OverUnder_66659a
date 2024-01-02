@@ -73,8 +73,6 @@ void Waypoint::setCurv(float newCurv) {
     this->curv = newCurv;
 }
 
-
-
 Waypoint scalarMult(Waypoint P, float s) {
 	Waypoint Ps = Waypoint(P.getX()*s, P.getY()*s);
 	return Ps;
@@ -115,4 +113,21 @@ float getLength(Waypoint P) {
 	else {
 		return 0;
 	}
+}
+
+bool areSame(Waypoint A, Waypoint B) {
+    if(A.getX() == B.getX()) {
+        if(A.getY() == B.getY()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+Waypoint lerp(Waypoint A, Waypoint B, float frac) {
+    float newX = A.getX() + (B.getX() - A.getX()) * frac;
+    float newY = A.getY() + (B.getY() - A.getY()) * frac;
+
+    Waypoint newPoint = Waypoint(newX, newY, A.getTheta());
 }

@@ -23,6 +23,7 @@ float deltaDist = 0;
 float deltaTheta = 0;
 
 float lastTheta = 0;
+float currentAngle = 0;
 
 Waypoint robotPose = Waypoint(0, 0, 0);
 
@@ -51,6 +52,7 @@ void tracking() {
     initializeTracking();
 
     while(true) {
+        currentAngle = inertial.get_rotation() * degToRad;
         leftCurrent = leftRot.get_position();
         rightCurrent = rightRot.get_position();
 
@@ -67,13 +69,13 @@ void tracking() {
         */
 
         deltaDist = (leftChange + rightChange)/2;
-        deltaTheta = (inertial.get_rotation() - lastTheta) * degToRad;
+        deltaTheta = (currentAngle - lastTheta);
 
-        robotPose.x += (sin(inertial.get_rotation() * degToRad) * deltaDist);
-        robotPose.y += (cos(inertial.get_rotation() * degToRad) * deltaDist);
-        robotPose.theta = inertial.get_rotation();
+        robotPose.x += (sin(currentAngle) * deltaDist);
+        robotPose.y += (cos(currentAngle) * deltaDist);
+        robotPose.theta = currentAngle;
 
-        lastTheta = inertial.get_rotation();
+        lastTheta = currentAngle;
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
@@ -83,7 +85,7 @@ void tracking() {
 
 		lcd::print(1, "X: %f\n", robotPose.x);
         lcd::print(2, "Y: %f\n", robotPose.y);
-        lcd::print(3, "Inertial: %f\n", robotPose.theta);
+        lcd::print(3, "Inertial: %f\n", robotPose.theta * radToDeg);
 
         delay(10);
     }
