@@ -4,57 +4,120 @@
 
 using namespace std;
 
+constexpr float PI = 3.14159265358979323846;
 constexpr float lookaheadDist = 10;
+constexpr float trackWidth = 1000000; //MICHAEL NEED TO TUNE!!
+//TUNE MAX VEL 
+//TUNE MAX ACCEL
+//TUNE VELOCITY K 
 
 std::vector<Waypoint> path = {{1, 1}, {100, 100}, {300, 50}, {500, 200}};
 
-void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float maximumVel, float maximumA, float constantK) {
-    vector<Waypoint> path = pathGen(pathToFollow, maximumVel, maximumA, constantK); //Now that Brandon and Michael made VexGenSim do we really need anymore?
+//Inspo DAWGMA + LemLib
+void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius, bool fwd, float maxVel, float maxA, float velocityK) {
+    
+    pathToFollow = pathGen(pathToFollow, maxVel, maxA, velocityK);
+    
+    Waypoint currentPos = getCurrentPose();
+    Waypoint lastPos = currentPos;
+    Waypoint lookPos = Waypoint(0, 0, 0);
+    Waypoint lastLookPos = pathToFollow[0];
 
+    Waypoint closestPoint = Waypoint(0, 0, 0);
+    
+    float currentCurvature;
+    float targetVel;
+
+    for(int i=0; i<pathToFollow.size(); i++) {
+        currentPos = getCurrentPose();
+
+        if(!fwd) {
+            currentPos.setTheta(currentPos.getTheta() - PI);
+        }
+
+        //update dist travelled for our weird task 
+        lastPos = currentPos;
+
+        closestPoint = findClosestPoint(currentPos, pathToFollow);
+        if(areSame(closestPoint, pathToFollow[pathToFollow.size()-1])) { //REACHED THE END
+            break;
+        }
+
+        lookPos = findLookaheadPoint(pathToFollow, currentPos, lastLookPos, lookaheadRadius);
+        lastLookPos = lookPos;
+         
+        currentCurvature = getSignedCurvature(currentPos, lookPos, currentPos.getTheta());
+
+        targetVel = closestPoint.getVel(); //MICHAEL RATE LIMITER OR SMTH HERE
+
+        //L = V * (2 + CT) / 2
+        //R = V * (2 - CT) / 2
+        float leftVel = targetVel * (2 + currentCurvature * trackWidth) / 2;
+        float rightVel = targetVel * (2 - currentCurvature * trackWidth) / 2;
+
+        //Find max and ratio it
+        float biggest = max(fabs(leftVel), fabs(rightVel));
+        leftVel = leftVel / biggest * 12000;
+        rightVel = rightVel / biggest * 12000;
+
+        if(fwd) {
+            LeftDT.move_voltage(leftVel);
+            RightDT.move_voltage(rightVel);
+        }
+        else {
+            LeftDT.move_voltage(leftVel);
+            RightDT.move_voltage(rightVel);
+        }
+
+        pros::delay(10);
+
+    }
+
+    stopMotors();
 
 }
 
 vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA, float velocityK) {
     //Following DAWGMA Document
 
-    //Step 1. Injecting extra points
-    int inchSpacing = 6;
-    vector<Waypoint> newPath;
-    for(int lineSeg = 0; lineSeg < pathToFollow.size()-1; lineSeg++) {
-        Waypoint dirVector = getDirVector(pathToFollow[lineSeg], pathToFollow[lineSeg+1]); 
-        int totalPointsFit = (int) (getLength(dirVector) / inchSpacing);
-        dirVector = scalarMult(normalizeVect(dirVector), inchSpacing);
+    // // Step 1. Injecting extra points
+    // int inchSpacing = 6;
+    // vector<Waypoint> newPath;
+    // for(int lineSeg = 0; lineSeg < pathToFollow.size()-1; lineSeg++) {
+    //     Waypoint dirVector = getDirVector(pathToFollow[lineSeg], pathToFollow[lineSeg+1]); 
+    //     int totalPointsFit = (int) (getLength(dirVector) / inchSpacing);
+    //     dirVector = scalarMult(normalizeVect(dirVector), inchSpacing);
 
-        //Inject points
-        for(int i=0; i<totalPointsFit; i++) {
-            newPath.push_back(Waypoint(pathToFollow[lineSeg].getX() + scalarMult(dirVector, i).getX(), pathToFollow[lineSeg].getY() + scalarMult(dirVector, i).getY()));
-        }
-    }
-    newPath.push_back(Waypoint(pathToFollow[pathToFollow.size()-1].getX(), pathToFollow[pathToFollow.size()-1].getY()));
+    //     //Inject points
+    //     for(int i=0; i<totalPointsFit; i++) {
+    //         newPath.push_back(Waypoint(pathToFollow[lineSeg].getX() + scalarMult(dirVector, i).getX(), pathToFollow[lineSeg].getY() + scalarMult(dirVector, i).getY()));
+    //     }
+    // }
+    // newPath.push_back(Waypoint(pathToFollow[pathToFollow.size()-1].getX(), pathToFollow[pathToFollow.size()-1].getY()));
 
-    //Step 2. Smooth Path
-    newPath = smooth(newPath, 0.3, 0.7, 0.001);
+    // //Step 2. Smooth Path
+    // newPath = smooth(newPath, 0.3, 0.7, 0.001);
 
     //Step 3. Distance between points
-    newPath[0].setDist(0);
-    for(int i=1; i<newPath.size(); i++) {
+    pathToFollow[0].setDist(0);
+    for(int i=1; i<pathToFollow.size(); i++) {
         //Runing Sum (D_i = D_i-1 + dist(D_i, D_i-1)
-        newPath[i].setDist((newPath[i-1].getDist() + distance(newPath[i], newPath[i-1])));
+        pathToFollow[i].setDist((pathToFollow[i-1].getDist() + distance(pathToFollow[i], pathToFollow[i-1])));
     }
 
     //Step 4. Calculate curvature (1/radius) between points
-    newPath[0].setCurv(0);
-    for(int i=1; i<(newPath.size()-1); i++) {
-        float x1 = newPath[i-1].getX();
-        float y1 = newPath[i-1].getY();
-        float x2 = newPath[i].getX();
-        float y2 = newPath[i].getY();
-        float x3 = newPath[i+1].getX();
-        float y3 = newPath[i+1].getY();
+    pathToFollow[0].setCurv(0);
+    for(int i=1; i<(pathToFollow.size()-1); i++) {
+        float x1 = pathToFollow[i-1].getX();
+        float y1 = pathToFollow[i-1].getY();
+        float x2 = pathToFollow[i].getX();
+        float y2 = pathToFollow[i].getY();
+        float x3 = pathToFollow[i+1].getX();
+        float y3 = pathToFollow[i+1].getY();
 
         if(x1 == y1) {
             //Account for divide by 0 edge cases
-            newPath[i-1].setX(x1 + 0.001);
+            pathToFollow[i-1].setX(x1 + 0.001);
         }
 
         float kOne = 0.5 * (pow(x1, 2) + pow(y1, 2) - pow(x2, 2) - pow(y2, 2)) / (x1 - x2);
@@ -68,34 +131,36 @@ vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA
 
         if(std::isnan(c)) {
             //Straight line
-            newPath[i].setCurv(0);
+            pathToFollow[i].setCurv(0);
         }
         else {
-            newPath[i].setCurv(c);
+            pathToFollow[i].setCurv(c);
         }
     }
-    newPath[newPath.size()-1].setCurv(0);
+    pathToFollow[pathToFollow.size()-1].setCurv(0);
 
     //Step 5a. Calculate Velocities
-    for(int i=0; i<newPath.size(); i++) {
-        if(newPath[i].getCurv() == 0) {
-            newPath[i].setVel(maxVel);
+    for(int i=0; i<pathToFollow.size(); i++) {
+        if(pathToFollow[i].getCurv() == 0) {
+            pathToFollow[i].setVel(maxVel);
         }
         else {
-            newPath[i].setVel(min(velocityK/(newPath[i].getCurv()), maxVel));
+            pathToFollow[i].setVel(min(velocityK/(pathToFollow[i].getCurv()), maxVel));
         }
     }
 
     //Step 5b & c
-    newPath[newPath.size()-1].setVel(0);
-    for(int i=newPath.size()-1; i>0; i--) {
-        float dist = distance(newPath[i], newPath[i-1]);
-        float newVel = sqrt(pow(newPath[i].getVel(), 2) + 2 * maxA * dist);
-        newPath[i].setVel(min(newPath[i-1].getVel(), newVel));
+    //i and i+1 becomes i-1 and i
+    pathToFollow[pathToFollow.size()-1].setVel(0);
+    for(int i=pathToFollow.size()-1; i>0; i--) {
+        float dist = distance(pathToFollow[i], pathToFollow[i-1]);
+        float newVel = sqrt(pow(pathToFollow[i].getVel(), 2) + 2 * maxA * dist);
+
+        pathToFollow[i-1].setVel(min(pathToFollow[i-1].getVel(), newVel));
     }
 
 
-    return newPath;
+    return pathToFollow;
 }
 
 vector<Waypoint> smooth(vector<Waypoint> roughPath, float a, float b, float tolerance) {
@@ -124,7 +189,7 @@ vector<Waypoint> smooth(vector<Waypoint> roughPath, float a, float b, float tole
     //Credit ~Team 2168 FRC/FTC for smoothing algorithm
 }
 
-int findClosestPoint(Waypoint P, vector<Waypoint> path) {
+Waypoint findClosestPoint(Waypoint P, vector<Waypoint> path) {
     //Returns index of closest point in path to point P
     float smallestDist = 10000000;
     int smallestIndex = -1;
@@ -138,7 +203,7 @@ int findClosestPoint(Waypoint P, vector<Waypoint> path) {
         }
     }
 
-    return smallestIndex;
+    return path[smallestIndex];
 }
 
 float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float lookaheadRadius) {
