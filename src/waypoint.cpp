@@ -130,4 +130,5 @@ Waypoint lerp(Waypoint A, Waypoint B, float frac) {
     float newY = A.getY() + (B.getY() - A.getY()) * frac;
 
     Waypoint newPoint = Waypoint(newX, newY, A.getTheta());
+    return newPoint;
 }
