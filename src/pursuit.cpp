@@ -1,6 +1,8 @@
 #include "pursuit.h"
 #include "waypoint.h"
 #include <cmath>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -95,6 +97,20 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
 
     stopMotors();
 
+}
+
+vector<Waypoint> readPoints(string fileName) {
+    vector<Waypoint> points;
+    ifstream file(fileName);
+    string line;
+    while(getline(file, line)) {
+        stringstream ss(line);
+        string x, y;
+        getline(ss, x, ',');
+        getline(ss, y, ',');
+        points.push_back(Waypoint(stof(x), stof(y)));
+    }
+    return points;
 }
 
 vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA, float velocityK) {

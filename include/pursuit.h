@@ -9,6 +9,7 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
 
 vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA, float velocityK);
 vector<Waypoint> smooth(vector<Waypoint> roughPath, float a, float b, float tolerance);
+vector<Waypoint> readPath(string pathName);
 
 Waypoint findClosestPoint(Waypoint P,  vector<Waypoint> path);
 float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float lookaheadRadius);
