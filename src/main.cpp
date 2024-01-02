@@ -49,8 +49,13 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+
+	
+
+
+
 	// skillz();
-	offensiveSneak();
+	// offensiveSneak();
 }
 
 /**
@@ -91,7 +96,6 @@ void opcontrol() {
 		axisTwo = exp((fabs(axisTwo)-100)/100) * axisTwo;
 		axisTwo /= 100;
 
-
 		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
 		//-1 <--  0 --> 1 scale to velocity (-600 <-- 0 --> 600 RPM)
@@ -104,7 +108,7 @@ void opcontrol() {
 
 		//CATA
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(12000 * 0.95);
+			cata.move_voltage(12000 * 0.80);
 		}
 		else {
 			cata.move_voltage(0);
