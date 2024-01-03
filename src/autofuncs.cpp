@@ -129,20 +129,20 @@ vector<pair<float, float>> generatePath(float carrotDist, float startX, float st
 
 
 std::pair<float, float> calculateWheelVelocity(float sX, float sY, float eX, float eY) {
-    float d = distDiff(sX, sY, eX, eY);
-    float theta = angDiff(sX, sY, eX, eY);
+    // float d = distDiff(sX, sY, eX, eY);
+    // float theta = angDiff(sX, sY, eX, eY);
 
-    //10 = dT = 10msec wait time
-    float v = d / 10;
-    float w = theta / 10;
+    // //10 = dT = 10msec wait time
+    // float v = d / 10;
+    // float w = theta / 10;
 
-    v *= 100000;
-    w *= 1000;
+    // v *= 100000;
+    // w *= 1000;
     
-    float leftVel = v - (w * WHEEL_BASE) / 2;
-    float rightVel = v + (w * WHEEL_BASE) / 2;
+    // float leftVel = v - (w * WHEEL_BASE) / 2;
+    // float rightVel = v + (w * WHEEL_BASE) / 2;
 
-    return make_pair(leftVel, rightVel);
+    return make_pair(1, 1);
 }
 
 vector<std::pair<float, float>> computeVelocites(vector<std::pair<float, float>> path) {

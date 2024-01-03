@@ -1,7 +1,9 @@
 #include "tracking.h"
+#include <iostream>
 
 using namespace pros;
 
+const int TIME_INTERVAL = 10;
 constexpr float PI = 3.14159265358979323846;
 constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
@@ -26,6 +28,9 @@ float lastTheta = 0;
 float currentAngle = 0;
 
 Waypoint robotPose = Waypoint(0, 0, 0);
+Waypoint lastRobotPose = Waypoint(0, 0, 0);
+
+float prevVel = 0;
 
 void initializeTracking() {
     inertial.reset();
@@ -46,7 +51,6 @@ void initializeTracking() {
     leftRot.set_position(0);
     rightRot.set_position(0);
 }
-
 
 void tracking() {
     initializeTracking();
@@ -71,9 +75,18 @@ void tracking() {
         deltaDist = (leftChange + rightChange)/2;
         deltaTheta = (currentAngle - lastTheta);
 
+        float distTravelled = distance(robotPose, lastRobotPose);
+
         robotPose.x += (sin(currentAngle) * deltaDist);
         robotPose.y += (cos(currentAngle) * deltaDist);
-        robotPose.theta = currentAngle;
+        robotPose.setTheta(currentAngle);
+        robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
+
+        float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
+        prevVel = robotPose.getVel();
+
+        lastRobotPose.setX(robotPose.getX());
+        lastRobotPose.setY(robotPose.getY());
 
         lastTheta = currentAngle;
 
@@ -87,7 +100,13 @@ void tracking() {
         lcd::print(2, "Y: %f\n", robotPose.y);
         lcd::print(3, "Inertial: %f\n", robotPose.theta * radToDeg);
 
-        delay(10);
+
+        //Accel & Vel for debugging ==> Take max via graph
+        std::cout << acceleration << "\t" << robotPose.getVel() << "\n";
+
+
+        delay(TIME_INTERVAL);
+
     }
 }
 
@@ -104,20 +123,4 @@ Waypoint getCurrentPose() {
     return (Waypoint)robotPose;
 }
 
-float distDiff(float startX, float startY, float endX, float endY) {
-    return (std::sqrt(std::pow(endX - startX, 2) + std::pow(endY - startY, 2))) / 10;
-}
 
-float angDiff(float startX, float startY, float endX, float endY) {
-    float angleDiff = atan2(endY - startY, endX - startX);
-
-    angleDiff *= radToDeg;
-    if (angleDiff < 0) {
-        angleDiff += 360;
-    }
-
-    angleDiff -= 90;
-    angleDiff *= -1;
-
-    return angleDiff;
-}

@@ -1,20 +1,24 @@
 #include "pursuit.h"
 #include "waypoint.h"
+#include "tracking.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
 
 using namespace std;
 
+const int TIME_INTERVAL = 10;
 constexpr float PI = 3.14159265358979323846;
+
+// maxVel - print out the derivative of odometry
+// maxA - print out the inertial.get_accel() and take max
+// k - constant from 1 to 5
+
 constexpr float lookaheadDist = 10;
 constexpr float trackWidth = 1000000; //VIVEK NEED TO TUNE!!
-constexpr float kV = 0.0001; //VIVEK NEED TO TUNE!!
-constexpr float kA = 0.0001; //VIVEK NEED TO TUNE!!
-constexpr float kP = 0.0001; //VIVEK NEED TO TUNE!!
-//TUNE MAX VEL 
-//TUNE MAX ACCEL
-//TUNE VELOCITY K 
+constexpr float kV = 0.0055; //VIVEK NEED TO TUNE!!
+constexpr float kA = 0.002; //VIVEK NEED TO TUNE!!
+constexpr float kP = 0.01; //VIVEK NEED TO TUNE!!
 
 std::vector<Waypoint> path = {{1, 1}, {100, 100}, {300, 50}, {500, 200}};
 
@@ -57,41 +61,44 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
 
         targetVel = closestPoint.getVel(); //maybe RATE LIMITER OR SMTH HERE
 
+        //Velocity Calculations: **************************************************
         //L = V * (2 + CT) / 2
         //R = V * (2 - CT) / 2
         float leftVel = targetVel * (2 + currentCurvature * trackWidth) / 2;
         float rightVel = targetVel * (2 - currentCurvature * trackWidth) / 2;
+        
+        float leftTargetAccel = (leftVel - prevLeftVel) / TIME_INTERVAL;
+        float rightTargetAccel = (rightVel - prevRightVel) / TIME_INTERVAL;
+
+        prevLeftVel = leftVel;
+        prevRightVel = rightVel;
+        //*************************************************************************
+
+        //Feedforward calculations:
+        float ffLeft = kV * leftVel + kA * leftTargetAccel;
+        float ffRight = kV * rightVel + kA * rightTargetAccel;
+
+        float fbLeft = kP * (leftVel - getLeftVel());
+        float fbRight = kP * (rightVel - getRightVel());
+
+        float actualLeft = ffLeft + fbLeft;
+        float actualRight = ffRight + fbRight;
 
         //Find max and ratio it
-        float biggest = max(fabs(leftVel), fabs(rightVel));
-        leftVel = leftVel / biggest * 12000;
-        rightVel = rightVel / biggest * 12000;
-
-        // float leftTargetAccel = leftVel; // fix these lol
-        // float rightTargetAccel = rightVel;
-
-        // prevLeftVel = leftVel;
-        // prevRightVel = rightVel;
-
-        // float ffLeft = kV * leftVel + kA * leftTargetAccel;
-        // float ffRight = kV * rightVel + kA * rightTargetAccel;
-
-        // float fbLeft = kP * (leftVel - );
-        // float fbRight = kP * (rightVel - );
-
-        // LeftDT.move_voltage(ffLeft + fbLeft);
-        // RightDT.move_voltage(ffRight + fbRight);
+        float biggest = max(fabs(actualLeft), fabs(actualRight));
+        actualLeft = actualLeft / biggest * 12000;
+        actualRight = actualRight / biggest * 12000;
 
         if(fwd) {
-            LeftDT.move_voltage(leftVel);
-            RightDT.move_voltage(rightVel);
+            LeftDT.move_voltage(actualLeft);
+            RightDT.move_voltage(actualRight);
         }
         else {
-            LeftDT.move_voltage(-leftVel);
-            RightDT.move_voltage(-rightVel);
+            LeftDT.move_voltage(-actualLeft);
+            RightDT.move_voltage(-actualRight);
         }
 
-        pros::delay(10);
+        pros::delay(TIME_INTERVAL);
 
     }
 
@@ -319,4 +326,12 @@ float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation)
     (std::sin(robotAngle) * (lookAhead.getX()-curPos.getX()) - std::cos(robotAngle) * (lookAhead.getY()-curPos.getY()) >= 0) ? side = 1 : side = -1;
 
     return curvature * side;
+}
+
+float getRightVel() {
+    return (FR.get_actual_velocity()+MR.get_actual_velocity()+BR.get_actual_velocity())/3;
+}
+
+float getLeftVel() {
+    return (FL.get_actual_velocity()+ML.get_actual_velocity()+BL.get_actual_velocity())/3;
 }

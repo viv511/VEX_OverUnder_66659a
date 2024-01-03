@@ -16,4 +16,7 @@ float circleLineIntersect(Waypoint start, Waypoint end, Waypoint curPos, float l
 Waypoint findLookaheadPoint(vector<Waypoint> pathToFollow, Waypoint curPos, Waypoint prevLookAhead, float lookaheadRadius);
 float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation);
 
+float getRightVel();
+float getLeftVel();
+
 #endif
