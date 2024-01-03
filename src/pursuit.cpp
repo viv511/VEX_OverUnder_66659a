@@ -187,25 +187,25 @@ vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA
     }
     pathToFollow[pathToFollow.size()-1].setCurv(0);
 
-    //Step 5a. Calculate Velocities
-    for(int i=0; i<pathToFollow.size(); i++) {
-        if(pathToFollow[i].getCurv() == 0) {
-            pathToFollow[i].setVel(maxVel);
-        }
-        else {
-            pathToFollow[i].setVel(min(velocityK/(pathToFollow[i].getCurv()), maxVel)); 
-        }
-    }
+    // //Step 5a. Calculate Velocities
+    // for(int i=0; i<pathToFollow.size(); i++) {
+    //     if(pathToFollow[i].getCurv() == 0) {
+    //         pathToFollow[i].setVel(maxVel);
+    //     }
+    //     else {
+    //         pathToFollow[i].setVel(min(velocityK/(pathToFollow[i].getCurv()), maxVel)); 
+    //     }
+    // }
 
-    //Step 5b & c
-    pathToFollow[pathToFollow.size()-1].setVel(0);
+    // //Step 5b & c
+    // pathToFollow[pathToFollow.size()-1].setVel(0);
 
-    for(int i=pathToFollow.size()-1; i>=0; i--) {
-        float dist = distance(pathToFollow[i+1], pathToFollow[i]);
-        float newVel = sqrt(pow(pathToFollow[i+1].getVel(), 2) + 2 * maxA * dist);
+    // for(int i=pathToFollow.size()-1; i>=0; i--) {
+    //     float dist = distance(pathToFollow[i+1], pathToFollow[i]);
+    //     float newVel = sqrt(pow(pathToFollow[i+1].getVel(), 2) + 2 * maxA * dist);
 
-        pathToFollow[i].setVel(min(pathToFollow[i].getVel(), newVel));
-    }
+    //     pathToFollow[i].setVel(min(pathToFollow[i].getVel(), newVel));
+    // }
 
 
     return pathToFollow;

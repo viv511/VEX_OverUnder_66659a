@@ -51,7 +51,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-
+	setStart(16, -34);
 	followRoute("test.txt", true);
 
 	// skillz();

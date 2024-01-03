@@ -11,5 +11,6 @@ void tracking();
 float avgDist();
 
 Waypoint getCurrentPose();
+void setStart(float sX, float sY);
 
 void set();

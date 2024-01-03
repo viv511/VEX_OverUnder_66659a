@@ -105,6 +105,11 @@ void tracking() {
     }
 }
 
+void setStart(float sX, float sY) {
+    robotPose.setX(sX);
+    robotPose.setY(sY);
+}
+
 float avgDist() {
     return ((leftAbsolute + rightAbsolute) / 2.0);
 }
