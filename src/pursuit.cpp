@@ -114,12 +114,13 @@ vector<Waypoint> readPoints(string fileName) {
     vector<Waypoint> points;
     ifstream file(fileName);
     string line;
-    while(getline(file, line)) {
+    while (getline(file, line)) {
         stringstream ss(line);
-        string x, y;
+        string x, y, velocity;
         getline(ss, x, ',');
         getline(ss, y, ',');
-        points.push_back(Waypoint(stof(x), stof(y)));
+        getline(ss, velocity, ',');
+        points.push_back(Waypoint(stof(x), stof(y), stof(velocity)));
     }
     return points;
 }
