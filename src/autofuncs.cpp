@@ -303,7 +303,7 @@ void moveToPoint(Waypoint target, bool isReversed) {
 
         currentX = currentPos.x;
         currentY = currentPos.y;
-        currentTheta = currentPos.theta;
+        currentTheta = currentPos.theta * radToDeg;
 
         if (isReversed) {
             currentTheta -= 180;
@@ -331,13 +331,13 @@ void moveToPoint(Waypoint target, bool isReversed) {
         lateralOutput = movePID.calculateOutput(distanceToTarget) * cos(headingError * degToRad);
         angularOutput = turnPID.calculateOutput(headingError);
 
-        if (distanceToTarget < 1) {
+        if (distanceToTarget < 4) {
             angularOutput = 0; // Stop angular adjustment if too close
         }
 
         arcade(lateralOutput, angularOutput); // Robot movement
 
-        pros::delay(20);
+        pros::delay(10);
     } while (!movePID.isSettled());
 
     arcade(0, 0); // Stop the robot

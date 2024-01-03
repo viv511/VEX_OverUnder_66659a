@@ -10,13 +10,15 @@
  */
 void initialize() {
 	wings.set_value(false);
+	blocker.set_value(false);
+	elev.set_value(false);
+
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
-	pros::Task cataControl(cataCtrl);
+	// pros::Task cataControl(cataCtrl);
 
 	LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
 	RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
-
 }
 
 /**
@@ -50,9 +52,7 @@ void competition_initialize() {}
  */
 void autonomous() {
 
-
-
-
+	followRoute("test.txt", true);
 
 	// skillz();
 	// offensiveSneak();
@@ -79,9 +79,12 @@ void opcontrol() {
 	float leftPower;
 	float rightPower;
 
-	//Vibes
-	bool wingState = false;
-	bool wingLast = false;
+	//Toggle's
+	bool blockerState = false;
+	bool blockerLast = false;
+
+	bool elevationState = false;
+	bool elevationLast = false;
 
 	while(1) {
 		LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -131,6 +134,46 @@ void opcontrol() {
 		}
 		else {
 			intake.move_voltage(0);
+		}
+
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast) {
+			blockerState = !blockerState;
+			blockerLast = true;
+		}
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))) {
+			blockerLast = false;
+		}
+
+		if(blockerState) {
+			blocker.set_value(true);
+		}
+		else {
+			blocker.set_value(false);
+		}
+
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast) {
+			elevationState = !elevationState;
+			elevationLast = true;
+		}
+		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)))) {
+			elevationLast = false;
+		}
+
+		if(elevationState) {
+			elev.set_value(true);
+			blocker.set_value(true);
+		}
+		else {
+			elev.set_value(false);
+			blocker.set_value(false);
+		}
+
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+			LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
+			RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
+
+			Waypoint target = Waypoint(10, 20, 0);
+			moveToPoint(target, false);
 		}
 
 		pros::delay(10);

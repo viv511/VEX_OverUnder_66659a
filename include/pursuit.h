@@ -5,6 +5,7 @@
 
 using namespace pros;
 
+void followRoute(string routeName, bool isfwd);
 void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius, bool fwd, float maxVel, float maxA, float velocityK);
 
 vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA, float velocityK);

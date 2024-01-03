@@ -10,17 +10,20 @@ using namespace std;
 const int TIME_INTERVAL = 10;
 constexpr float PI = 3.14159265358979323846;
 
-// maxVel - print out the derivative of odometry
-// maxA - print out the inertial.get_accel() and take max
-// k - constant from 1 to 5
-
+constexpr float maximumVelocity = 0.09; //Solved
+constexpr float maximumAcceleration = 0.002; //Solved
+constexpr float constantK = 1.2; //Needs to tune
 constexpr float lookaheadDist = 10;
-constexpr float trackWidth = 1000000; //VIVEK NEED TO TUNE!!
+constexpr float trackWidth = 11.75;
 constexpr float kV = 0.0055; //VIVEK NEED TO TUNE!!
 constexpr float kA = 0.002; //VIVEK NEED TO TUNE!!
 constexpr float kP = 0.01; //VIVEK NEED TO TUNE!!
 
-std::vector<Waypoint> path = {{1, 1}, {100, 100}, {300, 50}, {500, 200}};
+
+void followRoute(string routeName, bool isfwd) {
+    vector<Waypoint> path = readPoints(routeName);
+    pathFollowPurePursuit(path, lookaheadDist, isfwd, maximumVelocity, maximumAcceleration, constantK);
+}
 
 //Inspo DAWGMA + LemLib
 void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius, bool fwd, float maxVel, float maxA, float velocityK) {
@@ -107,6 +110,7 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
 }
 
 vector<Waypoint> readPoints(string fileName) {
+    fileName = "./ROUTES/" + fileName;
     vector<Waypoint> points;
     ifstream file(fileName);
     string line;
@@ -188,18 +192,18 @@ vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA
             pathToFollow[i].setVel(maxVel);
         }
         else {
-            pathToFollow[i].setVel(min(velocityK/(pathToFollow[i].getCurv()), maxVel));
+            pathToFollow[i].setVel(min(velocityK/(pathToFollow[i].getCurv()), maxVel)); 
         }
     }
 
     //Step 5b & c
-    //i and i+1 becomes i-1 and i
     pathToFollow[pathToFollow.size()-1].setVel(0);
-    for(int i=pathToFollow.size()-1; i>0; i--) {
-        float dist = distance(pathToFollow[i], pathToFollow[i-1]);
-        float newVel = sqrt(pow(pathToFollow[i].getVel(), 2) + 2 * maxA * dist);
 
-        pathToFollow[i-1].setVel(min(pathToFollow[i-1].getVel(), newVel));
+    for(int i=pathToFollow.size()-1; i>=0; i--) {
+        float dist = distance(pathToFollow[i+1], pathToFollow[i]);
+        float newVel = sqrt(pow(pathToFollow[i+1].getVel(), 2) + 2 * maxA * dist);
+
+        pathToFollow[i].setVel(min(pathToFollow[i].getVel(), newVel));
     }
 
 
@@ -329,7 +333,7 @@ float getSignedCurvature(Waypoint curPos, Waypoint lookAhead, float orientation)
 }
 
 float getRightVel() {
-    return (FR.get_actual_velocity()+MR.get_actual_velocity()+BR.get_actual_velocity())/3;
+    return -1*(FR.get_actual_velocity()+MR.get_actual_velocity()+BR.get_actual_velocity())/3; //bcz all motors are false?!?!
 }
 
 float getLeftVel() {

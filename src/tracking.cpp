@@ -40,7 +40,7 @@ void initializeTracking() {
         timer += 10;
 
         if(timer > 4000) {
-            controller.rumble("--..--");
+            controller.rumble("-----------------");
             break;
         }
     }
@@ -99,11 +99,6 @@ void tracking() {
 		lcd::print(1, "X: %f\n", robotPose.x);
         lcd::print(2, "Y: %f\n", robotPose.y);
         lcd::print(3, "Inertial: %f\n", robotPose.theta * radToDeg);
-
-
-        //Accel & Vel for debugging ==> Take max via graph
-        std::cout << acceleration << "\t" << robotPose.getVel() << "\n";
-
 
         delay(TIME_INTERVAL);
 
