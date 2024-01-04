@@ -20,6 +20,6 @@ void arcade(double a, double b);
 
 void moveToPoint(Waypoint target, bool isReversed);
 
-void goToPoint(Waypoint target);
+void goToPoint(float tX, float tY);
 
 #endif

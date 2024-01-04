@@ -349,13 +349,16 @@ void moveToPoint(Waypoint target, bool isReversed) {
     arcade(0, 0); // Stop the robot
 }
 
-void goToPoint(Waypoint target) {
+void goToPoint(float tX, float tY) {
+    Waypoint target = Waypoint(tX, tY);
     Waypoint currentPos = getCurrentPose();
 
     float distanceToTarget = distance(currentPos, target);
     float targetTheta = angle(currentPos, target);
 
-    
+    movePID.setTarget(distanceToTarget);
+    turnPID.setTarget(targetTheta);
 
-
+    turn(targetTheta);
+    driveDist(distanceToTarget);
 }

@@ -51,6 +51,12 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+	setStart(33, -48);
+	goToPoint(18, -32);
+	goToPoint(32, -20);
+	goToPoint(17, -5);
+	goToPoint(33, 3);
+
 	// skillz();
 	// offensiveSneak();
 }
@@ -166,8 +172,8 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			setStart(26.22, -38.55);
-			followRoute("curve.txt", true);
+			// setStart(26.22, -38.55);
+			// followRoute("curve.txt", true);
 		}
 
 		pros::delay(10);
