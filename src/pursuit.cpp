@@ -207,6 +207,15 @@ vector<Waypoint> pathGen(vector<Waypoint> pathToFollow, float maxVel, float maxA
     //     pathToFollow[i].setVel(min(pathToFollow[i].getVel(), newVel));
     // }
 
+    //Step 5 - Michael + Brandon COOK version:
+    float pathMaxVelValue = -1;
+    for(int i=0; i<pathToFollow.size(); i++) {
+        pathMaxVelValue = max(pathToFollow[i].getVel(), pathMaxVelValue);
+    }
+    for(int i=0; i<pathToFollow.size(); i++) {
+        pathToFollow[i].setVel(pathToFollow[i].getVel() / pathMaxVelValue * maxVel);
+    }
+
 
     return pathToFollow;
 }
