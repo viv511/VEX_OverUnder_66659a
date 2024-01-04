@@ -119,7 +119,8 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
 }
 
 vector<Waypoint> readPoints(string fileName) {
-vector<Waypoint> path;
+
+    vector<Waypoint> path;
 Waypoint newPoint = Waypoint(0, 0, 0);
 newPoint.setX(23.8195);
 newPoint.setY(-33.45);
@@ -489,6 +490,7 @@ newPoint.setX(24.1195);
 newPoint.setY(33.45);
 newPoint.setVel(0);
 path.push_back(newPoint);
+
 
 
     return path;
