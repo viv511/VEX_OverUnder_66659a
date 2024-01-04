@@ -348,3 +348,14 @@ void moveToPoint(Waypoint target, bool isReversed) {
 
     arcade(0, 0); // Stop the robot
 }
+
+void goToPoint(Waypoint target) {
+    Waypoint currentPos = getCurrentPose();
+
+    float distanceToTarget = distance(currentPos, target);
+    float targetTheta = angle(currentPos, target);
+
+    
+
+
+}

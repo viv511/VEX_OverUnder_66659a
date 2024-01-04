@@ -15,7 +15,7 @@ constexpr float maximumAcceleration = 0.002; //Solved
 constexpr float constantK = 2; //Needs to tune
 constexpr float lookaheadDist = 10; //Need to tune
 constexpr float trackWidth = 11.75;
-constexpr float kV = 0.0055; //VIVEK NEED TO TUNE!!
+constexpr float kV = 1/maximumVelocity; //VIVEK NEED TO TUNE!!
 constexpr float kA = 0.002; //VIVEK NEED TO TUNE!!
 constexpr float kP = 0.01; //VIVEK NEED TO TUNE!!
 
@@ -101,6 +101,8 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
         actualLeft = actualLeft / biggest * 12000;
         actualRight = actualRight / biggest * 12000;
 
+        std::cout << leftVel << " " << rightVel << "\n";
+
         if(fwd) {
             LeftDT.move_voltage(actualLeft);
             RightDT.move_voltage(actualRight);
@@ -113,6 +115,9 @@ void pathFollowPurePursuit(vector<Waypoint> pathToFollow, float lookaheadRadius,
         pros::delay(TIME_INTERVAL);
 
     }
+    
+    LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+    RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 
     stopMotors();
 
