@@ -13,7 +13,7 @@ constexpr float PI = 3.14159265358979323846;
 constexpr float maximumVelocity = 0.09; //Solved
 constexpr float maximumAcceleration = 0.002; //Solved
 constexpr float constantK = 1.2; //Needs to tune
-constexpr float lookaheadDist = 10;
+constexpr float lookaheadDist = 10; //Need to tune
 constexpr float trackWidth = 11.75;
 constexpr float kV = 0.0055; //VIVEK NEED TO TUNE!!
 constexpr float kA = 0.002; //VIVEK NEED TO TUNE!!
@@ -120,7 +120,11 @@ vector<Waypoint> readPoints(string fileName) {
         getline(ss, x, ',');
         getline(ss, y, ',');
         getline(ss, velocity, ',');
-        points.push_back(Waypoint(stof(x), stof(y), stof(velocity)));
+
+        Waypoint newPoint = Waypoint(stof(x), stof(y));
+        newPoint.setVel(stof(velocity));
+
+        points.push_back(newPoint);
     }
     return points;
 }
