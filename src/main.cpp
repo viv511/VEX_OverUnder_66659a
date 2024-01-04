@@ -172,7 +172,8 @@ void opcontrol() {
 			LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
 			RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
 
-			Waypoint target = Waypoint(10, 20, 0);
+			Waypoint target = Waypoint(10, 10, 0);
+
 			moveToPoint(target, false);
 		}
 

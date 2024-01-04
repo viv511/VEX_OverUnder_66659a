@@ -328,12 +328,18 @@ void moveToPoint(Waypoint target, bool isReversed) {
         while (headingError < -180) headingError += 360;
 
         // PID calculations
-        lateralOutput = movePID.calculateOutput(distanceToTarget) * cos(headingError * degToRad);
-        angularOutput = turnPID.calculateOutput(headingError);
+        // lateralOutput = movePID.calculateOutput(distanceToTarget) * cos(headingError * degToRad);
+        // angularOutput = turnPID.calculateOutput(headingError);
+
+        lateralOutput = 1100 * distanceToTarget * cos(headingError * degToRad);
+        angularOutput = 300 * headingError;
 
         if (distanceToTarget < 4) {
             angularOutput = 0; // Stop angular adjustment if too close
         }
+
+        lcd::print(5, "Lat: %f\n", lateralOutput);
+        lcd::print(6, "Ang: %f\n", angularOutput);
 
         arcade(lateralOutput, angularOutput); // Robot movement
 
