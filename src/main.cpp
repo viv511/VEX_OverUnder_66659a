@@ -51,9 +51,6 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	setStart(16, -34);
-	followRoute("test.txt", true);
-
 	// skillz();
 	// offensiveSneak();
 }
@@ -169,12 +166,8 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			LeftDT.set_brake_modes(MOTOR_BRAKE_HOLD);
-			RightDT.set_brake_modes(MOTOR_BRAKE_HOLD);
-
-			Waypoint target = Waypoint(10, 10, 0);
-
-			moveToPoint(target, false);
+			setStart(26.22, -38.55);
+			followRoute("curve.txt", true);
 		}
 
 		pros::delay(10);
