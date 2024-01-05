@@ -10,8 +10,8 @@
  */
 void initialize() {
 	wings.set_value(false);
-	blocker.set_value(true);
-	elev.set_value(true);
+	blocker.set_value(false);
+	elev.set_value(false);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -142,10 +142,10 @@ void opcontrol() {
 		}
 
 		if(blockerState) {
-			blocker.set_value(false);
+			blocker.set_value(true);
 		}
 		else {
-			blocker.set_value(true);
+			blocker.set_value(false);
 		}
 
 		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast) {
@@ -153,14 +153,14 @@ void opcontrol() {
 			elevationLast = true;
 		}
 		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)))) {
-			elevationLast = false;
+			elevationLast = false; 
 		}
 
 		if(elevationState) {
-			elev.set_value(false);
+			elev.set_value(true);
 		}
 		else {
-			elev.set_value(true);
+			elev.set_value(false);
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {

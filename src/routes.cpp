@@ -124,7 +124,9 @@ void skillz() {
 
 }
 
-
+void offensiveRush() {
+    
+}
 
 
 //			arc(1000, 650, 1); this might work

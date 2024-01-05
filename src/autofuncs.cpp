@@ -359,3 +359,39 @@ void goToPoint(float tX, float tY) {
     turn(targetTheta);
     driveDist(distanceToTarget);
 }
+
+void swing(bool left, float d) {
+
+    set();
+   
+    float cur = avgDist();
+
+    //Drive forward/backward
+    movePID.setTarget(d + cur);
+
+    if(left) {
+        while(!movePID.isSettled()) {
+            cur = avgDist();
+            float o = movePID.calculateOutput(cur);
+            LeftDT.move_voltage(o);
+            RightDT.move_voltage(o);
+            pros::delay(10);
+        }
+    }
+    else {
+        while(!movePID.isSettled()) {
+            cur = avgDist();
+            float o = movePID.calculateOutput(cur);
+            LeftDT.move_voltage(o);
+            RightDT.move_voltage(o);
+            pros::delay(10);
+        }
+    }
+
+    
+    stopMotors();
+
+    controller.rumble(".");
+
+
+}
