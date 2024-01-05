@@ -5,6 +5,20 @@
 using namespace pros;
 
 void defenseRoute() {
+
+    // start alliance triball to the left of bot
+
+    // drive straight for right triball, intake. 
+    // swerve to face left triball while opening wings
+    // full speed forward and push left triball over
+    // outtake and drop right triball over
+
+    // turn like 180 to face alliance triball 
+    // drive to alliance triball, intake
+    // turn to face goal, release intake, full power forward
+
+    // ------------------------------
+
     //Start 45 degree diagonal w/ Alliance triball touching bot
     // driveDist(-40, -40, 0.8, 0);
     // pros::delay(200);
