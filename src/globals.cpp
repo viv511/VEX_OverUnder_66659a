@@ -20,8 +20,8 @@ Rotation rightRot(12);
 
 //think these are ok
 ADIDigitalOut wings('A');
-ADIDigitalOut elev('C');
-ADIDigitalOut blocker('B');
+ADIDigitalOut elev('B');
+ADIDigitalOut blocker('C');
 
 
 Motor_Group LeftDT ({FL, ML, BL});

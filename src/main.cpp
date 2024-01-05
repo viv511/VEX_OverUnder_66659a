@@ -10,8 +10,8 @@
  */
 void initialize() {
 	wings.set_value(false);
-	blocker.set_value(false);
-	elev.set_value(false);
+	blocker.set_value(true);
+	elev.set_value(true);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -51,14 +51,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	setStart(33, -48);
-	goToPoint(18, -32);
-	goToPoint(32, -20);
-	goToPoint(17, -5);
-	goToPoint(33, 3);
-
 	// skillz();
-	// offensiveSneak();
+	offensiveSneak();
 }
 
 /**
@@ -148,10 +142,10 @@ void opcontrol() {
 		}
 
 		if(blockerState) {
-			blocker.set_value(true);
+			blocker.set_value(false);
 		}
 		else {
-			blocker.set_value(false);
+			blocker.set_value(true);
 		}
 
 		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast) {
@@ -163,12 +157,10 @@ void opcontrol() {
 		}
 
 		if(elevationState) {
-			elev.set_value(true);
-			blocker.set_value(true);
+			elev.set_value(false);
 		}
 		else {
-			elev.set_value(false);
-			blocker.set_value(false);
+			elev.set_value(true);
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {

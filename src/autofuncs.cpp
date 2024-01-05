@@ -356,9 +356,6 @@ void goToPoint(float tX, float tY) {
     float distanceToTarget = distance(currentPos, target);
     float targetTheta = angle(currentPos, target);
 
-    movePID.setTarget(distanceToTarget);
-    turnPID.setTarget(targetTheta);
-
     turn(targetTheta);
     driveDist(distanceToTarget);
 }
