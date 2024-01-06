@@ -51,14 +51,14 @@ void offensiveSneak() {
     intake.move_voltage(12000);
     LeftDT.move_voltage(12000 * 3/6);
     RightDT.move_voltage(12000 * 3/6);
-    pros::delay(100);
+    pros::delay(50);
     stopMotors();
 
     //step 2: drive backwards around corner to score triball #1
     driveTime(-650);
     turn(-45);
     pros::delay(50);
-    driveTime(-530);
+    driveTime(-500);
     turn(-45);
     pros::delay(50);
     driveTime(-700);
@@ -69,26 +69,26 @@ void offensiveSneak() {
     pros::delay(50);
     turn(180);
     intake.move_voltage(-12000);
-    pros::delay(200);
     driveTime(500);
     // +1 Ball
 
     //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
     intake.move_voltage(0);
     driveDist(-17); 
-    turn(-75); //important turn to face triball #3
+    turn(-70); //important turn to face triball #3
     intake.move_voltage(12000);
+
     driveDist(67);
     turn(135);
     intake.move_voltage(-12000);
-    driveTime(150);
-    driveTime(-150);
+    driveTime(200);
+    driveTime(-250);
 
     //step 5: swing around to triball #4, intake and release while opening wings for triball #5
     turn(-65);
     intake.move_voltage(12000);
-    driveTime(200);
-    swing(false, 40, 0.15);
+    driveTime(250);
+    swing(false, 40, 0.05);
     driveTime(-150);
     turn(180);
     wings.set_value(1);

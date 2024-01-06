@@ -51,8 +51,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	skillz();
-	// offensiveSneak();
+	// skillz();
+	offensiveSneak();
 	// offensiveRush();
 	// defenseRoute();
 }
@@ -165,11 +165,11 @@ void opcontrol() {
 			elev.set_value(false);
 		}
 
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			// setStart(26.22, -38.55);
-			// followRoute("curve.txt", true);
-			turn(-45);
-		}
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+		// 	// setStart(26.22, -38.55);
+		// 	// followRoute("curve.txt", true);
+		// 	turn(-45);
+		// }
 
 		pros::delay(10);
 	}
