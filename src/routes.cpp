@@ -110,28 +110,37 @@ void skillz() {
 
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
-        cata.move_voltage(12000 * 0.80);
+        cata.move_voltage(12000 * 0.75);
 
         timer += 10;
         pros::delay(10);
     }
     cata.move_voltage(0);
 
-    swing(true, 30, 0);
-    driveDist(20);
-    turn(-45);
-    driveDist(74);
-    turn(-90);
-    driveDist(20);
-    turn(-60);
+    swing(true, 21, 0);
+
     driveDist(35);
-    turn(150);
+    turn(-46);
+    driveDist(105);
+    turn(-90);
+
+    LeftDT.move_voltage(-6000);
+    RightDT.move_voltage(-6000);
+    pros::delay(400);
+    stopMotors();
+
+    driveDist(40);
+    turn(-50);
+    driveDist(40);
+    turn(140);
     wings.set_value(1);
-    driveTime(1000);
+    driveTime(1500);
+    wings.set_value(0);
     pros::delay(200);
-    driveDist(-30);
-    turn(-45);
-    driveTime(2000);
+    driveDist(-35);
+    turn(-50);
+    wings.set_value(1);
+    driveTime(1500);
 }
 
 void offensiveRush() {

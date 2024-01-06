@@ -140,19 +140,19 @@ void PID::turnLookupPID(float t) {
 void PID::moveLookupPID(float t) {
     t = fabs(t);
     if(t <= 20){
-        setConstants(19*fabs(this->target), 0, 100);
+        setConstants(20*fabs(this->target), 0, 100);
     }
     else if(t <= 25) {
-        setConstants(14*fabs(this->target), 0, 100);
+        setConstants(15*fabs(this->target), 0, 100);
     }
     else if(t <= 40) {
-        setConstants(11*fabs(this->target), 0, 200);
+        setConstants(12*fabs(this->target), 0, 200);
     }
     else if (t <= 50){
-        setConstants(9*fabs(this->target), 0, 200);        
+        setConstants(10*fabs(this->target), 0, 200);        
     }
     else {
-        setConstants(6*fabs(this->target), 0, 200);
+        setConstants(7*fabs(this->target), 0, 200);
     }
     
    
