@@ -1,14 +1,13 @@
 #include "main.h"
 
-
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
+void initialize()
+{
 	wings.set_value(false);
 	blocker.set_value(false);
 	elev.set_value(false);
@@ -50,7 +49,8 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
+void autonomous()
+{
 	// skillz();
 	offensiveSneak();
 	// offensiveRush();
@@ -70,32 +70,34 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
+void opcontrol()
+{
 	LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
-    RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	float axisOne;
 	float axisTwo;
 	float leftPower;
 	float rightPower;
 
-	//Toggle's
+	// Toggle's
 	bool blockerState = false;
 	bool blockerLast = false;
 
 	bool elevationState = false;
 	bool elevationLast = false;
 
-	while(1) {
+	while (1)
+	{
 		LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
-    	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+		RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
 		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
 
-		//Secret Sauce
+		// Secret Sauce
 		axisTwo *= 100;
-		axisTwo = exp((fabs(axisTwo)-100)/100) * axisTwo;
+		axisTwo = exp((fabs(axisTwo) - 100) / 100) * axisTwo;
 		axisTwo /= 100;
 
 		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
@@ -104,64 +106,79 @@ void opcontrol() {
 		leftPower = ((axisOne + axisTwo) / mag) * 600;
 		rightPower = ((axisOne - axisTwo) / mag) * 600;
 
-		//Assign power
+		// Assign power
 		LeftDT.move_velocity(leftPower);
 		RightDT.move_velocity(rightPower);
 
-		//CATA
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			cata.move_voltage(12000 * 0.80);
+		// CATA
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		{
+			cata.move_voltage(12000 * 0.70);
 		}
-		else {
+		else
+		{
 			cata.move_voltage(0);
 		}
 
-		//WINGS
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+		// WINGS
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		{
 			wings.set_value(true);
 		}
-		else {
+		else
+		{
 			wings.set_value(false);
 		}
 
-		//INTAKE
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+		// INTAKE
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
 			intake.move_voltage(12000);
 		}
-		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+		else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		{
 			intake.move_voltage(-12000);
 		}
-		else {
+		else
+		{
 			intake.move_voltage(0);
 		}
 
-		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast) {
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast)
+		{
 			blockerState = !blockerState;
 			blockerLast = true;
 		}
-		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))) {
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
+		{
 			blockerLast = false;
 		}
 
-		if(blockerState) {
+		if (blockerState)
+		{
 			blocker.set_value(true);
 		}
-		else {
+		else
+		{
 			blocker.set_value(false);
 		}
 
-		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast) {
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
+		{
 			elevationState = !elevationState;
 			elevationLast = true;
 		}
-		else if(!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)))) {
-			elevationLast = false; 
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
+		{
+			elevationLast = false;
 		}
 
-		if(elevationState) {
+		if (elevationState)
+		{
 			elev.set_value(true);
 		}
-		else {
+		else
+		{
 			elev.set_value(false);
 		}
 

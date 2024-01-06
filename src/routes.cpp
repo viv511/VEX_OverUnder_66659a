@@ -6,6 +6,26 @@ using namespace pros;
 
 void defenseRoute() {
 
+    //start with preload outside intake to the left
+    intake.move_voltage(12000);
+    driveDist(48);
+    wings.set_value(1);
+    driveDist(-10);
+    turn(70);
+    driveDist(20);
+    intake.move_voltage(-12000);
+    pros::delay(250);
+    wings.set_value(0);
+    swing(true, -75, 0.05);
+
+    intake.move_voltage(12000);
+    driveDist(30);
+    swing(false, -60, 0);
+    intake.move_voltage(-12000);
+    pros::delay(100);
+    driveTime(1000);
+
+
     // start alliance triball to the left of bot
 
     // drive straight for right triball, intake. 
@@ -51,7 +71,7 @@ void offensiveSneak() {
     intake.move_voltage(12000);
     LeftDT.move_voltage(12000 * 3/6);
     RightDT.move_voltage(12000 * 3/6);
-    pros::delay(50);
+    pros::delay(100);
     stopMotors();
 
     //step 2: drive backwards around corner to score triball #1
@@ -69,7 +89,10 @@ void offensiveSneak() {
     pros::delay(50);
     turn(180);
     intake.move_voltage(-12000);
-    driveTime(500);
+    driveTime(800); // make it back up and push again if not work
+    // driveTime(400);  
+    // driveTime(-200);
+    // driveTime (400);
     // +1 Ball
 
     //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
@@ -99,7 +122,7 @@ void offensiveSneak() {
 }
 
 void skillz() {
-    const int MATCHLOAD_TIME = 0; //in ms
+    const int MATCHLOAD_TIME = 37000; //in ms
 
     driveTime(-440);   
     turn(45);
@@ -110,7 +133,7 @@ void skillz() {
 
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
-        cata.move_voltage(12000 * 0.75);
+        cata.move_voltage(12000 * 0.70);
 
         timer += 10;
         pros::delay(10);
@@ -121,7 +144,7 @@ void skillz() {
 
     driveDist(35);
     turn(-46);
-    driveDist(108);
+    driveDist(103);
     turn(-90);
 
     LeftDT.move_voltage(-6000);
@@ -137,8 +160,8 @@ void skillz() {
     driveTime(1500);
     wings.set_value(0);
     pros::delay(200);
-    driveDist(-35);
-    turn(-50);
+    driveDist(-40);
+    turn(-30);
     wings.set_value(1);
     driveTime(1500);
 }
