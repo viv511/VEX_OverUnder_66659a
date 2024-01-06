@@ -47,8 +47,11 @@ void defenseRoute() {
 
 void offensiveSneak() {
     intake.move_voltage(12000);
-    driveTime(300);
-    driveDist(-53);
+    LeftDT.move_voltage(12000 * 3/6);
+    RightDT.move_voltage(12000 * 3/6);
+    pros::delay(100);
+    stopMotors();
+    driveDist(-48);
 
     turn(-45);
     pros::delay(50);
@@ -124,17 +127,29 @@ void offensiveSneak() {
 }
 
 void skillz() {
-    driveDist(-25.5);
+    const int MATCHLOAD_TIME = 0; //in ms
+
+    driveTime(-400);   
     turn(45);
     driveTime(-700);
 
-    driveDist(20);
-    turn(-90);
+    driveDist(15);
+    turn(-95);
 
-    LeftDT.move_voltage(4000);
-    RightDT.move_voltage(4000);
-    pros::delay(300);
+    LeftDT.move_voltage(-6000);
+    RightDT.move_voltage(-6000);
+    pros::delay(600);
     stopMotors();
+
+    long long timer = 0;
+    while(timer < MATCHLOAD_TIME) {
+        cata.move_voltage(12000 * 0.80);
+
+        timer += 10;
+        pros::delay(10);
+    }
+
+
 
 }
 
