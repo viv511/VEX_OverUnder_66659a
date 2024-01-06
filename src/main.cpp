@@ -53,6 +53,8 @@ void competition_initialize() {}
 void autonomous() {
 	skillz();
 	// offensiveSneak();
+	// offensiveRush();
+	// defenseRoute();
 }
 
 /**
