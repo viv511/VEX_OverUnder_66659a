@@ -13,4 +13,7 @@ float avgDist();
 Waypoint getCurrentPose();
 void setStart(float sX, float sY);
 
+float getLeft();
+float getRight();
+
 void set();

@@ -105,6 +105,16 @@ void tracking() {
     }
 }
 
+
+float getLeft() {
+    return leftAbsolute;
+}
+
+
+float getRight() {
+    return rightAbsolute;
+}
+
 void setStart(float sX, float sY) {
     robotPose.setX(sX);
     robotPose.setY(sY);

@@ -166,6 +166,7 @@ void opcontrol() {
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
 			// setStart(26.22, -38.55);
 			// followRoute("curve.txt", true);
+			turn(-45);
 		}
 
 		pros::delay(10);

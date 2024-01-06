@@ -102,7 +102,7 @@ void PID::turnLookupPID(float t) {
         setConstants(200, 0, t*26); //TUNED
     }
     else if(t <= 45) {
-        setConstants(250, 0, t*35); //TUNED
+        setConstants(250, 0, t*37); //TUNED
     }
     else if(t <= 60) {
         setConstants(300, 0, t*32); //TUNED

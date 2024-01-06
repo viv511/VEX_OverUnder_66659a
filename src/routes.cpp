@@ -46,100 +46,67 @@ void defenseRoute() {
 }
 
 void offensiveSneak() {
+
+    //step 1: drive forward a bit and intake
     intake.move_voltage(12000);
     LeftDT.move_voltage(12000 * 3/6);
     RightDT.move_voltage(12000 * 3/6);
     pros::delay(100);
     stopMotors();
-    driveDist(-48);
 
+    //step 2: drive backwards around corner to score triball #1
+    driveTime(-650);
     turn(-45);
     pros::delay(50);
-
     driveTime(-530);
-
     turn(-45);
     pros::delay(50);
-
     driveTime(-700);
     // +1 Balls
 
+    //step 3: turn around and release intake to score triball #2
     driveTime(200);
     pros::delay(50);
     turn(180);
-
     intake.move_voltage(-12000);
-
     pros::delay(200);
     driveTime(500);
     // +1 Ball
+
+    //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
     intake.move_voltage(0);
-
-    /*
-    past 8
-    */
-
-    driveDist(-17); //this point on the values in yellow (aka the #'s need to be tested)
-    turn(-70);
+    driveDist(-17); 
+    turn(-75); //important turn to face triball #3
     intake.move_voltage(12000);
-
     driveDist(67);
-
-
     turn(135);
     intake.move_voltage(-12000);
+    driveTime(150);
+    driveTime(-150);
 
-    //**
-    LeftDT.move_voltage(12000 * 4.5/6);
-    RightDT.move_voltage(12000 * 4.5/6);
-    pros::delay(450);
-    stopMotors();
-    pros::delay(250);
-    LeftDT.move_voltage(-12000 * 4.5/6);
-    RightDT.move_voltage(-12000 * 4.5/6);
-    pros::delay(150);
-    stopMotors();
-    //**
-
-    turn(-90);
-    
-    LeftDT.move_voltage(8000);
-    RightDT.move_voltage(8000);
-    pros::delay(300);
-    LeftDT.move_voltage(2000);
-    RightDT.move_voltage(12000);
-    pros::delay(350);
-    stopMotors();
-    
-    // intake.set_value(1);
-    
+    //step 5: swing around to triball #4, intake and release while opening wings for triball #5
+    turn(-65);
+    intake.move_voltage(12000);
+    driveTime(200);
+    swing(false, 40, 0.15);
+    driveTime(-150);
     turn(180);
-    pros::delay(150);
-
     wings.set_value(1);
-
     intake.move_voltage(-12000);
-    
     driveTime(2000);
-    wings.set_value(0);
-
+    
     controller.rumble("...");
 }
 
 void skillz() {
     const int MATCHLOAD_TIME = 0; //in ms
 
-    driveTime(-400);   
+    driveTime(-440);   
     turn(45);
     driveTime(-700);
-
-    driveDist(15);
-    turn(-95);
-
-    LeftDT.move_voltage(-6000);
-    RightDT.move_voltage(-6000);
-    pros::delay(600);
-    stopMotors();
+    swing(false, 37.69, 0);
+    driveDist(-30);
+    turn(10);
 
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
@@ -148,9 +115,23 @@ void skillz() {
         timer += 10;
         pros::delay(10);
     }
+    cata.move_voltage(0);
 
-
-
+    swing(true, 30, 0);
+    driveDist(20);
+    turn(-45);
+    driveDist(74);
+    turn(-90);
+    driveDist(20);
+    turn(-60);
+    driveDist(35);
+    turn(150);
+    wings.set_value(1);
+    driveTime(1000);
+    pros::delay(200);
+    driveDist(-30);
+    turn(-45);
+    driveTime(2000);
 }
 
 void offensiveRush() {

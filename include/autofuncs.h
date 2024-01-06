@@ -5,7 +5,7 @@
 
 using namespace pros;
 
-void swing(bool left, float d);
+void swing(bool left, float d, float otherMotor);
 void arc(float dist, float ang, float time);
 void driveDist(float d);
 void driveDist(float d, float limit);

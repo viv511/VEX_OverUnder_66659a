@@ -360,7 +360,7 @@ void goToPoint(float tX, float tY) {
     driveDist(distanceToTarget);
 }
 
-void swing(bool left, float d) {
+void swing(bool left, float d, float otherMotor) {
 
     set();
    
@@ -371,18 +371,18 @@ void swing(bool left, float d) {
 
     if(left) {
         while(!movePID.isSettled()) {
-            cur = avgDist();
+            cur = getLeft();
             float o = movePID.calculateOutput(cur);
             LeftDT.move_voltage(o);
-            RightDT.move_voltage(o);
+            RightDT.move_voltage(otherMotor*o);
             pros::delay(10);
         }
     }
     else {
         while(!movePID.isSettled()) {
-            cur = avgDist();
+            cur = getRight();
             float o = movePID.calculateOutput(cur);
-            LeftDT.move_voltage(o);
+            LeftDT.move_voltage(otherMotor*o);
             RightDT.move_voltage(o);
             pros::delay(10);
         }
