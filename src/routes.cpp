@@ -8,14 +8,15 @@ void defenseRoute() {
 
     //start with preload outside intake to the left
     intake.move_voltage(12000);
-    driveDist(48);
+    driveDist(49.5);
     wings.set_value(1);
     driveDist(-10);
-    turn(70);
+    turn(77);
     driveDist(20);
     intake.move_voltage(-12000);
     pros::delay(250);
     wings.set_value(0);
+    driveDist(-10);
     swing(true, -75, 0.05);
 
     intake.move_voltage(12000);
@@ -23,8 +24,11 @@ void defenseRoute() {
     swing(false, -60, 0);
     intake.move_voltage(-12000);
     pros::delay(100);
-    driveTime(1000);
+    driveTime(500);
 
+    //swing backwards and clockwise idk what the input is (around 75 degrees)
+    //swing()
+    driveTime(-100);
 
     // start alliance triball to the left of bot
 
