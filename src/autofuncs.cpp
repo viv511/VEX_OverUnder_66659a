@@ -368,32 +368,48 @@ void goToPoint(float tX, float tY) {
 // angle = angle bot is turning at (in degrees)
 // negative is rotating counterclockwise? positive is rotating clockwise? 
 // maxVel = the max velocity defaulting to 90 inches per second. this will need to be tuned depending on the turn.
-void swervePoint(float ICR_x, float ICR_y, float angle, float maxVel = 90){
+// direction: true = forward, false = backwards
+// left: if the ICR is to the left or right of the robot.
+void swervePoint(bool left = true, float ICR_x, float ICR_y, float angle, bool direction = true, float maxVel = 90){
     // botTHICKNESS
     float halfWidth = botTHICKNESS / 2;
 
     Waypoint currentPos = getCurrentPose();
 
-    float angle = angle * PI / 180.0;
-    float decelAngle = decelAngle * PI / 180.0;
     float R = distance(currentPos, Waypoint(ICR_x, ICR_y));
+    float w = maxVel / R;
+    float totalTime = 2 * PI / w; // Time to complete 1 rotation about ICR
+
     // Calculate the radius from the center of rotation to each wheel
-    float radiusL = R - halfWidth;
-    float radiusR = R + halfWidth;
+    float radiusL;
+    float radiusR;
+    if(left == true){
+        radiusL = R - halfWidth;
+        radiusR = R + halfWidth;
+    }
+    else{
+        radiusL = R + halfWidth;
+        radiusR = R - halfWidth;
+    }
 
-    float angularVelL = maxVel / radiusL;
-    float angularVelR = maxVel / radiusR;
-    float angularVelMax = max(angularVelL, angularVelR, maxVel / botTHICKNESS);
-    float scaleFactor = maxVel / angularVelMax;
+    float rVel = w * radiusR;
+    float lVel = w * radiusL;
 
-    angularVelL *= scaleFactor;
-    angularVelR *= scaleFactor;
 
-    float time = angle / angularVelMax;
+    float time = totalTime * angle / 360;
+    
+    float dirConst = 0;
 
-    LeftDT.move_voltage(12000 / maxVel * angularVelL);
-    RightDT.move_voltage(12000 / maxVel * angularVelL);
-    pros::delay(time * 1000 - 200);
+    if(direction == true){
+        dirConst = 1;
+    }
+    else{
+        dirConst = -1;
+    }
+
+    LeftDT.move_voltage(12000 / maxVel * lVel * dirConst);
+    RightDT.move_voltage(12000 / maxVel * rVel * dirConst);
+    pros::delay(time * 1000); //undershoot probably
     stopMotors();
     
 }
