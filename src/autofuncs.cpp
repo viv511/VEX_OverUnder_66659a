@@ -12,6 +12,9 @@ constexpr float PI = 3.14159265358979323846;
 constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
 
+constexpr float botTHICKNESS = 11.75; 
+
+
 float thetaPID = 160;
 PID movePID = PID(false, 1, 100, 3, 300, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
@@ -359,6 +362,42 @@ void goToPoint(float tX, float tY) {
     turn(targetTheta);
     driveDist(distanceToTarget);
 }
+
+
+// ICR = instantaneous center of rotation
+// angle = angle bot is turning at (in degrees)
+// negative is rotating counterclockwise? positive is rotating clockwise? 
+// maxVel = the max velocity defaulting to 90 inches per second. this will need to be tuned depending on the turn.
+void swervePoint(float ICR_x, float ICR_y, float angle, float maxVel = 90){
+    // botTHICKNESS
+    float halfWidth = botTHICKNESS / 2;
+
+    Waypoint currentPos = getCurrentPose();
+
+    float angle = angle * PI / 180.0;
+    float decelAngle = decelAngle * PI / 180.0;
+    float R = distance(currentPos, Waypoint(ICR_x, ICR_y));
+    // Calculate the radius from the center of rotation to each wheel
+    float radiusL = R - halfWidth;
+    float radiusR = R + halfWidth;
+
+    float angularVelL = maxVel / radiusL;
+    float angularVelR = maxVel / radiusR;
+    float angularVelMax = max(angularVelL, angularVelR, maxVel / botTHICKNESS);
+    float scaleFactor = maxVel / angularVelMax;
+
+    angularVelL *= scaleFactor;
+    angularVelR *= scaleFactor;
+
+    float time = angle / angularVelMax;
+
+    LeftDT.move_voltage(12000 / maxVel * angularVelL);
+    RightDT.move_voltage(12000 / maxVel * angularVelL);
+    pros::delay(time * 1000 - 200);
+    stopMotors();
+    
+}
+
 
 void swing(bool left, float d, float otherMotor) {
 
