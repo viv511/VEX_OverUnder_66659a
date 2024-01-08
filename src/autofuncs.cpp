@@ -370,15 +370,24 @@ void goToPoint(float tX, float tY) {
 // maxVel = the max velocity defaulting to 90 inches per second. this will need to be tuned depending on the turn.
 // direction: true = forward, false = backwards
 // left: if the ICR is to the left or right of the robot.
-void swervePoint(bool left = true, float ICR_x, float ICR_y, float angle, bool direction = true, float maxVel = 90){
+void swervePoint(bool left, float ICR_x, float ICR_y, float angle, bool direction, float maxVel){
     // botTHICKNESS
     float halfWidth = botTHICKNESS / 2;
 
     Waypoint currentPos = getCurrentPose();
+    float currentX = getLeft();
+    float currentY = getRight();
 
-    float R = distance(currentPos, Waypoint(ICR_x, ICR_y));
+
+    float R = sqrt((ICR_x - currentX) * (ICR_x - currentX) + (ICR_y - currentY) * (ICR_y - currentY));
+
+    
+    lcd::print(4, "R: %f\n", R);
+
     float w = maxVel / R;
     float totalTime = 2 * PI / w; // Time to complete 1 rotation about ICR
+    
+    lcd::print(7, "total time: %f\n", totalTime);
 
     // Calculate the radius from the center of rotation to each wheel
     float radiusL;
@@ -409,6 +418,10 @@ void swervePoint(bool left = true, float ICR_x, float ICR_y, float angle, bool d
 
     LeftDT.move_voltage(12000 / maxVel * lVel * dirConst);
     RightDT.move_voltage(12000 / maxVel * rVel * dirConst);
+    
+    lcd::print(5, "left: %f\n", 12000 / maxVel * lVel * dirConst);
+    
+    lcd::print(6, "right: %f\n", 12000 / maxVel * rVel * dirConst);
     pros::delay(time * 1000); //undershoot probably
     stopMotors();
     

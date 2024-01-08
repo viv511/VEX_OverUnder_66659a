@@ -51,8 +51,8 @@ void competition_initialize() {}
  */
 void autonomous()
 {
-	// skillz();
-	offensiveSneak();
+	skillz();
+	// offensiveSneak();
 	// offensiveRush();
 	// defenseRoute();
 }
@@ -182,11 +182,12 @@ void opcontrol()
 			elev.set_value(false);
 		}
 
-		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-		// 	// setStart(26.22, -38.55);
-		// 	// followRoute("curve.txt", true);
-		// 	turn(-45);
-		// }
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+			// setStart(26.22, -38.55);
+			// followRoute("curve.txt", true);
+			// turn(-45);
+			swervePoint(true, 0, 0, 90, true, 90);
+		}
 
 		pros::delay(10);
 	}

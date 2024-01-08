@@ -56,7 +56,7 @@ void tracking() {
     initializeTracking();
 
     while(true) {
-        currentAngle = inertial.get_rotation() * degToRad;
+        currentAngle = inertial.get_rotation();
         leftCurrent = leftRot.get_position() * -1;
         rightCurrent = rightRot.get_position();
 
@@ -75,20 +75,22 @@ void tracking() {
         deltaDist = (leftChange + rightChange)/2;
         deltaTheta = (currentAngle - lastTheta);
 
-        // float distTravelled = distance(robotPose, lastRobotPose);
+        float distTravelled = distance(robotPose, lastRobotPose);
 
-        // robotPose.x += (sin(currentAngle) * deltaDist);
-        // robotPose.y += (cos(currentAngle) * deltaDist);
-        // robotPose.setTheta(currentAngle);
-        // robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
+        robotPose.x += (sin(currentAngle) * deltaDist);
+        robotPose.y += (cos(currentAngle) * deltaDist);
+        robotPose.setTheta(currentAngle);
+        robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
 
-        // float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
-        // prevVel = robotPose.getVel();
+        float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
+        prevVel = robotPose.getVel();
 
-        // lastRobotPose.setX(robotPose.getX());
-        // lastRobotPose.setY(robotPose.getY());
+        lastRobotPose.setX(robotPose.getX());
+        lastRobotPose.setY(robotPose.getY());
 
         lastTheta = currentAngle;
+
+        deltaTheta *= degToRad;
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
@@ -96,8 +98,8 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", leftAbsolute);
-        lcd::print(2, "Y: %f\n", rightAbsolute);
+		lcd::print(1, "X: %f\n", robotPose.x);
+        lcd::print(2, "Y: %f\n", robotPose.y);
         lcd::print(3, "Inertial: %f\n", robotPose.theta * radToDeg);
 
         delay(TIME_INTERVAL);

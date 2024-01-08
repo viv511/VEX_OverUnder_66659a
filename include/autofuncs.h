@@ -23,4 +23,6 @@ void moveToPoint(Waypoint target, bool isReversed);
 
 void goToPoint(float tX, float tY);
 
+void swervePoint(bool left, float ICR_x, float ICR_y, float angle, bool direction, float maxVel);
+
 #endif
