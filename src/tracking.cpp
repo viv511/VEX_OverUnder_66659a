@@ -24,7 +24,7 @@ float rightLast = 0;
 float deltaDist = 0;
 float deltaTheta = 0;
 
-float lastTheta = 0;
+float lastAngle = 0;
 float currentAngle = 0;
 
 Waypoint robotPose = Waypoint(0, 0, 0);
@@ -56,12 +56,12 @@ void tracking() {
     initializeTracking();
 
     while(true) {
-        currentAngle = inertial.get_rotation();
-        leftCurrent = leftRot.get_position() * -1;
+        currentAngle = inertial.get_rotation() * degToRad;
+        leftCurrent = leftRot.get_position() * -1; // not sure why
         rightCurrent = rightRot.get_position();
 
-        leftChange = (leftCurrent - leftLast) * RATIO;
-        rightChange = (rightCurrent - rightLast) * RATIO;
+        leftChange = (leftCurrent - leftLast);
+        rightChange = (rightCurrent - rightLast);
 
         /*
         Approximating X and Y position using two parallel wheels:
@@ -72,25 +72,23 @@ void tracking() {
         By calculating the angular offset and applying sin and cos to theta, we find the offset in x and y.
         */
 
-        deltaDist = (leftChange + rightChange)/2;
-        deltaTheta = (currentAngle - lastTheta);
+        deltaDist = (leftChange + rightChange) / 2 * RATIO;
+        deltaTheta = (currentAngle - lastAngle);
 
         float distTravelled = distance(robotPose, lastRobotPose);
 
         robotPose.x += (sin(currentAngle) * deltaDist);
         robotPose.y += (cos(currentAngle) * deltaDist);
-        robotPose.setTheta(currentAngle);
-        robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
+        robotPose.setTheta(currentAngle * radToDeg);
+        // robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
 
-        float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
-        prevVel = robotPose.getVel();
+        // float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
+        // prevVel = robotPose.getVel();
 
         lastRobotPose.setX(robotPose.getX());
         lastRobotPose.setY(robotPose.getY());
 
-        lastTheta = currentAngle;
-
-        deltaTheta *= degToRad;
+        lastAngle = currentAngle;
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
@@ -100,7 +98,7 @@ void tracking() {
 
 		lcd::print(1, "X: %f\n", robotPose.x);
         lcd::print(2, "Y: %f\n", robotPose.y);
-        lcd::print(3, "Inertial: %f\n", robotPose.theta * radToDeg);
+        lcd::print(3, "Inertial: %f\n", robotPose.theta);
 
         delay(TIME_INTERVAL);
 
