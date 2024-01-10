@@ -41,7 +41,8 @@ void driveDist(float d) {
 }
 
 void driveDist(float d, float limit) {
-    set();
+    LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+    RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
    
     float cur = avgDist();
     float tAng = inertial.get_rotation();
@@ -77,20 +78,9 @@ void driveTime(int time) {
 float expectedAngle = 0;
 
 void turn(float ang) {
-    // set inertial to 0 at the start of each route instead of each turn  
-    inertial.set_rotation(0);
+
     LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
     RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-
-    //Michael im sorry it doesnt work i dont have time to debug sry
-    // expectedAngle += ang;
-    // float turnAngle = expectedAngle - inertial.get_rotation();
-    // while (turnAngle <= -180) { // ensures it lies between -180 and 180
-    //     turnAngle += 360;
-    // }
-    // while (turnAngle > 180) {
-    //     turnAngle -= 360;
-    // }
 
     turnPID.setTarget(ang);
     while(!turnPID.isSettled()) {
@@ -256,37 +246,37 @@ void arc(float dist, float ang, float time) {
 
 //pivot func
 
-// void pivot(double angle) {
-//     //theta = total turn
-//     //angle = target angle (0 to 360 degrees)
-//     //startAngle = current angle of robot -inf < degrees < inf
-//     double theta = 0;
-//     double startAngle = inertial.get_rotation();
+void pivot(double angle) {
+    //theta = total turn
+    //angle = target angle (0 to 360 degrees)
+    //startAngle = current angle of robot -inf < degrees < inf
+    double theta = 0;
+    double startAngle = inertial.get_rotation();
 
-//     // startAngle mod stuff - getting relative to (0 to 360 degrees)
-//     int quotient;
-//     if(startAngle < 0){
-//         quotient = -1 * int(startAngle / 360) + 1;
-//         startAngle = startAngle + quotient * 360;
-//     }
-//     else{
-//         quotient = int(startAngle / 360);
-//         startAngle = startAngle - quotient * 360;
-//     }
+    // startAngle mod stuff - getting relative to (0 to 360 degrees)
+    int quotient;
+    if(startAngle < 0){
+        quotient = -1 * int(startAngle / 360) + 1;
+        startAngle = startAngle + quotient * 360;
+    }
+    else{
+        quotient = int(startAngle / 360);
+        startAngle = startAngle - quotient * 360;
+    }
 
-//     // target angle fr
-//     theta = angle - startAngle;
-//     if(fabs(theta) >= 180){
-//         if(theta > 0){
-//             theta = -1 * (360 - theta);
-//         }
-//         else{
-//             theta = 360 + theta;
-//         }
-//     }
+    // target angle fr
+    theta = angle - startAngle;
+    if(fabs(theta) >= 180){
+        if(theta > 0){
+            theta = -1 * (360 - theta);
+        }
+        else{
+            theta = 360 + theta;
+        }
+    }
 
-//     turn(theta);
-// }
+    turn(theta);
+}
 
 void arcade(double a, double b){
     double leftPower = (a+b);
@@ -359,7 +349,7 @@ void goToPoint(float tX, float tY) {
     float distanceToTarget = distance(currentPos, target);
     float targetTheta = angle(currentPos, target);
 
-    turn(targetTheta);
+    pivot(targetTheta);
     driveDist(distanceToTarget);
 }
 

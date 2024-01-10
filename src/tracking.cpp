@@ -96,9 +96,9 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", robotPose.x);
-        lcd::print(2, "Y: %f\n", robotPose.y);
-        lcd::print(3, "Inertial: %f\n", robotPose.theta);
+		lcd::print(1, "X: %f\n", robotPose.getX());
+        lcd::print(2, "Y: %f\n", robotPose.getY());
+        lcd::print(3, "Inertial: %f\n", robotPose.getTheta());
 
         delay(TIME_INTERVAL);
 
