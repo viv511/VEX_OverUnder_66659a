@@ -186,7 +186,12 @@ void opcontrol()
 			// setStart(26.22, -38.55);
 			// followRoute("curve.txt", true);
 			// turn(-45);
-			swervePoint(true, 0, 0, 90, true, 90);
+			// swervePoint(true, 0, 0, 90, true, 90);
+			goToPoint(15, 0);
+			goToPoint(0, 15);
+			goToPoint(0, 0);
+			// driveDist(20);
+			//moveToPoint(Waypoint(20, 20), false);
 		}
 
 		pros::delay(10);

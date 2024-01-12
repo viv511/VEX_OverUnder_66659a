@@ -296,7 +296,7 @@ void moveToPoint(Waypoint target, bool isReversed) {
 
         currentX = currentPos.x;
         currentY = currentPos.y;
-        currentTheta = currentPos.theta * radToDeg;
+        currentTheta = currentPos.theta;
 
         if (isReversed) {
             currentTheta -= 180;
@@ -347,6 +347,8 @@ void goToPoint(float tX, float tY) {
     Waypoint currentPos = getCurrentPose();
 
     float distanceToTarget = distance(currentPos, target);
+    
+    lcd::print(4, "distance to target: %f\n", distanceToTarget);
     float targetTheta = angle(currentPos, target);
 
     pivot(targetTheta);

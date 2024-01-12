@@ -57,11 +57,11 @@ void tracking() {
 
     while(true) {
         currentAngle = inertial.get_rotation() * degToRad;
-        leftCurrent = leftRot.get_position() * -1; // not sure why
+        leftCurrent = leftRot.get_position() * -1; // rotation sensors are flipped
         rightCurrent = rightRot.get_position();
 
-        leftChange = (leftCurrent - leftLast);
-        rightChange = (rightCurrent - rightLast);
+        leftChange = (leftCurrent - leftLast) * RATIO;
+        rightChange = (rightCurrent - rightLast) * RATIO;
 
         /*
         Approximating X and Y position using two parallel wheels:
@@ -72,7 +72,7 @@ void tracking() {
         By calculating the angular offset and applying sin and cos to theta, we find the offset in x and y.
         */
 
-        deltaDist = (leftChange + rightChange) / 2 * RATIO;
+        deltaDist = (leftChange + rightChange) / 2;
         deltaTheta = (currentAngle - lastAngle);
 
         float distTravelled = distance(robotPose, lastRobotPose);
@@ -96,9 +96,9 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", robotPose.getX());
-        lcd::print(2, "Y: %f\n", robotPose.getY());
-        lcd::print(3, "Inertial: %f\n", robotPose.getTheta());
+		lcd::print(1, "X: %f\n", robotPose.x);
+        lcd::print(2, "Y: %f\n", robotPose.y);
+        lcd::print(3, "Inertial: %f\n", robotPose.theta);
 
         delay(TIME_INTERVAL);
 
