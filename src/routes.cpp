@@ -145,16 +145,17 @@ void skillz() {
     cata.move_voltage(0);
 
     swing(true, 21, 0);
-
     driveDist(35);
     turn(-46);
+    // optimize this part using circular arc of like 60 degrees
+
     driveDist(103);
     turn(-90);
-
     LeftDT.move_voltage(-6000);
     RightDT.move_voltage(-6000);
     pros::delay(400);
     stopMotors();
+    // use another circular arc here? 
 
     driveDist(40);
     turn(-50);
@@ -168,6 +169,7 @@ void skillz() {
     turn(-30);
     wings.set_value(1);
     driveTime(1500);
+    //adjust this part based on matchloading
 }
 
 void offensiveRush() {
