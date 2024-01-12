@@ -82,7 +82,7 @@ void turn(float ang) {
     LeftDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
     RightDT.set_brake_modes(E_MOTOR_BRAKE_HOLD);
 
-    turnPID.setTarget(ang);
+    turnPID.setTarget(ang + inertial.get_rotation());
     while(!turnPID.isSettled()) {
         float turnSpeed = turnPID.calculateOutput(inertial.get_rotation());
 
@@ -357,7 +357,7 @@ void goToPoint(float tX, float tY) {
 
 
 // ICR = instantaneous center of rotation
-// angle = angle bot is turning at (in degrees)
+// angle = angle bot is turning at (in degrees) 
 // negative is rotating counterclockwise? positive is rotating clockwise? 
 // maxVel = the max velocity defaulting to 90 inches per second. this will need to be tuned depending on the turn.
 // direction: true = forward, false = backwards

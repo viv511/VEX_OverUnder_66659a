@@ -23,7 +23,7 @@ extern Rotation rightRot;
 
 extern ADIDigitalOut wings;
 extern ADIDigitalOut elev;
-extern ADIDigitalOut blocker;
+// extern ADIDigitalOut blocker;
 
 extern Motor_Group LeftDT;
 extern Motor_Group RightDT;

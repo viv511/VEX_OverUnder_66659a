@@ -7,7 +7,9 @@ using namespace pros;
 
 void defenseRoute();
 void offensiveSneak();
-void skillz();
+void skillz1();
+
+void skillz2();
 void offensiveRush();
 
 #endif

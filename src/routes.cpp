@@ -125,31 +125,36 @@ void offensiveSneak() {
     controller.rumble("...");
 }
 
-void skillz() {
+void skillz1() {
+    intake.move_velocity(12000);
     const int MATCHLOAD_TIME = 37000; //in ms
 
     driveTime(-440);   
-    turn(45);
+    intake.move_velocity(0);
+
+    pivot(45);
     driveTime(-700);
     swing(false, 37.69, 0);
     driveDist(-30);
-    turn(10);
 
-    long long timer = 0;
-    while(timer < MATCHLOAD_TIME) {
-        cata.move_voltage(12000 * 0.70);
+    delay(2000);
+    // long long timer = 0;
+    // while(timer < MATCHLOAD_TIME) {
+    //     cata.move_voltage(12000 * 0.70);
 
-        timer += 10;
-        pros::delay(10);
-    }
-    cata.move_voltage(0);
-
-    swing(true, 21, 0);
-    driveDist(35);
-    turn(-46);
+    //     timer += 10;
+    //     pros::delay(10);
+    // }
+    // cata.move_voltage(0);
+    pivot(0);
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(5000);
+    delay(700);
+    stopMotors();
+    
+    driveDist(90);
+    // turn(-46);
     // optimize this part using circular arc of like 60 degrees
-
-    driveDist(103);
     turn(-90);
     LeftDT.move_voltage(-6000);
     RightDT.move_voltage(-6000);
@@ -170,6 +175,65 @@ void skillz() {
     wings.set_value(1);
     driveTime(1500);
     //adjust this part based on matchloading
+}
+void skillz2(){
+    intake.move_velocity(12000);
+    wings.set_value(1);
+    pros::delay(200);
+    intake.move_velocity(0);
+    wings.set_value(0);
+    pivot(135);
+    driveDist(-32);
+    pivot(75);
+    LeftDT.move_voltage(-12000*0.5);
+    RightDT.move_voltage(-12000*0.5);
+    pros::delay(750);
+
+    const int MATCHLOAD_TIME = 37000; //in ms
+    // long long timer = 0;
+    // while(timer < MATCHLOAD_TIME) {
+    //     cata.move_voltage(12000 * 0.70);
+
+    //     timer += 10;
+    //     pros::delay(10);
+    // }
+    // cata.move_voltage(0);
+
+    pros::delay(2000);
+
+    pivot(180);
+    driveTime(-650);
+    driveTime(250);
+    driveTime(-700);
+    
+    LeftDT.move_voltage(12000*0.8);
+    RightDT.move_voltage(12000*0.8);
+    pros::delay(100);
+    stopMotors();
+    
+    //pivot(180);
+
+    RightDT.move_voltage(9000);
+    LeftDT.move_voltage(3750);
+    delay(600);
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(5000);
+    delay(550);
+    stopMotors();
+    pivot(90);
+    driveDist(90);
+
+    pivot(-135);
+    driveDist(-30);
+    pivot(180);
+    
+    driveTime(-500);
+    driveTime(250);
+    driveTime(-600);
+    driveDist(-10);
+    //pivot(-70);
+
+
 }
 
 void offensiveRush() {

@@ -9,7 +9,7 @@
 void initialize()
 {
 	wings.set_value(false);
-	blocker.set_value(false);
+	// blocker.set_value(false);
 	elev.set_value(false);
 
 	pros::lcd::initialize();
@@ -51,7 +51,8 @@ void competition_initialize() {}
  */
 void autonomous()
 {
-	skillz();
+
+	skillz2();
 	// offensiveSneak();
 	// offensiveRush();
 	// defenseRoute();
@@ -113,7 +114,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			cata.move_voltage(12000 * 0.70);
+			cata.move_voltage(12000 * 0.90);
 		}
 		else
 		{
@@ -144,31 +145,31 @@ void opcontrol()
 			intake.move_voltage(0);
 		}
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast)
-		{
-			blockerState = !blockerState;
-			blockerLast = true;
-		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
-		{
-			blockerLast = false;
-		}
+		// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast)
+		// {
+		// 	blockerState = !blockerState;
+		// 	blockerLast = true;
+		// }
+		// else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
+		// {
+		// 	blockerLast = false;
+		// }
 
-		if (blockerState)
-		{
-			blocker.set_value(true);
-		}
-		else
-		{
-			blocker.set_value(false);
-		}
+		// if (blockerState)
+		// {
+		// 	blocker.set_value(true);
+		// }
+		// else
+		// {
+		// 	blocker.set_value(false);
+		// }
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
 		{
 			elevationState = !elevationState;
 			elevationLast = true;
 		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
 		{
 			elevationLast = false;
 		}
@@ -181,16 +182,20 @@ void opcontrol()
 		{
 			elev.set_value(false);
 		}
-
+	
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
 			// setStart(26.22, -38.55);
 			// followRoute("curve.txt", true);
 			// turn(-45);
 			// swervePoint(true, 0, 0, 90, true, 90);
-			goToPoint(15, 0);
-			goToPoint(0, 15);
-			goToPoint(0, 0);
-			// driveDist(20);
+			// RightDT.move_voltage(12000);
+			// LeftDT.move_voltage(5000);
+			// delay(550);
+			// stopMotors();
+			// driveDist(30);
+			pivot(135);
+			delay(500);
+			pivot(75);
 			//moveToPoint(Waypoint(20, 20), false);
 		}
 
