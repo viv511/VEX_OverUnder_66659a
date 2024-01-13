@@ -19,7 +19,7 @@ Rotation leftRot(11);
 Rotation rightRot(12);
 
 //think these are ok
-ADIDigitalOut wings('B');
+ADIDigitalOut wings('C');
 ADIDigitalOut elev('A');
 // ADIDigitalOut blocker('C');
 

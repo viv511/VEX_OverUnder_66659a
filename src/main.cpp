@@ -115,7 +115,7 @@ void opcontrol()
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
 			
-			cata.move_voltage(12000 * 0.85);
+			cata.move_voltage(12000 * 0.77);
 		}
 		else
 		{
@@ -182,6 +182,22 @@ void opcontrol()
 		else
 		{
 			elev.set_value(false);
+		}
+
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
+		{
+			intake.move_velocity(12000);
+			wings.set_value(1);
+			pros::delay(200);
+			wings.set_value(0);
+			pivot(135);
+			intake.move_velocity(0);
+			driveDist(-34);
+			pivot(75);
+			LeftDT.move_voltage(-12000*0.5);
+			RightDT.move_voltage(-12000*0.5);
+			delay(300);
+			stopMotors();
 		}
 	
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {

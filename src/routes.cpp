@@ -190,10 +190,10 @@ void skillz2(){
     RightDT.move_voltage(-12000*0.5);
     pros::delay(750);
 
-    const int MATCHLOAD_TIME = 0; //in ms
+    const int MATCHLOAD_TIME = 0; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
-        cata.move_voltage(12000 * 0.80);
+        cata.move_voltage(12000 * 0.74);
 
         timer += 10;
         pros::delay(10);
@@ -202,7 +202,7 @@ void skillz2(){
 
     driveTime(70);
 
-    pivot(180);
+    pivot(179);
     driveTime(-650);
     driveTime(250);
     driveTime(-700);
@@ -237,32 +237,36 @@ void skillz2(){
     //pivot(-70);
 
     driveDist(15);
-    pivot(-85);
-    driveDist(50);
+    pivot(-80);
+    driveDist(60);
     pivot(0);
+    driveTime(200);
 
     wings.set_value(1);
 
     //Push triballs in goal (middle) (x1)
     LeftDT.move_voltage(12000);
-    RightDT.move_voltage(7000);
-    pros::delay(1800);
-    stopMotors();
-
+    RightDT.move_voltage(1500);
+    pros::delay(600);
+    stopMotors(); 
+    driveTime(550);
     pivot(90);
     wings.set_value(0);
 
     driveDist(-50);
 
     pivot(0);
+    driveTime(300);
     wings.set_value(1);
 
     //Push triballs in goal (middle) (x2)
 
     LeftDT.move_voltage(12000);
-    RightDT.move_voltage(7000);
-    pros::delay(1800);
+    RightDT.move_voltage(1500);
+    pros::delay(550);
     stopMotors();
+    driveTime(500);
+    pivot(90);
 
 
 }
@@ -275,48 +279,51 @@ void offensiveRush() {
     
     //step 2: pick up triball #1, put it in front of goal, push #1 and #2 into goal
     intake.move_voltage(12000);
-    driveDist(55);
+    driveDist(70);
     pros::delay(200);
-    turn(135);
-    intake.move_voltage(-12000);
+    pivot(135);
+
     wings.set_value(1);
-    driveDist(32);
+
+    intake.move_voltage(-12000);
+    driveDist(40);
 
     //step 3: pick up triball #3, throw it near goal
     driveDist(-30);
-    turn(120);
+    pivot(-90);
+
     intake.move_voltage(12000);
-    driveDist(20);
-    turn(-80);
-    driveDist(41);
+    driveDist(30);
+
+    pivot(90);
+
+    driveDist(50);
+
+    pivot(135);
+
     intake.move_voltage(-12000);
-    driveTime(200);
-    driveTime(-200);
+    
+    driveDist(-30);
 
     //step 4: drive to triball #4 and intake
-    turn(120);
-    driveDist(10);
-    turn(90);
-    driveDist(32);
+
+    pivot(45);
+
+    driveDist(-60);
+    pivot(-45);
+
     intake.move_voltage(12000);
-    
-    //step 5: drive around corner to push preload and #3 in goal
-    driveTime(-650);
-    turn(-45);
-    pros::delay(50);
-    driveTime(-530);
-    turn(-45);
-    pros::delay(50);
-    driveTime(-700);
 
-    //step 6: turn around and release intake to score triball #4
-    driveTime(200);
-    pros::delay(50);
-    turn(180);
-    intake.move_voltage(-12000);
-    pros::delay(200);
+    driveDist(32);
+
+    driveDist(-50);
+
+    pivot(-90);
+    driveDist(-30);
+    pivot(-135);
+    driveTime(-1500);
     driveTime(500);
+    pivot(45);
+    intake.move_voltage(-12000);
+    driveTime(2000);
 }
-
-
-//			arc(1000, 650, 1); this might work
