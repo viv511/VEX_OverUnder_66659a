@@ -5,6 +5,8 @@
 
 using namespace pros;
 
+void disrupt();
+void defensivePush();
 void defenseRoute();
 void offensiveSneak();
 void skillz1();

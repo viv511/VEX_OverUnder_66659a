@@ -96,8 +96,8 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", robotPose.x);
-        lcd::print(2, "Y: %f\n", robotPose.y);
+		lcd::print(1, "X: %f\n", leftAbsolute);
+        lcd::print(2, "Y: %f\n", rightAbsolute);
         lcd::print(3, "Inertial: %f\n", robotPose.theta);
 
         delay(TIME_INTERVAL);

@@ -4,6 +4,20 @@
 
 using namespace pros;
 
+void disrupt(){
+    driveTime(-5000);
+    while(true){
+        pivot(180);
+        pivot(0);
+    }
+}
+
+void defensivePush(){
+    driveDist(-16);
+    pivot(45);
+    driveTime(-15000);
+}
+
 void defenseRoute() {
 
     //start with preload outside intake to the left
@@ -72,13 +86,14 @@ void defenseRoute() {
 void offensiveSneak() {
 
     //step 1: drive forward a bit and intake
-    intake.move_voltage(12000);
+    intake.move_voltage(12000); 
     LeftDT.move_voltage(12000 * 3/6);
     RightDT.move_voltage(12000 * 3/6);
     pros::delay(100);
     stopMotors();
 
     //step 2: drive backwards around corner to score triball #1
+    pros::delay(200);
     driveTime(-650);
     
     LeftDT.move_voltage(-9000);
@@ -124,57 +139,57 @@ void offensiveSneak() {
     controller.rumble("...");
 }
 
-void skillz1() {
-    intake.move_velocity(12000);
-    const int MATCHLOAD_TIME = 37000; //in ms
+// void skillz1() {
+//     intake.move_velocity(12000);
+//     const int MATCHLOAD_TIME = 37000; //in ms
 
-    driveTime(-440);   
-    intake.move_velocity(0);
+//     driveTime(-440);   
+//     intake.move_velocity(0);
 
-    pivot(45);
-    driveTime(-700);
-    swing(false, 37.69, 0);
-    driveDist(-30);
+//     pivot(45);
+//     driveTime(-700);
+//     swing(false, 37.69, 0);
+//     driveDist(-30);
 
-    delay(2000);
-    // long long timer = 0;
-    // while(timer < MATCHLOAD_TIME) {
-    //     cata.move_voltage(12000 * 0.70);
+//     delay(2000);
+//     // long long timer = 0;
+//     // while(timer < MATCHLOAD_TIME) {
+//     //     cata.move_voltage(12000 * 0.70);
 
-    //     timer += 10;
-    //     pros::delay(10);
-    // }
-    // cata.move_voltage(0);
-    pivot(0);
-    RightDT.move_voltage(12000);
-    LeftDT.move_voltage(5000);
-    delay(700);
-    stopMotors();
+//     //     timer += 10;
+//     //     pros::delay(10);
+//     // }
+//     // cata.move_voltage(0);
+//     pivot(0);
+//     RightDT.move_voltage(12000);
+//     LeftDT.move_voltage(5000);
+//     delay(700);
+//     stopMotors();
     
-    driveDist(90);
-    // turn(-46);
-    // optimize this part using circular arc of like 60 degrees
-    turn(-90);
-    LeftDT.move_voltage(-6000);
-    RightDT.move_voltage(-6000);
-    pros::delay(400);
-    stopMotors();
-    // use another circular arc here? 
+//     driveDist(90);
+//     // turn(-46);
+//     // optimize this part using circular arc of like 60 degrees
+//     turn(-90);
+//     LeftDT.move_voltage(-6000);
+//     RightDT.move_voltage(-6000);
+//     pros::delay(400);
+//     stopMotors();
+//     // use another circular arc here? 
 
-    driveDist(40);
-    turn(-50);
-    driveDist(40);
-    turn(140);
-    wings.set_value(1);
-    driveTime(1500);
-    wings.set_value(0);
-    pros::delay(200);
-    driveDist(-40);
-    turn(-30);
-    wings.set_value(1);
-    driveTime(1500);
-    //adjust this part based on matchloading
-}
+//     driveDist(40);
+//     turn(-50);
+//     driveDist(40);
+//     turn(140);
+//     wings.set_value(1);
+//     driveTime(1500);
+//     wings.set_value(0);
+//     pros::delay(200);
+//     driveDist(-40);
+//     turn(-30);
+//     wings.set_value(1);
+//     driveTime(1500);
+//     //adjust this part based on matchloading
+// }
 
 void skillz2(){
     intake.move_velocity(12000);
@@ -185,22 +200,37 @@ void skillz2(){
     intake.move_velocity(0);
 
     driveDist(-34);
-    pivot(75);
-    LeftDT.move_voltage(-12000*0.5);
-    RightDT.move_voltage(-12000*0.5);
+    pivot(67);
+    LeftDT.move_voltage(-12000*0.4);
+    RightDT.move_voltage(-12000*0.4);
     pros::delay(750);
+    stopMotors();
 
-    const int MATCHLOAD_TIME = 0; //in ms (30000)
+    elev.set_value(1);
+    const int MATCHLOAD_TIME = 29000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
-        cata.move_voltage(12000 * 0.74);
+        cata.move_voltage(12000 * 0.82);
 
         timer += 10;
         pros::delay(10);
+        inertial.set_rotation(72);
+         LeftDT.move_voltage(-12000*0.25);
+    RightDT.move_voltage(-12000*0.25);
     }
     cata.move_voltage(0);
+    stopMotors();
+
+    pros::delay(50);
+    elev.set_value(0);
+
+    inertial.set_rotation(72);
 
     driveTime(70);
+
+    pros::delay(50);
+
+    inertial.set_rotation(72);
 
     pivot(179);
     driveTime(-650);
@@ -216,19 +246,19 @@ void skillz2(){
 
     RightDT.move_voltage(9000);
     LeftDT.move_voltage(3750);
-    delay(600);
+    delay(550);
     RightDT.move_voltage(12000);
     LeftDT.move_voltage(5000);
-    delay(550);
+    delay(450);
     stopMotors();
 
     delay(150);
 
     pivot(90);
-    driveDist(90);
+    driveDist(93);
 
     pivot(-135);
-    driveDist(-45); //
+    driveDist(-47); //
     pivot(180);
     
     driveTime(-1500);
@@ -236,9 +266,9 @@ void skillz2(){
     driveTime(-1000);
     //pivot(-70);
 
-    driveDist(15);
-    pivot(-80);
-    driveDist(60);
+    driveDist(30);
+    pivot(-70);
+    driveDist(65);
     pivot(0);
     driveTime(200);
 
@@ -247,7 +277,7 @@ void skillz2(){
     //Push triballs in goal (middle) (x1)
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(1500);
-    pros::delay(600);
+    pros::delay(500);
     stopMotors(); 
     driveTime(550);
     pivot(90);
@@ -263,7 +293,7 @@ void skillz2(){
 
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(1500);
-    pros::delay(550);
+    pros::delay(450);
     stopMotors();
     driveTime(500);
     pivot(90);

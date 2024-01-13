@@ -9,7 +9,7 @@
 void initialize()
 {
 	wings.set_value(false);
-	backWing.set_value(false);
+	// backWing.set_value(false);
 	// blocker.set_value(false);
 	elev.set_value(false);
 
@@ -52,16 +52,19 @@ void competition_initialize() {}
  */
 void autonomous()
 {
+	// defensivePush();
 	// skillz2();
+	// disrupt();
 	offensiveSneak();
 
+// 
 
 	// offensiveRush();
 	// defenseRoute();
 }
 
 /**
- * Runs the operator control code. This function will be started in its own task
+ * Runs the operator control code. This function will be started in its own task	
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
@@ -116,7 +119,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			cata.move_voltage(12000 * 0.74);
+			cata.move_voltage(12000 * 0.83);
 		}
 		else
 		{
@@ -148,12 +151,12 @@ void opcontrol()
 		}
 
 		
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
-			backWing.set_value(1);
-		}
-		else {
-			backWing.set_value(0);
-		}
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+		// 	backWing.set_value(1);
+		// }
+		// else {
+		// 	backWing.set_value(0);
+		// }
 
 		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
 		{
@@ -182,12 +185,10 @@ void opcontrol()
 			wings.set_value(0);
 			pivot(135);
 			intake.move_velocity(0);
+
 			driveDist(-34);
-			pivot(75);
-			LeftDT.move_voltage(-12000*0.5);
-			RightDT.move_voltage(-12000*0.5);
-			delay(300);
-			stopMotors();
+			pivot(67);
+
 		}
 	
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
@@ -202,7 +203,9 @@ void opcontrol()
 			// driveDist(30);
 			pivot(135);
 			delay(500);
-			pivot(75);
+			pivot(72);
+			delay(500);
+    		pivot(179);
 			//moveToPoint(Waypoint(20, 20), false);
 		}
 
