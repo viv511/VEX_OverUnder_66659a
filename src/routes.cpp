@@ -180,34 +180,35 @@ void skillz2(){
     intake.move_velocity(12000);
     wings.set_value(1);
     pros::delay(200);
-    intake.move_velocity(0);
     wings.set_value(0);
     pivot(135);
-    driveDist(-32);
+    intake.move_velocity(0);
+
+    driveDist(-34);
     pivot(75);
     LeftDT.move_voltage(-12000*0.5);
     RightDT.move_voltage(-12000*0.5);
     pros::delay(750);
 
-    const int MATCHLOAD_TIME = 37000; //in ms
-    // long long timer = 0;
-    // while(timer < MATCHLOAD_TIME) {
-    //     cata.move_voltage(12000 * 0.70);
+    const int MATCHLOAD_TIME = 0; //in ms
+    long long timer = 0;
+    while(timer < MATCHLOAD_TIME) {
+        cata.move_voltage(12000 * 0.80);
 
-    //     timer += 10;
-    //     pros::delay(10);
-    // }
-    // cata.move_voltage(0);
+        timer += 10;
+        pros::delay(10);
+    }
+    cata.move_voltage(0);
 
-    pros::delay(2000);
+    driveTime(70);
 
     pivot(180);
     driveTime(-650);
     driveTime(250);
     driveTime(-700);
     
-    LeftDT.move_voltage(12000*0.8);
-    RightDT.move_voltage(12000*0.8);
+    LeftDT.move_voltage(12000*0.75);
+    RightDT.move_voltage(12000*0.75);
     pros::delay(100);
     stopMotors();
     
@@ -220,18 +221,48 @@ void skillz2(){
     LeftDT.move_voltage(5000);
     delay(550);
     stopMotors();
+
+    delay(150);
+
     pivot(90);
     driveDist(90);
 
     pivot(-135);
-    driveDist(-30);
+    driveDist(-45); //
     pivot(180);
     
-    driveTime(-500);
+    driveTime(-1500);
     driveTime(250);
-    driveTime(-600);
-    driveDist(-10);
+    driveTime(-1000);
     //pivot(-70);
+
+    driveDist(15);
+    pivot(-85);
+    driveDist(50);
+    pivot(0);
+
+    wings.set_value(1);
+
+    //Push triballs in goal (middle) (x1)
+    LeftDT.move_voltage(12000);
+    RightDT.move_voltage(7000);
+    pros::delay(1800);
+    stopMotors();
+
+    pivot(90);
+    wings.set_value(0);
+
+    driveDist(-50);
+
+    pivot(0);
+    wings.set_value(1);
+
+    //Push triballs in goal (middle) (x2)
+
+    LeftDT.move_voltage(12000);
+    RightDT.move_voltage(7000);
+    pros::delay(1800);
+    stopMotors();
 
 
 }
