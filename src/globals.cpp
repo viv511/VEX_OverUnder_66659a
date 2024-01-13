@@ -21,6 +21,7 @@ Rotation rightRot(12);
 //think these are ok
 ADIDigitalOut wings('C');
 ADIDigitalOut elev('A');
+ADIDigitalOut backWing('E');
 // ADIDigitalOut blocker('C');
 
 

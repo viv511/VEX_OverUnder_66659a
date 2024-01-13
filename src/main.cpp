@@ -9,6 +9,7 @@
 void initialize()
 {
 	wings.set_value(false);
+	backWing.set_value(false);
 	// blocker.set_value(false);
 	elev.set_value(false);
 
@@ -51,9 +52,10 @@ void competition_initialize() {}
  */
 void autonomous()
 {
+	// skillz2();
+	offensiveSneak();
 
-	skillz2();
-	// offensiveSneak();
+
 	// offensiveRush();
 	// defenseRoute();
 }
@@ -114,8 +116,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			
-			cata.move_voltage(12000 * 0.77);
+			cata.move_voltage(12000 * 0.74);
 		}
 		else
 		{
@@ -146,24 +147,13 @@ void opcontrol()
 			intake.move_voltage(0);
 		}
 
-		// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !blockerLast)
-		// {
-		// 	blockerState = !blockerState;
-		// 	blockerLast = true;
-		// }
-		// else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
-		// {
-		// 	blockerLast = false;
-		// }
-
-		// if (blockerState)
-		// {
-		// 	blocker.set_value(true);
-		// }
-		// else
-		// {
-		// 	blocker.set_value(false);
-		// }
+		
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+			backWing.set_value(1);
+		}
+		else {
+			backWing.set_value(0);
+		}
 
 		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
 		{

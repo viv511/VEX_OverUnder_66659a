@@ -80,18 +80,19 @@ void offensiveSneak() {
 
     //step 2: drive backwards around corner to score triball #1
     driveTime(-650);
-    turn(-45);
-    pros::delay(50);
-    driveTime(-500);
-    turn(-45);
-    pros::delay(50);
+    
+    LeftDT.move_voltage(-9000);
+    RightDT.move_voltage(-4000);
+    pros::delay(400);
+    stopMotors();
+    
     driveTime(-700);
     // +1 Balls
 
     //step 3: turn around and release intake to score triball #2
     driveTime(200);
     pros::delay(50);
-    turn(180);
+    pivot(90);
     intake.move_voltage(-12000);
     driveTime(800); // make it back up and push again if not work
     // driveTime(400);  
@@ -102,23 +103,21 @@ void offensiveSneak() {
     //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
     intake.move_voltage(0);
     driveDist(-17); 
-    turn(-70); //important turn to face triball #3
+    pivot(20); //important turn to face triball #3
     intake.move_voltage(12000);
 
     driveDist(67);
-    turn(135);
+    pivot(155);
     intake.move_voltage(-12000);
     driveTime(200);
-    driveTime(-250);
+    driveTime(-150);
 
     //step 5: swing around to triball #4, intake and release while opening wings for triball #5
-    turn(-65);
+    pivot(45);
     intake.move_voltage(12000);
-    driveTime(250);
-    swing(false, 40, 0.05);
-    driveTime(-150);
-    turn(180);
-    wings.set_value(1);
+    driveTime(450);
+    pivot(180);
+    wings.set_value(1); 
     intake.move_voltage(-12000);
     driveTime(2000);
     
@@ -176,6 +175,7 @@ void skillz1() {
     driveTime(1500);
     //adjust this part based on matchloading
 }
+
 void skillz2(){
     intake.move_velocity(12000);
     wings.set_value(1);
@@ -279,9 +279,9 @@ void offensiveRush() {
     
     //step 2: pick up triball #1, put it in front of goal, push #1 and #2 into goal
     intake.move_voltage(12000);
-    driveDist(70);
+    driveDist(120);
     pros::delay(200);
-    pivot(135);
+    pivot(125);
 
     wings.set_value(1);
 
