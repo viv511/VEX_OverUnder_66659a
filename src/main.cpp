@@ -120,6 +120,7 @@ void opcontrol()
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
 			cata.move_voltage(12000 * 0.83);
+			pros::lcd::print(4, "Inertial: ", inertial.get_rotation());
 		}
 		else
 		{
@@ -201,12 +202,9 @@ void opcontrol()
 			// delay(550);
 			// stopMotors();
 			// driveDist(30);
-			pivot(135);
-			delay(500);
-			pivot(72);
-			delay(500);
-    		pivot(179);
 			//moveToPoint(Waypoint(20, 20), false);
+			pivot(90);
+			controller.rumble(".");
 		}
 
 		pros::delay(10);
