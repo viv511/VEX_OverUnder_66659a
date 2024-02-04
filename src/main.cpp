@@ -54,8 +54,9 @@ void autonomous()
 {
 	// defensivePush();
 	// skillz2();
+	skillz3();
 	// disrupt();
-	offensiveSneak();
+	//offensiveSneak();
 
 // 
 
@@ -201,10 +202,16 @@ void opcontrol()
 			// LeftDT.move_voltage(5000);
 			// delay(550);
 			// stopMotors();
-			// driveDist(30);
+			//driveDist(30);
 			//moveToPoint(Waypoint(20, 20), false);
-			pivot(90);
-			controller.rumble(".");
+			driveTime(150);
+			RightDT.move_voltage(11000);
+			LeftDT.move_voltage(4500);
+			delay(550);
+			RightDT.move_voltage(11000);
+			LeftDT.move_voltage(5000);
+			delay(150);
+			stopMotors();
 		}
 
 		pros::delay(10);

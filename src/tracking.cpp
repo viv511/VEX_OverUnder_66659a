@@ -7,7 +7,7 @@ const int TIME_INTERVAL = 10;
 constexpr float PI = 3.14159265358979323846;
 constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
-constexpr float DIAMETER = 3.32;
+constexpr float DIAMETER = 3.32; //3.32
 constexpr float TICKS = 36000.0;
 constexpr float RATIO = (PI * DIAMETER)/TICKS;
 
@@ -57,8 +57,8 @@ void tracking() {
 
     while(true) {
         currentAngle = inertial.get_rotation() * degToRad;
-        leftCurrent = leftRot.get_position() * -1; // rotation sensors are flipped
-        rightCurrent = rightRot.get_position();
+        leftCurrent = leftRot.get_position(); // rotation sensors are flipped
+        rightCurrent = rightRot.get_position() * -1;
 
         leftChange = (leftCurrent - leftLast) * RATIO;
         rightChange = (rightCurrent - rightLast) * RATIO;
@@ -96,8 +96,8 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", leftAbsolute);
-        lcd::print(2, "Y: %f\n", rightAbsolute);
+		lcd::print(1, "X: %f\n", robotPose.x);
+        lcd::print(2, "Y: %f\n", robotPose.y);
         lcd::print(3, "Inertial: %f\n", robotPose.theta);
 
         delay(TIME_INTERVAL);

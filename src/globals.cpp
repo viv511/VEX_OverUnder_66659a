@@ -1,27 +1,27 @@
 #include "main.h"
 #include "globals.h"
 
-Motor FL(20, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
-Motor ML(18, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
-Motor BL(13, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
-Motor FR(19, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
-Motor MR(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
-Motor BR(14, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
+Motor FL(6, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
+Motor ML(7, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
+Motor BL(8, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //
+Motor FR(3, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
+Motor MR(2, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
+Motor BR(4, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 
-Motor cata(17, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+Motor cata(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 
-Motor intake(1, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
+Motor intake(5, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
 
 Controller controller(E_CONTROLLER_MASTER);
 
-IMU inertial(7); //!!!
-Rotation leftRot(11);
-Rotation rightRot(12);
+IMU inertial(11); //!!!
+Rotation leftRot(20);
+Rotation rightRot(1);
 
 //think these are ok
 ADIDigitalOut wings('C');
 ADIDigitalOut elev('A');
-// ADIDigitalOut backWing('E');
+ADIDigitalOut backWings('E');
 // ADIDigitalOut blocker('C');
 
 

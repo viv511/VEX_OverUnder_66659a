@@ -301,6 +301,48 @@ void skillz2(){
 
 }
 
+void skillz3(){
+    driveTime(-350); // add open backwings? maybe try to take triball out of corner here
+    delay(50);
+    LeftDT.move_voltage(-12000);
+    delay(350);
+    stopMotors();
+    elev.set_value(1);
+    const int MATCHLOAD_TIME = 0; //in ms (30000)
+    long long timer = 0;
+    while(timer < MATCHLOAD_TIME) {
+        cata.move_voltage(12000 * 0.82);
+        timer += 10;
+        pros::delay(10);
+    }
+    cata.move_voltage(0);
+    stopMotors();
+    pros::delay(50);
+    elev.set_value(0);
+
+    delay(1000);
+    pivot(45);
+    driveTime(-400);
+    delay(50);
+    pivot(45);
+    
+    //pivot(180);
+    driveTime(150);
+	RightDT.move_voltage(11000);
+    LeftDT.move_voltage(4500);
+    delay(550);
+    RightDT.move_voltage(11000);
+    LeftDT.move_voltage(5000);
+    delay(150);
+
+    stopMotors();
+    pivot(-45);
+
+    driveTime(500);
+
+
+}
+
 void offensiveRush() {
     //step 1: pop wings to hit preload near goal
     wings.set_value(1);
