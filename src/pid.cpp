@@ -96,13 +96,13 @@ void PID::turnLookupPID(float t) {
     t = fabs(t);
 
     if(t <= 15) {
-        setConstants(250, 0, t*15); 
+        setConstants(350, 5, t*15); 
     }
     else if(t <= 30) {
-        setConstants(200, 0, t*26); 
+        setConstants(200, 5, t*26); 
     }
     else if(t <= 45) {
-        setConstants(250, 0, t*37); 
+        setConstants(200, 2, t*39); 
     }
     else if(t <= 60) {
         setConstants(300, 0, t*32);

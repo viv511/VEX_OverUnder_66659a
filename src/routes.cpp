@@ -87,10 +87,10 @@ void offensiveSneak() {
 
     //step 1: drive forward a bit and intake
     intake.move_voltage(12000); 
-    LeftDT.move_voltage(12000 * 3/6);
-    RightDT.move_voltage(12000 * 3/6);
-    pros::delay(100);
-    stopMotors();
+    // LeftDT.move_voltage(12000 * 3/6);
+    // RightDT.move_voltage(12000 * 3/6);
+    // pros::delay(100);
+    // stopMotors();
 
     //step 2: drive backwards around corner to score triball #1
     pros::delay(200);

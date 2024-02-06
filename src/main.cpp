@@ -54,9 +54,9 @@ void autonomous()
 {
 	// defensivePush();
 	// skillz2();
-	skillz3();
+	// skillz3();
 	// disrupt();
-	//offensiveSneak();
+	offensiveSneak();
 
 // 
 
@@ -120,7 +120,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			cata.move_voltage(12000 * 0.83);
+			cata.move_voltage(12000);
 			pros::lcd::print(4, "Inertial: ", inertial.get_rotation());
 		}
 		else
@@ -190,28 +190,10 @@ void opcontrol()
 
 			driveDist(-34);
 			pivot(67);
-
 		}
 	
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			// setStart(26.22, -38.55);
-			// followRoute("curve.txt", true);
-			// turn(-45);
-			// swervePoint(true, 0, 0, 90, true, 90);
-			// RightDT.move_voltage(12000);
-			// LeftDT.move_voltage(5000);
-			// delay(550);
-			// stopMotors();
-			//driveDist(30);
-			//moveToPoint(Waypoint(20, 20), false);
-			driveTime(150);
-			RightDT.move_voltage(11000);
-			LeftDT.move_voltage(4500);
-			delay(550);
-			RightDT.move_voltage(11000);
-			LeftDT.move_voltage(5000);
-			delay(150);
-			stopMotors();
+			turn(45);
 		}
 
 		pros::delay(10);
