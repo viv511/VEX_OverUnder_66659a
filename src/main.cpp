@@ -54,9 +54,9 @@ void autonomous()
 {
 	// defensivePush();
 	// skillz2();
-	// skillz3();
+	skillz3();
 	// disrupt();
-	offensiveSneak();
+	//offensiveSneak();
 
 // 
 
