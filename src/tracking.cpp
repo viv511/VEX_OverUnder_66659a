@@ -9,7 +9,7 @@ constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
 constexpr float DIAMETER = 3.32; //3.32
 constexpr float TICKS = 36000.0;
-constexpr float RATIO = (PI * DIAMETER)/TICKS;
+constexpr float RATIO = (PI * DIAMETER * 2)/(TICKS * 3); //Account for 2:3 gear ratio
 
 float leftAbsolute = 0;
 float leftCurrent = 0;
@@ -56,7 +56,7 @@ void tracking() {
     initializeTracking();
 
     while(true) {
-        currentAngle = inertial.get_rotation() * degToRad;
+        currentAngle = inertial.get_rotation();
         leftCurrent = leftRot.get_position(); // rotation sensors are flipped
         rightCurrent = rightRot.get_position() * -1;
 
@@ -72,23 +72,23 @@ void tracking() {
         By calculating the angular offset and applying sin and cos to theta, we find the offset in x and y.
         */
 
-        deltaDist = (leftChange + rightChange) / 2;
-        deltaTheta = (currentAngle - lastAngle);
+        // deltaDist = (leftChange + rightChange) / 2;
+        // deltaTheta = (currentAngle - lastAngle);
 
-        float distTravelled = distance(robotPose, lastRobotPose);
+        // float distTravelled = distance(robotPose, lastRobotPose);
 
-        robotPose.x += (sin(currentAngle) * deltaDist);
-        robotPose.y += (cos(currentAngle) * deltaDist);
-        robotPose.setTheta(currentAngle * radToDeg);
+        // robotPose.x += (sin(currentAngle) * deltaDist);
+        // robotPose.y += (cos(currentAngle) * deltaDist);
+        // robotPose.setTheta(currentAngle * radToDeg);
         // robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
 
         // float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
         // prevVel = robotPose.getVel();
 
-        lastRobotPose.setX(robotPose.getX());
-        lastRobotPose.setY(robotPose.getY());
+        // lastRobotPose.setX(robotPose.getX());
+        // lastRobotPose.setY(robotPose.getY());
 
-        lastAngle = currentAngle;
+        // lastAngle = currentAngle;
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
@@ -96,12 +96,11 @@ void tracking() {
         leftLast = leftCurrent;
         rightLast = rightCurrent;
 
-		lcd::print(1, "X: %f\n", robotPose.x);
-        lcd::print(2, "Y: %f\n", robotPose.y);
-        lcd::print(3, "Inertial: %f\n", robotPose.theta);
+		lcd::print(1, "X: %f\n", leftAbsolute);
+        lcd::print(2, "Y: %f\n", rightAbsolute);
+        lcd::print(3, "Inertial: %f\n", currentAngle);
 
         delay(TIME_INTERVAL);
-
     }
 }
 

@@ -120,8 +120,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			cata.move_voltage(12000);
-			pros::lcd::print(4, "Inertial: ", inertial.get_rotation());
+			cata.move_voltage(12000*0.9);
 		}
 		else
 		{
