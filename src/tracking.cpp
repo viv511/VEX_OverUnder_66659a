@@ -9,7 +9,7 @@ constexpr float degToRad = PI/180;
 constexpr float radToDeg = 180/PI;
 constexpr float DIAMETER = 3.32; //3.32
 constexpr float TICKS = 36000.0;
-constexpr float RATIO = (PI * DIAMETER * 2)/(TICKS * 3); //Account for 2:3 gear ratio
+constexpr float RATIO = (PI * DIAMETER * 3)/(TICKS * 5); //Account for 3:5 gear ratio
 
 float leftAbsolute = 0;
 float leftCurrent = 0;
