@@ -193,7 +193,11 @@ void opcontrol()
 		}
 	
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			turn(45);
+			driveTime(80);
+			RightDT.move_voltage(12000);
+    		LeftDT.move_voltage(4900);
+    		delay(740);
+    		
 		}
 
 		pros::delay(10);

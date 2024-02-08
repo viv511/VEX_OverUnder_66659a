@@ -302,13 +302,13 @@ void skillz2(){
 }
 
 void skillz3(){
-    driveTime(-350); // add open backwings? maybe try to take triball out of corner here
+    driveTime(-370); // add open backwings? maybe try to take triball out of corner here
     delay(50);
     LeftDT.move_voltage(-12000);
-    delay(350);
+    delay(500);
     stopMotors();
     elev.set_value(1);
-    const int MATCHLOAD_TIME = 0; //in ms (30000)
+    const int MATCHLOAD_TIME = 8000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
         cata.move_voltage(12000 * 0.82);
@@ -319,7 +319,6 @@ void skillz3(){
     stopMotors();
     pros::delay(50);
     elev.set_value(0);
-
     delay(1000);
     pivot(45);
     driveTime(-400);
@@ -327,19 +326,19 @@ void skillz3(){
     pivot(45);
     
     //pivot(180);
-    driveTime(150);
-	RightDT.move_voltage(11000);
-    LeftDT.move_voltage(4500);
-    delay(550);
-    RightDT.move_voltage(11000);
-    LeftDT.move_voltage(5000);
-    delay(150);
-
-    stopMotors();
+    driveTime(80);
+	RightDT.move_voltage(12000);
+    LeftDT.move_voltage(4900);
+    delay(740);
     pivot(-45);
 
-    driveTime(500);
-
+    driveTime(800);
+	// RightDT.move_voltage(12000);
+    // LeftDT.move_voltage(4900);
+    // delay(740);
+    // pivot(-135);
+    driveTime(-250);
+    driveTime(400);
 
 }
 
