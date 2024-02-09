@@ -139,57 +139,6 @@ void offensiveSneak() {
     controller.rumble("...");
 }
 
-// void skillz1() {
-//     intake.move_velocity(12000);
-//     const int MATCHLOAD_TIME = 37000; //in ms
-
-//     driveTime(-440);   
-//     intake.move_velocity(0);
-
-//     pivot(45);
-//     driveTime(-700);
-//     swing(false, 37.69, 0);
-//     driveDist(-30);
-
-//     delay(2000);
-//     // long long timer = 0;
-//     // while(timer < MATCHLOAD_TIME) {
-//     //     cata.move_voltage(12000 * 0.70);
-
-//     //     timer += 10;
-//     //     pros::delay(10);
-//     // }
-//     // cata.move_voltage(0);
-//     pivot(0);
-//     RightDT.move_voltage(12000);
-//     LeftDT.move_voltage(5000);
-//     delay(700);
-//     stopMotors();
-    
-//     driveDist(90);
-//     // turn(-46);
-//     // optimize this part using circular arc of like 60 degrees
-//     turn(-90);
-//     LeftDT.move_voltage(-6000);
-//     RightDT.move_voltage(-6000);
-//     pros::delay(400);
-//     stopMotors();
-//     // use another circular arc here? 
-
-//     driveDist(40);
-//     turn(-50);
-//     driveDist(40);
-//     turn(140);
-//     wings.set_value(1);
-//     driveTime(1500);
-//     wings.set_value(0);
-//     pros::delay(200);
-//     driveDist(-40);
-//     turn(-30);
-//     wings.set_value(1);
-//     driveTime(1500);
-//     //adjust this part based on matchloading
-// }
 
 void skillz2(){
     intake.move_velocity(12000);
@@ -206,7 +155,7 @@ void skillz2(){
     pros::delay(750);
     stopMotors();
 
-    elev.set_value(1);
+    backWing.set_value(1);
     const int MATCHLOAD_TIME = 29000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
@@ -216,13 +165,13 @@ void skillz2(){
         pros::delay(10);
         inertial.set_rotation(72);
          LeftDT.move_voltage(-12000*0.25);
-    RightDT.move_voltage(-12000*0.25);
+        RightDT.move_voltage(-12000*0.25);
     }
     cata.move_voltage(0);
     stopMotors();
 
     pros::delay(50);
-    elev.set_value(0);
+    backWing.set_value(0);
 
     inertial.set_rotation(72);
 
@@ -307,7 +256,7 @@ void skillz3(){
     LeftDT.move_voltage(-12000);
     delay(500);
     stopMotors();
-    elev.set_value(1);
+    backWing.set_value(1);
     const int MATCHLOAD_TIME = 8000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
@@ -318,7 +267,7 @@ void skillz3(){
     cata.move_voltage(0);
     stopMotors();
     pros::delay(50);
-    elev.set_value(0);
+    backWing.set_value(0);
     delay(1000);
     pivot(45);
     driveTime(-400);
@@ -343,58 +292,11 @@ void skillz3(){
 }
 
 void offensiveRush() {
-    //step 1: pop wings to hit preload near goal
-    wings.set_value(1);
-    pros::delay(200);
-    wings.set_value(0);
-    
-    //step 2: pick up triball #1, put it in front of goal, push #1 and #2 into goal
-    intake.move_voltage(12000);
-    driveDist(120);
-    pros::delay(200);
-    pivot(125);
+    //Reset: Facing the middle left triball, preload is next to wings
 
-    wings.set_value(1);
-
-    intake.move_voltage(-12000);
-    driveDist(40);
-
-    //step 3: pick up triball #3, throw it near goal
-    driveDist(-30);
-    pivot(-90);
-
-    intake.move_voltage(12000);
-    driveDist(30);
-
-    pivot(90);
-
-    driveDist(50);
-
-    pivot(135);
-
-    intake.move_voltage(-12000);
-    
-    driveDist(-30);
-
-    //step 4: drive to triball #4 and intake
-
-    pivot(45);
-
-    driveDist(-60);
-    pivot(-45);
-
-    intake.move_voltage(12000);
-
-    driveDist(32);
-
-    driveDist(-50);
-
-    pivot(-90);
-    driveDist(-30);
-    pivot(-135);
-    driveTime(-1500);
-    driveTime(500);
-    pivot(45);
-    intake.move_voltage(-12000);
-    driveTime(2000);
+    //Pop wings and drive forward towards mid triball and intake on
+    //Pivot towards goal, open wings, outtake, and drive forward
+    //Backward Arc with left side ==> Either PID or Time based
+    //Go forward, intake on towards back left triball
+    //
 }

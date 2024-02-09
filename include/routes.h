@@ -9,8 +9,6 @@ void disrupt();
 void defensivePush();
 void defenseRoute();
 void offensiveSneak();
-//void skillz1();
-
 
 void skillz2();
 void skillz3();

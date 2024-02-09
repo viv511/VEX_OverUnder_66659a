@@ -9,9 +9,8 @@
 void initialize()
 {
 	wings.set_value(false);
-	// backWing.set_value(false);
-	// blocker.set_value(false);
-	elev.set_value(false);
+	backWing.set_value(false);
+	intakePiston.set_value(false);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -50,17 +49,15 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous()
-{
+void autonomous() {
+	intakePiston.set_value(true);
+	offensiveRush();
+
 	// defensivePush();
 	// skillz2();
-	skillz3();
+	// skillz3();
 	// disrupt();
 	//offensiveSneak();
-
-// 
-
-	// offensiveRush();
 	// defenseRoute();
 }
 
@@ -77,8 +74,9 @@ void autonomous()
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol()
-{
+void opcontrol() {
+	intakePiston.set_value(true);
+
 	LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	float axisOne;
@@ -87,14 +85,10 @@ void opcontrol()
 	float rightPower;
 
 	// Toggle's
-	bool blockerState = false;
-	bool blockerLast = false;
-
 	bool elevationState = false;
 	bool elevationLast = false;
 
-	while (1)
-	{
+	while (1) {
 		LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 
@@ -120,7 +114,7 @@ void opcontrol()
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			cata.move_voltage(12000*0.9);
+			cata.move_voltage(12000*0.95);
 		}
 		else
 		{
@@ -152,56 +146,37 @@ void opcontrol()
 		}
 
 		
-		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
 		// 	backWing.set_value(1);
 		// }
 		// else {
 		// 	backWing.set_value(0);
 		// }
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
 		{
 			elevationState = !elevationState;
 			elevationLast = true;
 		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
 		{
 			elevationLast = false;
 		}
 
 		if (elevationState)
 		{
-			elev.set_value(true);
+			backWing.set_value(true);
 		}
 		else
 		{
-			elev.set_value(false);
+			backWing.set_value(false);
 		}
 
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-		{
-			intake.move_velocity(12000);
-			wings.set_value(1);
-			pros::delay(200);
-			wings.set_value(0);
-			pivot(135);
-			intake.move_velocity(0);
-
-			driveDist(-34);
-			pivot(67);
-		}
+		// if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+			
+		// }
 	
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-			pros::delay(2000);
-			long long timer = 0;
-			while(timer < 35000) {
-				cata.move_voltage(12000);
-				pros::delay(10);
-				timer+=10;
-			}
-    		
-		}
-
+		
 		pros::delay(10);
 	}
 }

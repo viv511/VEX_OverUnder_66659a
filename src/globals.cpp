@@ -19,10 +19,9 @@ Rotation leftRot(20);
 Rotation rightRot(1);
 
 //think these are ok
-ADIDigitalOut wings('C');
-ADIDigitalOut elev('A');
-ADIDigitalOut backWings('E');
-// ADIDigitalOut blocker('C');
+ADIDigitalOut wings('F');
+ADIDigitalOut backWing('G');
+ADIDigitalOut intakePiston('H');
 
 
 Motor_Group LeftDT ({FL, ML, BL});
