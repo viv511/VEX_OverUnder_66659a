@@ -10,7 +10,7 @@ Motor BR(4, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 
 Motor cata(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 
-Motor intake(5, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
+Motor intake(5, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES);
 
 Controller controller(E_CONTROLLER_MASTER);
 
@@ -19,8 +19,8 @@ Rotation leftRot(20);
 Rotation rightRot(1);
 
 //think these are ok
-ADIDigitalOut wings('F');
-ADIDigitalOut backWing('G');
+ADIDigitalOut wings('G');
+ADIDigitalOut backWing('F');
 ADIDigitalOut intakePiston('H');
 
 

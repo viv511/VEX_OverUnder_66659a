@@ -12,6 +12,46 @@ void disrupt(){
     }
 }
 
+void defensiveRush(){
+    intakePiston.set_value(true);
+    wings.set_value(1);
+    delay(300);
+    wings.set_value(0);
+    delay(100);
+    intake.move_voltage(12000);
+    driveDist(55);
+    delay(100);
+    driveTime(-155);
+    wings.set_value(1);
+    LeftDT.move_voltage(12000);
+    delay(310);
+    stopMotors();  
+    delay(200);
+    driveTime(250);
+    
+    intake.move_voltage(-12000);
+    delay(300);
+    wings.set_value(0);
+    intake.move_voltage(0);
+
+    driveDist(-10);
+    pivot(20);
+    driveDist(-50);
+    pivot(140);
+    LeftDT.move_voltage(-12000);
+    RightDT.move_voltage(-6000);
+    stopMotors();
+    driveTime(300);
+    driveDist(12);
+    pivot(140);
+    driveDist(7);
+    backWing.set_value(1);
+    delay(150);
+    RightDT.move_voltage(10000);
+    LeftDT.move_voltage(3000);
+
+}
+
 void defensivePush(){
     driveDist(-16);
     pivot(45);
@@ -298,5 +338,6 @@ void offensiveRush() {
     //Pivot towards goal, open wings, outtake, and drive forward
     //Backward Arc with left side ==> Either PID or Time based
     //Go forward, intake on towards back left triball
-    //
+    
+    
 }

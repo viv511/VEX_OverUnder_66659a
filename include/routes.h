@@ -8,6 +8,7 @@ using namespace pros;
 void disrupt();
 void defensivePush();
 void defenseRoute();
+void defensiveRush();
 void offensiveSneak();
 
 void skillz2();

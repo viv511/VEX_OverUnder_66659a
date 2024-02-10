@@ -50,8 +50,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	intakePiston.set_value(true);
-	offensiveRush();
+	intakePiston.set_value(1);
 
 	// defensivePush();
 	// skillz2();
@@ -112,7 +111,7 @@ void opcontrol() {
 		RightDT.move_velocity(rightPower);
 
 		// CATA
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			cata.move_voltage(12000*0.95);
 		}
@@ -146,35 +145,39 @@ void opcontrol() {
 		}
 
 		
-		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-		// 	backWing.set_value(1);
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+			backWing.set_value(1);
+		}
+		else {
+			backWing.set_value(0);
+		}
+
+		// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
+		// {
+		// 	elevationState = !elevationState;
+		// 	elevationLast = true;
 		// }
-		// else {
-		// 	backWing.set_value(0);
+		// else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
+		// {
+		// 	elevationLast = false;
 		// }
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
-		{
-			elevationState = !elevationState;
-			elevationLast = true;
-		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
-		{
-			elevationLast = false;
-		}
+		// if (elevationState)
+		// {
+		// 	backWing.set_value(true);
+		// }
+		// else
+		// {
+		// 	backWing.set_value(false);
+		// }
 
-		if (elevationState)
-		{
-			backWing.set_value(true);
-		}
-		else
-		{
-			backWing.set_value(false);
-		}
-
-		// if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+			// wings.set_value(1);
+   			// delay(300);
+    		// wings.set_value(0);
 			
-		// }
+			defensiveRush();
+		}
 	
 		
 		pros::delay(10);
