@@ -13,6 +13,8 @@ void disrupt(){
 }
 
 void defensiveRush(){
+
+    //step 1: drive forward and intake
     intakePiston.set_value(true);
     wings.set_value(1);
     delay(300);
@@ -20,6 +22,8 @@ void defensiveRush(){
     delay(100);
     intake.move_voltage(12000);
     driveDist(55);
+
+
     delay(100);
     driveTime(-155);
     wings.set_value(1);
@@ -27,29 +31,44 @@ void defensiveRush(){
     delay(310);
     stopMotors();  
     delay(200);
-    driveTime(250);
-    
+    driveTime(125);
     intake.move_voltage(-12000);
+    driveTime(125);
     delay(300);
     wings.set_value(0);
     intake.move_voltage(0);
 
-    driveDist(-10);
-    pivot(20);
-    driveDist(-50);
-    pivot(140);
-    LeftDT.move_voltage(-12000);
-    RightDT.move_voltage(-6000);
+    driveTime(-75);
+    pivot(35);
+
+    //longish drive back
+    driveDist(-55);
+    pivot(115);
+    //swerve to push triball in
+    LeftDT.move_voltage(-4000);
+    RightDT.move_voltage(-12000);
+    delay(350);
     stopMotors();
-    driveTime(300);
-    driveDist(12);
-    pivot(140);
-    driveDist(7);
+    driveTime(-400);
+    delay(50);
+
+    //hit triball out of corner
+    driveTime(220);
+    pivot(115);
+    driveTime(350);
     backWing.set_value(1);
     delay(150);
-    RightDT.move_voltage(10000);
-    LeftDT.move_voltage(3000);
 
+    //180 spin
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(4000);
+    delay(400);
+    backWing.set_value(0);
+    stopMotors();
+
+    //drive to bar
+    pivot(-117);
+    driveDist(-30);
 }
 
 void defensivePush(){
