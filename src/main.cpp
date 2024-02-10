@@ -25,7 +25,11 @@ void initialize()
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	intakePiston.set_value(false);
+	wings.set_value(false);
+	backWing.set_value(false);
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -36,7 +40,41 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	intakePiston.set_value(false);
+	wings.set_value(false);
+	backWing.set_value(false);
+	// pros::lcd::print(0, "Competition Initialize");
+	// pros::lcd::print(1, "Team 315Y");
+	// pros::lcd::print(2, "VEX Robotics Competition");
+	// pros::lcd::print(3, "Tower Takeover");
+	// pros::lcd::print(4, "Autonomous Selector");
+	// pros::lcd::print(5, "Left: Defensive Rush");
+	// pros::lcd::print(6, "Right: Defensive Push");
+	// pros::lcd::print(7, "Center: Skills");
+	// pros::lcd::print(8, "Down: Disrupt");
+	// pros::lcd::print(9, "Up: Offensive Sneak");
+	// pros::lcd::print(10, "Down: Defensive Rush");
+	// pros::lcd::print(11, "Right: Defensive Push");
+	// pros::lcd::print(12, "Center: Skills");
+	// pros::lcd::print(13, "Down: Disrupt");
+	// pros::lcd::print(14, "Up: Offensive Sneak");
+	// pros::lcd::print(15, "Down: Defensive Rush");
+	// pros::lcd::print(16, "Right: Defensive Push");
+	// pros::lcd::print(17, "Center: Skills");
+	// pros::lcd::print(18, "Down: Disrupt");
+	// pros::lcd::print(19, "Up: Offensive Sneak");
+	// pros::lcd::print(20, "Down: Defensive Rush");
+	// pros::lcd::print(21, "Right: Defensive Push");
+	// pros::lcd::print(22, "Center: Skills");
+	// pros::lcd::print(23, "Down: Disrupt");
+	// pros::lcd::print(24, "Up: Offensive Sneak");
+	// pros::lcd::print(25, "Down: Defensive Rush");
+	// pros::lcd::print(26, "Right: Defensive Push");
+	// pros::lcd::print(27, "Center: Skills");
+	// pros::lcd::print(28, "Down: Disrupt");
+	// pros::lcd::print(29, "Up: Offensive Sneak");
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -50,13 +88,15 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	intakePiston.set_value(1);
+	
+	defensiveRush();
 
+	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
 	// skillz3();
 	// disrupt();
-	//offensiveSneak();
+	// offensiveSneak();
 	// defenseRoute();
 }
 
@@ -176,7 +216,21 @@ void opcontrol() {
    			// delay(300);
     		// wings.set_value(0);
 			
-			defensiveRush();
+			// defensiveRush();
+    // delay(100);
+    // driveTime(-155);
+    // wings.set_value(1);
+    // LeftDT.move_voltage(12000);
+    // delay(310);
+    // stopMotors();  
+    // delay(200);
+    // driveTime(250);
+    // intake.move_voltage(-12000);
+    // delay(300);
+    // wings.set_value(0);
+    // intake.move_voltage(0);
+
+
 		}
 	
 		
