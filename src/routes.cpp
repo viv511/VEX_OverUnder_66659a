@@ -5,7 +5,7 @@
 using namespace pros;
 
 void disrupt(){
-    driveTime(-5000);
+    driveTime(2500);
     while(true){
         pivot(180);
         pivot(0);
@@ -148,6 +148,8 @@ void offensiveSneak() {
 
     //step 1: drive forward a bit and intake
     intake.move_voltage(12000); 
+    intakePiston.set_value(true);
+    pros::delay(100);
     LeftDT.move_voltage(12000 * 3/6);
     RightDT.move_voltage(12000 * 3/6);
     pros::delay(100);
@@ -155,48 +157,51 @@ void offensiveSneak() {
 
     //step 2: drive backwards around corner to score triball #1
     pros::delay(200);
-    driveTime(-650);
-    
-    LeftDT.move_voltage(-9000);
-    RightDT.move_voltage(-4000);
-    pros::delay(400);
+    driveTime(-460);
+	RightDT.move_voltage(-4800);
+    LeftDT.move_voltage(-12000);
+    backWing.set_value(1);
+    delay(230);
+    delay(300);
     stopMotors();
-    
-    driveTime(-700);
+    backWing.set_value(0);
+
+    driveTime(-450);
     // +1 Balls
 
     //step 3: turn around and release intake to score triball #2
-    driveTime(400);
+    driveTime(200);
     pros::delay(50);
     pivot(90);
     intake.move_voltage(-12000);
     driveTime(800); // make it back up and push again if not work
+    pros::delay(50);
     driveTime(-300);
-    driveTime(400);  
-    driveTime(-200);
+    pros::delay(50);
+    pivot(90);
+    pros::delay(50);
     // driveTime (400);
     // +1 Ball
 
-    // //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
-    // intake.move_voltage(0);
-    // driveDist(-17); 
-    // pivot(20); //important turn to face triball #3
-    // intake.move_voltage(12000);
+    //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
+    intake.move_voltage(0);
+    driveTime(-150);
+    pivot(25); //important turn to face triball #3
+    intake.move_voltage(12000);
+    driveDist(67);
+    pivot(155);
+    intake.move_voltage(-12000);
+    driveTime(200);
+    driveTime(-150);
 
-    // driveDist(67);
-    // pivot(155);
-    // intake.move_voltage(-12000);
-    // driveTime(200);
-    // driveTime(-150);
-
-    // //step 5: swing around to triball #4, intake and release while opening wings for triball #5
-    // pivot(45);
-    // intake.move_voltage(12000);
-    // driveTime(450);
-    // pivot(180);
-    // wings.set_value(1); 
-    // intake.move_voltage(-12000);
-    // driveTime(2000);
+    //step 5: swing around to triball #4, intake and release while opening wings for triball #5
+    pivot(52);
+    intake.move_voltage(12000);
+    driveTime(500);
+    pivot(180);
+    wings.set_value(1); 
+    intake.move_voltage(-12000);
+    driveTime(2000);
     
     controller.rumble("...");
 }
@@ -313,13 +318,28 @@ void skillz2(){
 }
 
 void skillz3(){
-    driveTime(-370); // add open backwings? maybe try to take triball out of corner here
-    delay(50);
-    LeftDT.move_voltage(-12000);
-    delay(500);
+    
+    intakePiston.set_value(true);
+    intake.move_velocity(12000);
+    wings.set_value(1);
+    pros::delay(500);
+    wings.set_value(0);
+    pivot(135);
+    intake.move_velocity(0);
+
+    driveDist(-34);
+    pivot(67);
+    LeftDT.move_voltage(-12000*0.6);
+    RightDT.move_voltage(-12000*0.6);
+    pros::delay(350);
     stopMotors();
+
+    backWing.set_value(1);
+    pivot(67);
+
+
     // backWing.set_value(1);
-    const int MATCHLOAD_TIME = 0; //in ms (30000)
+    const int MATCHLOAD_TIME = 35000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
         cata.move_voltage(12000);
@@ -329,27 +349,28 @@ void skillz3(){
     cata.move_voltage(0);
     stopMotors();
     pros::delay(50);
-    // backWing.set_value(0);
-    pivot(45);
+    driveTime(50);
+    backWing.set_value(0);
+    pivot(180);
     driveTime(-400);
     delay(50);
-    pivot(45);
+    pivot(180);
     
     driveTime(80);
 	RightDT.move_voltage(12000);
     LeftDT.move_voltage(4900);
     delay(740);
     stopMotors();
-    pivot(-45);
+    pivot(-45+135);
 
     //drive across field, swerve for side push
-    driveTime(800);
+    driveTime(1300);
 	RightDT.move_voltage(12000);
     LeftDT.move_voltage(4900);
     wings.set_value(1);
     delay(740);
     stopMotors();
-    pivot(-135);
+    pivot(-135+135);
 
     //second push
     driveTime(-250);
@@ -359,16 +380,16 @@ void skillz3(){
     wings.set_value(0);
 
     driveTime(-225);
-    pivot(160);
+    pivot(160+135);
     driveTime(700);
     wings.set_value(1);
-    pivot(-80);
+    pivot(-80+135);
     driveTime(500);
     delay(50);
     driveTime(-200);
     delay(50);
     driveTime(300);
-    pivot(-45);
+    pivot(-45+135);
     driveTime(-300);
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-5000);
@@ -378,6 +399,11 @@ void skillz3(){
     driveTime(-1000);
     driveTime(200);
 
+
+    wings.set_value(1);
+    driveTime(2000);
+    wings.set_value(0);
+    driveTime(-200);
 }
 
 void offensiveRush() {

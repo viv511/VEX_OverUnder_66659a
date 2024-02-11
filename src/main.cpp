@@ -89,14 +89,14 @@ void competition_initialize() {
  */
 void autonomous() {
 	
-	defensiveRush();
+	// defensiveRush();
 
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
 	// skillz3();
 	// disrupt();
-	// offensiveSneak();
+	offensiveSneak();
 	// defenseRoute();
 }
 
@@ -153,7 +153,7 @@ void opcontrol() {
 		// CATA
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
-			cata.move_voltage(12000*0.95);
+			cata.move_voltage(12000);
 		}
 		else
 		{
