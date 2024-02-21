@@ -10,7 +10,7 @@ void initialize()
 {
 	wings.set_value(false);
 	backWing.set_value(false);
-	intakePiston.set_value(false);
+	//intakePiston.set_value(false);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -26,7 +26,7 @@ void initialize()
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	intakePiston.set_value(false);
+	//intakePiston.set_value(false);
 	wings.set_value(false);
 	backWing.set_value(false);
 }
@@ -41,7 +41,7 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-	intakePiston.set_value(false);
+	//intakePiston.set_value(false);
 	wings.set_value(false);
 	backWing.set_value(false);
 	// pros::lcd::print(0, "Competition Initialize");
@@ -89,14 +89,14 @@ void competition_initialize() {
  */
 void autonomous() {
 	
-	// defensiveRush();
+	defensiveRush();
 
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
 	// skillz3();
 	// disrupt();
-	offensiveSneak();
+	//offensiveSneak();
 	// defenseRoute();
 }
 
@@ -114,7 +114,7 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	intakePiston.set_value(true);
+	//intakePiston.set_value(true);
 
 	LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -133,7 +133,8 @@ void opcontrol() {
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0);
+		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0) * 0.88; 
+		// 0.88 is turn senstivity
 
 		// Secret Sauce
 		axisTwo *= 100;
@@ -211,29 +212,32 @@ void opcontrol() {
 		// 	backWing.set_value(false);
 		// }
 
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-			// wings.set_value(1);
-   			// delay(300);
-    		// wings.set_value(0);
-			
-			// defensiveRush();
-    // delay(100);
-    // driveTime(-155);
-    // wings.set_value(1);
-    // LeftDT.move_voltage(12000);
-    // delay(310);
-    // stopMotors();  
-    // delay(200);
-    // driveTime(250);
-    // intake.move_voltage(-12000);
-    // delay(300);
-    // wings.set_value(0);
-    // intake.move_voltage(0);
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+			float cr = inertial.get_rotation();
+			turn(15);
+			controller.print(1,1,"%f",inertial.get_rotation() - cr);
 
+		}
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+			float cr = inertial.get_rotation();
+			turn(30);
+			controller.print(1,1,"%f",inertial.get_rotation() - cr);
+
+		}
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+			float cr = inertial.get_rotation();
+			turn(45);
+			controller.print(1,1,"%f",inertial.get_rotation() - cr);
+
+		}
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+			float cr = inertial.get_rotation();
+			turn(60);
+			controller.print(1,1,"%f",inertial.get_rotation() - cr);
 
 		}
 	
-		
+		controller.print(0,1,"%f",inertial.get_rotation());
 		pros::delay(10);
 	}
 }
