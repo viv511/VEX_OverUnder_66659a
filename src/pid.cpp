@@ -139,20 +139,26 @@ void PID::turnLookupPID(float t) {
 
 void PID::moveLookupPID(float t) {
     t = fabs(t);
-    if(t <= 20){
-        setConstants(20*fabs(this->target), 0, 100);
+    if(t <= 6){
+        setConstants(200*fabs(this->target), 0, 100); // good
     }
-    else if(t <= 25) {
-        setConstants(15*fabs(this->target), 0, 100);
+    else if(t <= 12){
+        setConstants(75*fabs(this->target), 0, 200); // good
+    }   
+    else if(t <= 15) {
+        setConstants(50*fabs(this->target), 0, 200); // good
+    }
+    else if(t <= 26){
+        setConstants(30*fabs(this->target), 0, 200); // good
     }
     else if(t <= 40) {
-        setConstants(12*fabs(this->target), 0, 200);
+        setConstants(20*fabs(this->target), 0, 200); // good
     }
-    else if (t <= 50){
-        setConstants(10*fabs(this->target), 0, 200);        
+    else if (t <= 52){
+        setConstants(10*fabs(this->target), 0, 200); // good
     }
     else {
-        setConstants(7*fabs(this->target), 0, 200);
+        setConstants(7*fabs(this->target), 0, 200); // good
     }
     
    
@@ -217,20 +223,20 @@ void PID::updateTimers() {
 bool PID::isSettled() {
     if(smallTimeCounter > smallExit) {
         //In target small threshold for smallExit amount of time
-        pros::lcd::print(6, "diff: %f\n", error);
-        pros::lcd::print(5, "Exit: %s\n", "SMALL");
+        controller.print(0,1,"%f", error);
+        controller.print(1,1,"%f","SMALL");
         return true;
     }
     else if(largeTimeCounter > largeExit) {
         //In target large threshold for largeExit amount of time
-        pros::lcd::print(6, "diff: %f\n", error);
-        pros::lcd::print(5, "Exit: %s\n", "LARGE");
+        controller.print(0,1,"%f", error);
+        controller.print(1,1,"%f", "LARGE");
         return true;
     }
     else if(maxCounter > maxTime) {
         //took too long
-        pros::lcd::print(6, "diff: %f\n", error);
-        pros::lcd::print(5, "Exit: %s\n", "MAX");
+        controller.print(0,1,"%f", error);
+        controller.print(1,1,"%f", "MAX");
         return true; 
     }
 

@@ -213,31 +213,19 @@ void opcontrol() {
 		// }
 
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-			float cr = inertial.get_rotation();
-			turn(15);
-			controller.print(1,1,"%f",inertial.get_rotation() - cr);
-
 		}
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-			float cr = inertial.get_rotation();
-			turn(30);
-			controller.print(1,1,"%f",inertial.get_rotation() - cr);
-
 		}
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
-			float cr = inertial.get_rotation();
-			turn(45);
-			controller.print(1,1,"%f",inertial.get_rotation() - cr);
-
 		}
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
-			float cr = inertial.get_rotation();
-			turn(60);
-			controller.print(1,1,"%f",inertial.get_rotation() - cr);
-
+		}
+		
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+			
 		}
 	
-		controller.print(0,1,"%f",inertial.get_rotation());
+		// controller.print(0,1,"%f",inertial.get_rotation());
 		pros::delay(10);
 	}
 }
