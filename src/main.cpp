@@ -137,7 +137,7 @@ void opcontrol() {
 
 		// Secret Sauce
 		axisTwo *= 100;
-		axisTwo = exp((fabs(axisTwo) - 100) / 100) * axisTwo;
+		axisTwo = exp((fabs(axisTwo) - 100) / 50) * axisTwo;
 		axisTwo /= 100;
 
 		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
@@ -161,7 +161,7 @@ void opcontrol() {
 		}
 
 		// WINGS
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
 			wings.set_value(true);
 		}
@@ -185,7 +185,7 @@ void opcontrol() {
 		}
 
 		
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 			backWing.set_value(1);
 		}
 		else {
