@@ -89,12 +89,12 @@ void competition_initialize() {
  */
 void autonomous() {
 	
-	defensiveRush();
-
+	// defensiveRush();
+	
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
-	// skillz3();
+	skillz3();
 	// disrupt();
 	//offensiveSneak();
 	// defenseRoute();
@@ -152,13 +152,15 @@ void opcontrol() {
 		RightDT.move_velocity(rightPower);
 
 		// CATA
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
+		if((elevationState) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))
 		{
 			cata.move_voltage(12000);
 		}
 		else
 		{
-			cata.move_voltage(0);
+			if(!elevationState) {
+				cata.move_voltage(0);
+			}
 		}
 
 		// WINGS
@@ -193,38 +195,54 @@ void opcontrol() {
 			backWing.set_value(0);
 		}
 
-		// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
-		// {
-		// 	elevationState = !elevationState;
-		// 	elevationLast = true;
-		// }
-		// else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
-		// {
-		// 	elevationLast = false;
-		// }
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
+		{
+			elevationState = !elevationState;
+			elevationLast = true;
+		}
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
+		{
+			elevationLast = false;
+		}
 
-		// if (elevationState)
-		// {
-		// 	backWing.set_value(true);
-		// }
-		// else
-		// {
-		// 	backWing.set_value(false);
-		// }
+		if (elevationState)
+		{
+			backWing.set_value(true);
+		}
+		else
+		{
+			backWing.set_value(false);
+		}
 
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+
+		// macro 
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))){
+			// Push balls in. 
+			RightDT.move_voltage(-12000);
+			LeftDT.move_voltage(-6000);
+			delay(550);
+			LeftDT.move_voltage(-12000);
+			delay(270);
+			pivot(45);
+			delay(50);
+
+			// Set up for matchloading
+			RightDT.move_voltage(12000);
+			LeftDT.move_voltage(4000);
+			delay(300);
+			pivot(-65);
+			LeftDT.move_voltage(-5000);
+			RightDT.move_voltage(-5000);
+			pros::delay(30);
+			stopMotors();		
 		}
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-		}
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
-		}
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
-		}
-		
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+
+
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))){
+			betterskills();
+			
 			
 		}
-	
 		// controller.print(0,1,"%f",inertial.get_rotation());
 		pros::delay(10);
 	}

@@ -233,31 +233,31 @@ void offensiveSneak() {
     
     controller.rumble("...");
 }
+void betterskills(){
 
+    // Push balls in. 
+    RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-6000);
+    delay(550);
+    LeftDT.move_voltage(-12000);
+    delay(220);
+    pivot(45);
+    delay(50);
 
-void skillz3(){
-    
-    //intakePiston.set_value(true);
-    // intake.move_velocity(12000);
-    wings.set_value(1);
-    pros::delay(500);
-    wings.set_value(0);
-    pivot(135);
-    intake.move_velocity(0);
-
-    driveDist(-26);
-    pivot(67);
-    LeftDT.move_voltage(-12000*0.6);
-    RightDT.move_voltage(-12000*0.6);
-    pros::delay(350);
+    // Set up for matchloading
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(4000);
+    delay(300);
+    pivot(-63);
+    LeftDT.move_voltage(-5000);
+    RightDT.move_voltage(-5000);
+    pros::delay(30);
+    pivot(-63);
     stopMotors();
-
     backWing.set_value(1);
-    pivot(72);
 
-
-    // backWing.set_value(1);
-    const int MATCHLOAD_TIME = 0; //in ms (30000)
+    // matchloading
+    const int MATCHLOAD_TIME = 2000; //in ms (30000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
         cata.move_voltage(12000);
@@ -267,69 +267,194 @@ void skillz3(){
     cata.move_voltage(0);
     stopMotors();
     pros::delay(50);
+
+
+    // Go to alley
+    pivot(180);
+    driveTime(-165);
+    RightDT.move_voltage(-6300);
+    LeftDT.move_voltage(-12000);
+    delay(390);
+    stopMotors();
+    pivot(132.5);
+
+    // push through alley
+    cata.move_voltage(12000);
+    driveDist(-81);
+    cata.move_voltage(0);
+    pivot(135);
+    delay(150);
+    
+
+
+    //side push w/ swerve
+    driveTime(-180);
+	RightDT.move_voltage(-4900);
+    LeftDT.move_voltage(-12000);
+    delay(740);
+    stopMotors();
+    pivot(45);
+    driveTime(-400);
+
+    //second push
+    driveTime(250);
+    delay(50);
+    driveTime(-400);
+    delay(50);
+    pivot(45);
+
+
+    // set up for push from front
+    driveDist(11);
+    pivot(145);
+    driveDist(45);
+    wings.set_value(1);
+    pivot(-135);
+    driveTime(105);
+    RightDT.move_voltage(3000);
+    LeftDT.move_voltage(12000);
+	delay(485);
+    pivot(-45);
+    delay(50);
+
+    // front push
+    driveTime(700);
+    pivot(-45);
+    delay(200);
+
+    // #2 push from front
+    wings.set_value(0);
+    driveDist(-28);
+    delay(200);
+    pivot(-135);
+    wings.set_value(1);
+    LeftDT.move_voltage(12000);
+    RightDT.move_voltage(3000);
+	delay(485);
+    pivot(-45);
+    driveTime(700);
+    pivot(-45);
+    wings.set_value(0);
+    delay(200);
+
+    // push from other side
+    driveDist(-26);
+    delay(20);
+    pivot(-95);
+    driveDist(-50);
+    pivot(0);
+    RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-7500);
+    delay(400);
+    LeftDT.move_voltage(-12000);
+    delay(200);
+    stopMotors();
+    
+    
+
+
+}
+
+void skillz3(){
+
+   RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-6000);
+    delay(550);
+    LeftDT.move_voltage(-12000);
+    delay(270);
+    pivot(45);
+    delay(50);
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(4000);
+    delay(300);
+    pivot(-65);
+    LeftDT.move_voltage(-6000);
+    RightDT.move_voltage(-6000);
+    pros::delay(100);
+    stopMotors();
+    backWing.set_value(1);
+
+    // backWing.set_value(1);
+    const int MATCHLOAD_TIME = 27000; //in ms (30000)
+    long long timer = 0;
+    while(timer < MATCHLOAD_TIME) {
+        cata.move_voltage(12000);
+        timer += 10;
+        pros::delay(10);
+    }
+    cata.move_voltage(0);
+    stopMotors();
+    pros::delay(50);
+
+    // swerve to alley
     driveTime(50);
     backWing.set_value(0);
-    pivot(170);
-    driveTime(-400);
+    pivot(160);
+    driveTime(-550);
+
     pivot(180);
-    
     driveTime(80);
 	RightDT.move_voltage(12000);
     LeftDT.move_voltage(4900);
     delay(750);
     stopMotors();
     delay(50);
-    pivot(90);
+    pivot(87.5);
 
-    //drive across field, swerve for side push
+    //drive across field through alley
     driveDist(81);
-	RightDT.move_voltage(12000);
-    LeftDT.move_voltage(4900);
+    pivot(-90);
+    delay(150);
+
+    // swerve for side push
+    driveTime(-230);
+	RightDT.move_voltage(-4900);
+    LeftDT.move_voltage(-12000);
     delay(740);
     stopMotors();
-    pivot(0);
-    driveTime(400);
+    pivot(180);
+    driveTime(-400);
 
     //second push
-    driveTime(-250);
+    driveTime(250);
     delay(50);
-    driveTime(400);
+    driveTime(-400);
     delay(50);
-    wings.set_value(0);
+   
 
 
     // go push from front
-    driveDist(-15);
+    driveDist(11);
     pivot(-80);
     driveDist(45);
-    backWing.set_value(1);
-    pivot(180);
-    driveTime(-125);
-    RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-3000);
+    wings.set_value(1);
+    pivot(0);
+    driveTime(105);
+    RightDT.move_voltage(3000);
+    LeftDT.move_voltage(12000);
 	delay(485);
-    pivot(-90);
+    pivot(90);
     delay(50);
-    driveTime(-400);
+    driveTime(700);
+    pivot(90);
     delay(200);
 
     // #2 push from front
-    backWing.set_value(0);
-    driveTime(470);
+    wings.set_value(0);
+    driveDist(-28);
     delay(200);
-    backWing.set_value(1);
-    pivot(180);
-    driveTime(-150);
-    LeftDT.move_voltage(-3000);
-    RightDT.move_voltage(-12000);
+    pivot(0);
+    wings.set_value(1);
+    LeftDT.move_voltage(12000);
+    RightDT.move_voltage(3000);
 	delay(485);
-    pivot(-90);
-    driveTime(-400);
-    backWing.set_value(0);
+    pivot(90);
+    driveTime(700);
+    wings.set_value(0);
     delay(200);
 
     // push from other side
-    driveTime(450);
+    driveDist(-26);
     delay(20);
     pivot(-140);
     driveDist(-50);

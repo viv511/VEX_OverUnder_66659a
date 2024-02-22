@@ -15,7 +15,7 @@ constexpr float radToDeg = 180/PI;
 constexpr float botTHICKNESS = 11.75; 
 
 
-float thetaPID = 160;
+float thetaPID = 400;
 PID movePID = PID(false, 1, 100, 3, 300, 2000);
 PID swingPID = PID(true, 1, 300, 3, 300, 1500);
 PID turnPID = PID(true, 1, 100, 3, 300, 1200);
