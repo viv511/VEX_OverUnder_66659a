@@ -93,7 +93,7 @@ void autonomous() {
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
-	betterskills();
+	betterskillz();
 	// skillz3();
 	// disrupt();
 	//offensiveSneak();

@@ -254,7 +254,7 @@ void startOfSkills() {
     stopMotors();
 }
 
-void betterskills(){
+void betterskillz(){
     startOfSkills();
 
     backWing.set_value(1);
