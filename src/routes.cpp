@@ -282,7 +282,7 @@ void betterskills(){
     LeftDT.move_voltage(-12000);
     delay(390);
     stopMotors();
-    pivot(136.7);
+    pivot(135);
 
     // push through alley
     cata.move_voltage(12000* 0.33);
