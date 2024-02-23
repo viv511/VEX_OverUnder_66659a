@@ -10,7 +10,6 @@ void initialize()
 {
 	wings.set_value(false);
 	backWing.set_value(false);
-	//intakePiston.set_value(false);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -94,7 +93,8 @@ void autonomous() {
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
-	skillz3();
+	betterskills();
+	// skillz3();
 	// disrupt();
 	//offensiveSneak();
 	// defenseRoute();
@@ -114,7 +114,7 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	//intakePiston.set_value(true);
+	// intakePiston.set_value(true);
 
 	LeftDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	RightDT.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -155,12 +155,13 @@ void opcontrol() {
 		if((elevationState) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))
 		{
 			cata.move_voltage(12000);
+			intake.move_voltage(-12000); // remove
 		}
 		else
 		{
 			if(!elevationState) {
 				cata.move_voltage(0);
-			}
+			};
 		}
 
 		// WINGS
@@ -187,20 +188,12 @@ void opcontrol() {
 			intake.move_voltage(0);
 		}
 
-		
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			backWing.set_value(1);
-		}
-		else {
-			backWing.set_value(0);
-		}
-
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) && !elevationLast)
+		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) && !elevationLast)
 		{
 			elevationState = !elevationState;
 			elevationLast = true;
 		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))))
+		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))))
 		{
 			elevationLast = false;
 		}
@@ -217,32 +210,10 @@ void opcontrol() {
 
 		// macro 
 		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))){
-			// Push balls in. 
-			RightDT.move_voltage(-12000);
-			LeftDT.move_voltage(-6000);
-			delay(550);
-			LeftDT.move_voltage(-12000);
-			delay(270);
-			pivot(45);
-			delay(50);
-
-			// Set up for matchloading
-			RightDT.move_voltage(12000);
-			LeftDT.move_voltage(4000);
-			delay(300);
-			pivot(-65);
-			LeftDT.move_voltage(-5000);
-			RightDT.move_voltage(-5000);
-			pros::delay(30);
-			stopMotors();		
+			startOfSkills();
 		}
 
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))){
-			betterskills();
-			
-			
-		}
 		// controller.print(0,1,"%f",inertial.get_rotation());
 		pros::delay(10);
 	}

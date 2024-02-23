@@ -10,12 +10,12 @@ void defensiveRush(){
 
     delay(350);
     wings.set_value(0);
-    intake.move_velocity(200);
+    intake.move_velocity(600);
     driveDist(52);
    
     
     // drive backwards  and open wings
-    driveDist(-12); // TUNE PLS VIVEKKKK
+    driveDist(-11); // TUNE PLS VIVEKKKK
 
     wings.set_value(1);
     intake.move_velocity(0);
@@ -42,12 +42,10 @@ void defensiveRush(){
     LeftDT.move_voltage(0);
     RightDT.move_voltage(0);
     delay(20);
-    wings.set_value(false);
+    
     // go back and set bot up to score the preload.
-
-
-
     driveDist(-9); //TUNE THIS 
+    wings.set_value(false);
 
 
 
@@ -55,7 +53,7 @@ void defensiveRush(){
     // turn(-55);
     pivot(17);
 
-    driveDist(-56.7);
+    driveDist(-58);
     backWing.set_value(1);
     delay(120);
     turn(-275);
@@ -90,12 +88,11 @@ void defensiveRush(){
     LeftDT.move_voltage(0);
     RightDT.move_voltage(0);
 
-    pivot(67);
+    pivot(72);
 
     // touch bar and outtake
-    intake.move_velocity(-200);
-    wings.set_value(1);
-    driveTime(-270);
+    intake.move_velocity(-600);
+    driveTime(270);
     RightDT.move_voltage(10000);
     LeftDT.move_voltage(10000);
     delay(200);
@@ -233,8 +230,9 @@ void offensiveSneak() {
     
     controller.rumble("...");
 }
-void betterskills(){
 
+void startOfSkills() { 
+    
     // Push balls in. 
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-6000);
@@ -251,20 +249,28 @@ void betterskills(){
     pivot(-63);
     LeftDT.move_voltage(-5000);
     RightDT.move_voltage(-5000);
-    pros::delay(30);
+    pros::delay(20);
     pivot(-63);
     stopMotors();
+}
+
+void betterskills(){
+    startOfSkills();
+
     backWing.set_value(1);
 
     // matchloading
-    const int MATCHLOAD_TIME = 2000; //in ms (30000)
+    const int MATCHLOAD_TIME = 27000; //in ms (26000)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
         cata.move_voltage(12000);
+        intake.move_voltage(-12000);
         timer += 10;
         pros::delay(10);
     }
     cata.move_voltage(0);
+    intake.move_voltage(0);
+    backWing.set_value(0);
     stopMotors();
     pros::delay(50);
 
@@ -276,13 +282,13 @@ void betterskills(){
     LeftDT.move_voltage(-12000);
     delay(390);
     stopMotors();
-    pivot(132.5);
+    pivot(135);
 
     // push through alley
-    cata.move_voltage(12000);
+    cata.move_voltage(12000* 0.33);
     driveDist(-81);
     cata.move_voltage(0);
-    pivot(135);
+    pivot(133);
     delay(150);
     
 
@@ -295,25 +301,35 @@ void betterskills(){
     stopMotors();
     pivot(45);
     driveTime(-400);
+    delay(50);
 
     //second push
-    driveTime(250);
+    driveTime(270);
     delay(50);
-    driveTime(-400);
+    driveTime(-410);
     delay(50);
     pivot(45);
+
+    //third push
+    // driveTime(320);
+    //  delay(50);
+    // driveTime(-450);
+    // delay(50);
+    // pivot(45);
 
 
     // set up for push from front
     driveDist(11);
     pivot(145);
     driveDist(45);
-    wings.set_value(1);
     pivot(-135);
     driveTime(105);
     RightDT.move_voltage(3000);
     LeftDT.move_voltage(12000);
 	delay(485);
+    wings.set_value(1);
+    stopMotors();
+    delay(100);
     pivot(-45);
     delay(50);
 
@@ -324,14 +340,18 @@ void betterskills(){
 
     // #2 push from front
     wings.set_value(0);
-    driveDist(-28);
+    driveDist(-30);
     delay(200);
     pivot(-135);
-    wings.set_value(1);
+    driveTime(75);
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(3000);
 	delay(485);
+    wings.set_value(1);
+    stopMotors();
+    delay(100);
     pivot(-45);
+    delay(50);
     driveTime(700);
     pivot(-45);
     wings.set_value(0);
@@ -340,15 +360,30 @@ void betterskills(){
     // push from other side
     driveDist(-26);
     delay(20);
-    pivot(-95);
-    driveDist(-50);
-    pivot(0);
+    pivot(67);
+    driveDist(-30);
+    pivot(45);
+    driveDist(-18);
+    pivot(135);
+    driveTime(-100);
+    backWing.set_value(1);
+    pivot(180);
+    driveTime(-100);
+    backWing.set_value(0);
     RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-7500);
-    delay(400);
+    LeftDT.move_voltage(-6000);
+    delay(550);
     LeftDT.move_voltage(-12000);
     delay(200);
     stopMotors();
+    
+
+    // push more
+    driveTime(320);
+    delay(50);
+    driveTime(-400);
+    delay(50);
+    driveTime(150);
     
     
 

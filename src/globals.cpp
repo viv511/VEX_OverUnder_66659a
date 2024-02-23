@@ -10,7 +10,7 @@ Motor BR(4, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 
 Motor cata(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);//good
 
-Motor intake(5, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES); //good
+Motor intake(5, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES); //good
 
 Controller controller(E_CONTROLLER_MASTER);
 

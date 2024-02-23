@@ -9,7 +9,9 @@ void defenseRoute();
 void defensiveRush();
 void offensiveSneak();
 void skillz3();
+void startOfSkills();
 void betterskills();
 void offensiveRush();
+
 
 #endif
