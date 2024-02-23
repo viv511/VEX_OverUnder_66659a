@@ -260,7 +260,7 @@ void betterskillz(){
     backWing.set_value(1);
 
     // matchloading
-    const int MATCHLOAD_TIME = 26500; //in ms (27500)
+    const int MATCHLOAD_TIME = 27500; //in ms (27500)
     long long timer = 0;
     while(timer < MATCHLOAD_TIME) {
         cata.move_voltage(12000);
@@ -285,7 +285,7 @@ void betterskillz(){
     pivot(136.7);
 
     // push through alley
-    cata.move_voltage(12000* 0.53);
+    cata.move_voltage(12000* 0.67);
     driveDist(-78);
     cata.move_voltage(0);
     pivot(133);
@@ -323,7 +323,7 @@ void betterskillz(){
     pivot(145);
     driveDist(51);
     pivot(45);
-    driveTime(-105);
+    driveTime(-135);
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-3000);
 	delay(485);
@@ -334,8 +334,8 @@ void betterskillz(){
     delay(50);
 
     // front push
-    RightDT.move_voltage(-8000);
-    LeftDT.move_voltage(-8000);
+    RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-12000);
     delay(1200);
     pivot(135);
     delay(200);
@@ -356,11 +356,11 @@ void betterskillz(){
     delay(50);
     pivot(135);
     delay(50);
-    RightDT.move_voltage(-8500);
-    LeftDT.move_voltage(-8500);
-    delay(1200);
+    RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-12000);
+    delay(700);
     pivot(135);
-    wings.set_value(0);
+    backWing.set_value(0);
     delay(200);
 
     // push from other side
@@ -374,10 +374,10 @@ void betterskillz(){
     driveTime(-100);
     backWing.set_value(1);
     pivot(180);
-    driveTime(-100);
+    driveTime(-180);
     backWing.set_value(0);
     RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-6000);
+    LeftDT.move_voltage(-5800);
     delay(550);
     LeftDT.move_voltage(-12000);
     delay(200);
