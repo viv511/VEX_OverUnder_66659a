@@ -239,7 +239,6 @@ void startOfSkills() {
     delay(550);
     LeftDT.move_voltage(-12000);
     delay(220);
-    pivot(45);
     delay(50);
 
     // Set up for matchloading
@@ -282,33 +281,34 @@ void betterskillz(){
     LeftDT.move_voltage(-12000);
     delay(390);
     stopMotors();
-    pivot(136.7);
+    pivot(136);
 
     // push through alley
-    cata.move_voltage(12000* 0.67);
-    driveDist(-78);
+    cata.move_voltage(12000* 0.72);
+    driveDist(-75);
     cata.move_voltage(0);
-    pivot(133);
-    delay(150);
     
 
-
     //side push w/ swerve
-    driveTime(-110);
-	RightDT.move_voltage(-4900);
+	RightDT.move_voltage(-4800);
     LeftDT.move_voltage(-12000);
-    delay(740);
-    stopMotors();
-    pivot(45);
-    driveTime(-400);
-    delay(50);
+    delay(350);
+    RightDT.move_voltage(-12000);
+    delay(135);
+    RightDT.move_voltage(-2300);
+    delay(165);
+    RightDT.move_voltage(-5000);
+    delay(205);
+    // pivot(45);
+    driveTime(-350);
+
+    // delay(1000000);
+
 
     //second push
     driveTime(270);
-    delay(50);
+    pivot(50);
     driveTime(-410);
-    delay(50);
-    pivot(45);
 
     //third push
     // driveTime(320);
@@ -319,81 +319,61 @@ void betterskillz(){
 
 
     // set up for push from front
-    driveDist(11);
-    pivot(145);
-    driveDist(51);
+    driveDist(9);
+    pivot(139);
+    driveDist(49);
     pivot(45);
-    driveTime(-135);
+    driveTime(-350);
     RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-3000);
-	delay(485);
+	delay(310);
     backWing.set_value(1);
-    stopMotors();
-    delay(100);
-    pivot(135);
-    delay(50);
 
     // front push
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-12000);
-    delay(1200);
+    delay(650);
     pivot(135);
-    delay(200);
 
     // set up for push
+    driveTime(150);
     backWing.set_value(0);
-    driveDist(30);
-    delay(200);
+    driveTime(350);
     pivot(45);
-    driveTime(-85);
-    LeftDT.move_voltage(-3000);
+    
+    driveTime(-300);
     RightDT.move_voltage(-12000);
-	delay(485);
+	delay(310);
     backWing.set_value(1);
 
     // 2nd push
-    stopMotors();
-    delay(50);
-    pivot(135);
-    delay(50);
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-12000);
-    delay(700);
+    delay(650);
     pivot(135);
-    backWing.set_value(0);
-    delay(200);
 
     // push from other side
-    driveDist(26);
-    delay(20);
-    pivot(70);
-    driveDist(-42);
-    pivot(45);
-    driveDist(-15);
-    pivot(135);
-    driveTime(-100);
-    backWing.set_value(1);
-    pivot(180);
-    driveTime(-180);
-    backWing.set_value(0);
-    RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-5800);
-    delay(550);
-    LeftDT.move_voltage(-12000);
-    delay(200);
-    stopMotors();
-    
-
-    // push more
-    driveTime(320);
-    delay(50);
-    driveTime(-400);
-    delay(50);
     driveTime(150);
+    backWing.set_value(0);
+    driveTime(250);
+    pivot(-100);
+    wings.set_value(1);
+    driveTime(380);
     
-    
-
-
+    RightDT.move_voltage(12000);
+    LeftDT.move_voltage(4100);
+    delay(400);
+    driveTime(400);
+    wings.set_value(0);
+    pivot(-45);
+    LeftDT.move_voltage(12000);
+    RightDT.move_voltage(4900);
+    wings.set_value(1);
+    delay(440);
+    wings.set_value(0);
+    delay(300);
+    driveTime(-200);
+    driveTime(370);
+    driveTime(-100);
 }
 
 void skillz3(){
@@ -512,13 +492,13 @@ void skillz3(){
 
 }
 
-void offensiveRush() {
-    //Reset: Facing the middle left triball, preload is next to wings
+// void offensiveRush() {
+//     //Reset: Facing the middle left triball, preload is next to wings
 
-    //Pop wings and drive forward towards mid triball and intake on
-    //Pivot towards goal, open wings, outtake, and drive forward
-    //Backward Arc with left side ==> Either PID or Time based
-    //Go forward, intake on towards back left triball
+//     //Pop wings and drive forward towards mid triball and intake on
+//     //Pivot towards goal, open wings, outtake, and drive forward
+//     //Backward Arc with left side ==> Either PID or Time based
+//     //Go forward, intake on towards back left triball
     
     
-}
+// }
