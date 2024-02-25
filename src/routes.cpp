@@ -231,7 +231,7 @@ void offensiveSneak() {
     controller.rumble("...");
 }
 
-void startOfSkills() { 
+void startOfSkillz() { 
     
     // Push balls in. 
     RightDT.move_voltage(-12000);
@@ -242,6 +242,7 @@ void startOfSkills() {
     delay(50);
 
     // Set up for matchloading
+    pivot(45);
     RightDT.move_voltage(12000);
     LeftDT.move_voltage(3500);
     delay(300);
@@ -254,12 +255,12 @@ void startOfSkills() {
 }
 
 void betterskillz(){
-    startOfSkills();
+    startOfSkillz();
 
     backWing.set_value(1);
 
     // matchloading
-    const int MATCHLOAD_TIME = 2500; //in ms (27500)
+    const int MATCHLOAD_TIME = 24000; //in ms (27500)
     long long timer = 0;
     float hitterSpeed = 0.85;
     while(timer < MATCHLOAD_TIME) {
@@ -286,13 +287,13 @@ void betterskillz(){
     LeftDT.move_voltage(-12000);
     delay(390);
     stopMotors();
-    pivot(136);
+    pivot(137);
 
     // push through alley
     cata.move_voltage(12000* 0.72);
     intake.move_voltage(-12000 * 0.72);
 
-    driveDist(-77);
+    driveDist(-76);
     cata.move_voltage(0);
     intake.move_voltage(0);
     
@@ -302,8 +303,8 @@ void betterskillz(){
     LeftDT.move_voltage(-12000);
     delay(350);
     RightDT.move_voltage(-12000);
-    delay(135);
-    RightDT.move_voltage(-2300);
+    delay(155);
+    RightDT.move_voltage(-2800);
     delay(165);
     RightDT.move_voltage(-5000);
     delay(205);
@@ -328,18 +329,19 @@ void betterskillz(){
 
     // set up for push from front
     driveDist(9);
-    pivot(139);
+    pivot(147);
     driveDist(49);
-    pivot(45);
-    driveTime(-350);
-    RightDT.move_voltage(-12000);
-	delay(310);
+    pivot(105);
+    wings.set_value(1);
+    pivot(195);
+    wings.set_value(0);
+    pivot(105);
     backWing.set_value(1);
 
     // front push
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-12000);
-    delay(650);
+    delay(850);
     pivot(135);
 
     // set up for push
@@ -348,9 +350,9 @@ void betterskillz(){
     driveTime(350);
     pivot(45);
     
-    driveTime(-300);
+    driveTime(-400);
     RightDT.move_voltage(-12000);
-	delay(310);
+	delay(380);
     backWing.set_value(1);
 
     // 2nd push
@@ -362,28 +364,30 @@ void betterskillz(){
     // push missed triballs in corner.
     driveTime(150);
     backWing.set_value(0);
-    driveTime(250);
+    driveTime(300);
 
 
     pivot(-135);
     wings.set_value(1); 
-    driveTime(250);
+    driveTime(150);
     LeftDT.move_voltage(12000);
     delay(420);
     stopMotors();
     wings.set_value(0);
-    driveTime(100);
-
+    pivot(-45);
+    driveTime(200);
     // go push from far corner.
     RightDT.move_voltage(12000);
-    delay(410);
+    delay(440);
     driveTime(330);
     pivot(-45);
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(4500);
     delay(1000);
     driveTime(300);
-    driveTime(-350);
+    driveTime(-200);
+    driveTime(350);
+    driveTime(-300);
     
 }
 

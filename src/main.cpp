@@ -154,7 +154,7 @@ void opcontrol() {
 		// CATA
 		if((elevationState) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))
 		{
-			float hitterSpeed = 0.88;
+			float hitterSpeed = 0.85;
 			cata.move_voltage(12000 * hitterSpeed);
 			intake.move_voltage(-12000 * hitterSpeed); // remove
 		}
@@ -212,7 +212,7 @@ void opcontrol() {
 
 		// macro 
 		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))){
-			startOfSkills();
+			startOfSkillz();
 			
 		}
 
