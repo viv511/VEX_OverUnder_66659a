@@ -8,13 +8,13 @@ Motor FR(3, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 Motor MR(2, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 Motor BR(4, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES); //
 
-Motor cata(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);//good
+Motor cata(9, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);//good
 
-Motor intake(5, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES); //good
+Motor intake(5, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES); //good
 
 Controller controller(E_CONTROLLER_MASTER);
 
-IMU inertial(11); //good
+IMU inertial(17); //good
 Rotation leftRot(19);//good
 Rotation rightRot(1); //good
 

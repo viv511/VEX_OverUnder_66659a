@@ -154,8 +154,9 @@ void opcontrol() {
 		// CATA
 		if((elevationState) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))
 		{
-			cata.move_voltage(12000);
-			intake.move_voltage(-12000); // remove
+			float hitterSpeed = 0.88;
+			cata.move_voltage(12000 * hitterSpeed);
+			intake.move_voltage(-12000 * hitterSpeed); // remove
 		}
 		else
 		{
@@ -179,10 +180,11 @@ void opcontrol() {
 		{
 			intake.move_voltage(12000);
 		}
-		else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) || controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			intake.move_voltage(-12000);
 		}
+	
 		else
 		{
 			intake.move_voltage(0);
