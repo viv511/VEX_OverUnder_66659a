@@ -249,7 +249,7 @@ void startOfSkillz() {
     pivot(-63);
     LeftDT.move_voltage(-5000);
     RightDT.move_voltage(-5000);
-    pros::delay(20);
+    pros::delay(60);
     pivot(-63);
     stopMotors();
 }
@@ -260,9 +260,9 @@ void betterskillz(){
     backWing.set_value(1);
 
     // matchloading
-    const int MATCHLOAD_TIME = 24000; //in ms (27500)
+    const int MATCHLOAD_TIME = 28000; //in ms (27500)
     long long timer = 0;
-    float hitterSpeed = 0.85;
+    float hitterSpeed = 0.70;
     while(timer < MATCHLOAD_TIME) {
         
         cata.move_voltage(12000 * hitterSpeed);
@@ -311,31 +311,25 @@ void betterskillz(){
     // pivot(45);
     driveTime(-350);
 
-    // delay(1000000);
-
-
     //second push
-    driveTime(270);
+    driveTime(320);
     // pivot(50);
     driveTime(-410);
 
     //third push
-    // driveTime(320);
-    //  delay(50);
-    // driveTime(-450);
-    // delay(50);
-    // pivot(45);
+    driveTime(320);
+    driveTime(-410);
+    delay(50);
 
 
     // set up for push from front
     driveDist(9);
-    pivot(147);
+    pivot(145);
     driveDist(49);
     pivot(105);
-    wings.set_value(1);
-    pivot(195);
-    wings.set_value(0);
-    pivot(105);
+    // wings.set_value(1);
+    // pivot(195);
+    // wings.set_value(0);
     backWing.set_value(1);
 
     // front push
@@ -350,9 +344,25 @@ void betterskillz(){
     driveTime(350);
     pivot(45);
     
-    driveTime(-400);
+    driveTime(-200);
     RightDT.move_voltage(-12000);
 	delay(380);
+    backWing.set_value(1);
+
+    // 2nd push
+    RightDT.move_voltage(-12000);
+    LeftDT.move_voltage(-12000);
+    delay(650);
+    pivot(135);
+
+    driveTime(150);
+    backWing.set_value(0);
+    driveTime(350);
+    pivot(45);
+    
+    driveTime(-330);
+    RightDT.move_voltage(-12000);
+	delay(420);
     backWing.set_value(1);
 
     // 2nd push
@@ -366,27 +376,17 @@ void betterskillz(){
     backWing.set_value(0);
     driveTime(300);
 
-
-    pivot(-135);
-    wings.set_value(1); 
-    driveTime(150);
-    LeftDT.move_voltage(12000);
-    delay(420);
-    stopMotors();
-    wings.set_value(0);
+    pivot(-135); 
+    driveTime(3000);
     pivot(-45);
-    driveTime(200);
+    driveTime(600);
     // go push from far corner.
-    RightDT.move_voltage(12000);
-    delay(440);
-    driveTime(330);
-    pivot(-45);
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(4500);
     delay(1000);
-    driveTime(300);
+    driveTime(500);
     driveTime(-200);
-    driveTime(350);
+    driveTime(500);
     driveTime(-300);
     
 }

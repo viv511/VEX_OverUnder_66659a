@@ -88,12 +88,15 @@ void competition_initialize() {
  */
 void autonomous() {
 	
-	// defensiveRush();
-	
+	defensiveRush();
+	// betterskillz();
+
+
+
 	// intakePiston.set_value(1);	
 	// defensivePush();
 	// skillz2();
-	betterskillz();
+
 	// skillz3();
 	// disrupt();
 	//offensiveSneak();
@@ -133,7 +136,7 @@ void opcontrol() {
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0) * 0.88; 
+		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0); 
 		// 0.88 is turn senstivity
 
 		// Secret Sauce
@@ -151,19 +154,16 @@ void opcontrol() {
 		LeftDT.move_velocity(leftPower);
 		RightDT.move_velocity(rightPower);
 
-		// CATA
-		if((elevationState) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)))
+		// BACK WINGS
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
-			float hitterSpeed = 0.85;
-			cata.move_voltage(12000 * hitterSpeed);
-			intake.move_voltage(-12000 * hitterSpeed); // remove
+			backWing.set_value(true);
 		}
 		else
 		{
-			if(!elevationState) {
-				cata.move_voltage(0);
-			};
+			backWing.set_value(false);
 		}
+		
 
 		// WINGS
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
@@ -175,49 +175,55 @@ void opcontrol() {
 			wings.set_value(false);
 		}
 
-		// INTAKE
-		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-		{
-			intake.move_voltage(12000);
-		}
-		else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) || controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
-		{
-			intake.move_voltage(-12000);
-		}
-	
-		else
-		{
-			intake.move_voltage(0);
-		}
+		// SKILLS 
+		//*****************************
+					// if(elevationState){
+					// 	float hitterSpeed = 0.70;
+					// 	cata.move_voltage(12000 * hitterSpeed);
+					// 	intake.move_voltage(-12000 * hitterSpeed);
+					// }
+					// else {
+					// 	cata.move_voltage(0);
+					// 	intake.move_voltage(0);
+					// }
 
-		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) && !elevationLast)
-		{
-			elevationState = !elevationState;
-			elevationLast = true;
-		}
-		else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))))
-		{
-			elevationLast = false;
-		}
+					// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
+					// {
+					// 	elevationState = !elevationState;
+					// 	elevationLast = true;
+					// }
+					// else if (!((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))))
+					// {
+					// 	elevationLast = false;
+					// }
+		//*****************************
 
-		if (elevationState)
-		{
-			backWing.set_value(true);
-		}
-		else
-		{
-			backWing.set_value(false);
-		}
 
+		//*****************************
+		// NOT SKILLS
+		//*****************************
+					if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+					{
+						intake.move_voltage(12000);
+					}
+					else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+					{
+						intake.move_voltage(-12000);
+					}
+					else
+					{
+						intake.move_voltage(0);
+					}
+		//*****************************
 
 		// macro 
 		if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))){
-			startOfSkillz();
-			
+			startOfSkillz();	
 		}
 
 
-		// controller.print(0,1,"%f",inertial.get_rotation());
+		lcd::print(5, "Intake: %f\n", intake.get_actual_velocity());
+		lcd::print(6, "Cata: %f\n", cata.get_actual_velocity());
 		pros::delay(10);
 	}
 }
