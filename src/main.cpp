@@ -140,9 +140,9 @@ void opcontrol() {
 		// 0.88 is turn senstivity
 
 		// Secret Sauce
-		axisTwo *= 100;
-		axisTwo = exp((fabs(axisTwo) - 100) / 50) * axisTwo;
-		axisTwo /= 100;
+		// axisTwo *= 100;
+		// axisTwo = exp((fabs(axisTwo) - 100) / 50) * axisTwo;
+		// axisTwo /= 100;
 
 		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
 
