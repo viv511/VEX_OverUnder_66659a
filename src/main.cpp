@@ -86,9 +86,10 @@ void competition_initialize() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
+void autonomous() { 
 	
 	defensiveRush();
+	
 	// betterskillz();
 
 
@@ -99,7 +100,7 @@ void autonomous() {
 
 	// skillz3();
 	// disrupt();
-	//offensiveSneak();
+	// offensiveSneak();
 	// defenseRoute();
 }
 
@@ -136,15 +137,16 @@ void opcontrol() {
 
 		// *---*---*---*---*---*---*--CONTROLLER AND DRIVE--*---*---*---*---*---*---*---*---*
 		axisOne = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0);
-		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0); 
+		axisTwo = ((controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127.0) * 0.88; 
 		// 0.88 is turn senstivity
 
 		// Secret Sauce
-		// axisTwo *= 100;
-		// axisTwo = exp((fabs(axisTwo) - 100) / 50) * axisTwo;
-		// axisTwo /= 100;
+		axisTwo *= 100;
+		axisTwo = exp((fabs(axisTwo) - 100) / 50) * axisTwo;
+		axisTwo /= 100;
 
 		float mag = fmax(1.0, fmax(fabs(axisOne + axisTwo), fabs(axisOne - axisTwo)));
+
 
 		//-1 <--  0 --> 1 scale to velocity (-600 <-- 0 --> 600 RPM)
 		leftPower = ((axisOne + axisTwo) / mag) * 600;
@@ -154,7 +156,10 @@ void opcontrol() {
 		LeftDT.move_velocity(leftPower);
 		RightDT.move_velocity(rightPower);
 
-		// BACK WINGS
+
+
+		//BACK WINGS
+		// UNCOMMENT FOR MATCHES, COMMENT OUT FOR SKILLS
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
 			backWing.set_value(true);
@@ -178,13 +183,24 @@ void opcontrol() {
 		// SKILLS 
 		//*****************************
 					// if(elevationState){
-					// 	float hitterSpeed = 0.70;
+					// 	float hitterSpeed = 0.83;
 					// 	cata.move_voltage(12000 * hitterSpeed);
 					// 	intake.move_voltage(-12000 * hitterSpeed);
+
+					// 	backWing.set_value(true);
 					// }
 					// else {
 					// 	cata.move_voltage(0);
 					// 	intake.move_voltage(0);
+
+					// 	if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+					// 	{
+					// 		backWing.set_value(true);
+					// 	}
+					// 	else
+					// 	{
+					// 		backWing.set_value(false);
+					// 	}
 					// }
 
 					// if ((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) && !elevationLast)
@@ -202,18 +218,18 @@ void opcontrol() {
 		//*****************************
 		// NOT SKILLS
 		//*****************************
-					if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-					{
-						intake.move_voltage(12000);
-					}
-					else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-					{
-						intake.move_voltage(-12000);
-					}
-					else
-					{
-						intake.move_voltage(0);
-					}
+				if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+				{
+					intake.move_voltage(12000);
+				}
+				else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+				{
+					intake.move_voltage(-12000);
+				}
+				else
+				{
+					intake.move_voltage(0);
+				}
 		//*****************************
 
 		// macro 

@@ -6,11 +6,15 @@ using namespace pros;
 
 
 void defensiveRush(){
+    intake.move_velocity(600);
+    // intake.move_velocity(-600);
     wings.set_value(1);
 
-    delay(350);
+    
+    delay(450);
     wings.set_value(0);
-    intake.move_velocity(600);
+    
+    // intake.move_velocity(600);
     driveDist(52);
    
     
@@ -18,12 +22,12 @@ void defensiveRush(){
     driveDist(-11); // TUNE PLS VIVEKKKK
 
     wings.set_value(1);
-    intake.move_velocity(0);
+    // intake.move_velocity(0);
 
 
     // drift
     LeftDT.move_voltage(12000);
-    delay(320);
+    delay(380);
     LeftDT.move_voltage(0);
 
     // delay(50);
@@ -46,59 +50,46 @@ void defensiveRush(){
     // go back and set bot up to score the preload.
     driveDist(-9); //TUNE THIS 
     wings.set_value(false);
-
-
-
-    // expected_rotation = 0;
-    // turn(-55);
-    pivot(17);
-
+    pivot(20.5);
     driveDist(-58);
+
+    // take triball out of corner
     backWing.set_value(1);
     delay(120);
     turn(-275);
-
     backWing.set_value(0);
 
-    // turn(12);
     delay(50);
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(12000);
-
     delay(70);
 
-    LeftDT.move_voltage(-4850);
+    // score preload
+    LeftDT.move_voltage(-4250);
     RightDT.move_voltage(-12000);
     delay(550);
-    
     LeftDT.move_voltage(-12000);
-    delay(330);
+    delay(600);
 
-    // delay(30);
-
-    LeftDT.move_voltage(0);
-    RightDT.move_voltage(0);
+    stopMotors();
     delay(100);
 
+    // go to alley
+    driveTime(20);
     RightDT.move_voltage(12000);
-    LeftDT.move_voltage(12000);
-    delay(80);
-    LeftDT.move_voltage(4900);
+    LeftDT.move_voltage(4500);
     delay(740);
-    LeftDT.move_voltage(0);
-    RightDT.move_voltage(0);
-
-    pivot(72);
+    pivot(74.5);
 
     // touch bar and outtake
     intake.move_velocity(-600);
-    driveTime(270);
+    driveTime(280);
     RightDT.move_voltage(10000);
     LeftDT.move_voltage(10000);
-    delay(200);
+    delay(275);
     RightDT.move_voltage(5500);
     LeftDT.move_voltage(5500);
-    delay(250);
+    delay(295);
     RightDT.move_voltage(0);
     LeftDT.move_voltage(0);
 }
@@ -174,61 +165,63 @@ void offensiveSneak() {
     //step 1: drive forward a bit and intake
     intake.move_voltage(12000); 
     //intakePiston.set_value(true);
-    pros::delay(100);
-    LeftDT.move_voltage(12000 * 3/6);
-    RightDT.move_voltage(12000 * 3/6);
-    pros::delay(100);
-    stopMotors();
+    pros::delay(800);
+
 
     //step 2: drive backwards around corner to score triball #1
-    pros::delay(200);
-    driveTime(-460);
-	RightDT.move_voltage(-4800);
-    LeftDT.move_voltage(-12000);
-    backWing.set_value(1);
-    delay(230);
+    driveDist(-33);
+    pivot(-45);
+    driveDist(-21);
+    pivot(-90);
+    driveTime(-700);
+    driveDist(9);
+    pivot(95);
+    intake.move_voltage(-12000);
     delay(300);
-    stopMotors();
-    backWing.set_value(0);
+    driveTime(1500);
+    
 
-    driveTime(-450);
+    driveDist(-21);
+    pivot(135);
+    driveDist(-10);
+    // pivot(20);
     // +1 Balls
 
-    //step 3: turn around and release intake to score triball #2
-    driveTime(200);
-    pros::delay(50);
-    pivot(90);
-    intake.move_voltage(-12000);
-    driveTime(800); // make it back up and push again if not work
-    pros::delay(50);
-    driveTime(-300);
-    pros::delay(50);
-    pivot(90);
-    pros::delay(50);
-    // driveTime (400);
-    // +1 Ball
+    // //step 3: turn around and release intake to score triball #2
+    // driveTime(200);
+    // pros::delay(50);
+    // pivot(90);
+    // intake.move_voltage(-12000);
+    // driveTime(800); // make it back up and push again if not work
+    // pros::delay(50);
+    // driveTime(-300);
+    // pros::delay(50);
+    // pivot(90);
+    // pros::delay(50);
+    // // driveTime (400);
+    // // +1 Ball
 
-    //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
-    intake.move_voltage(0);
-    driveTime(-150);
-    pivot(25); //important turn to face triball #3
-    intake.move_voltage(12000);
-    driveDist(67);
-    pivot(155);
-    intake.move_voltage(-12000);
-    driveTime(200);
-    driveTime(-150);
+    // //step 4: turn around and drive forwards to pick up triball #3 + throw it in front of goal
+    // intake.move_voltage(0);
+    // driveTime(-150);
+    // pivot(25); //important turn to face triball #3
+    // intake.move_voltage(12000);
+    // driveDist(67);
+    // pivot(155);
+    // intake.move_voltage(-12000);
+    // driveTime(200);
+    // driveTime(-150);
 
-    //step 5: swing around to triball #4, intake and release while opening wings for triball #5
-    pivot(52);
-    intake.move_voltage(12000);
-    driveTime(500);
-    pivot(180);
-    wings.set_value(1); 
-    intake.move_voltage(-12000);
-    driveTime(2000);
+    // //step 5: swing around to triball #4, intake and release while opening wings for triball #5
+    // pivot(52);
+    // intake.move_voltage(12000);
+    // driveTime(500);
+    // pivot(180);
+    // wings.set_value(1); 
+    // intake.move_voltage(-12000);
+    // driveTime(2000);
     
-    controller.rumble("...");
+    // controller.rumble("...");
 }
 
 void startOfSkillz() { 
@@ -247,9 +240,9 @@ void startOfSkillz() {
     LeftDT.move_voltage(3500);
     delay(300);
     pivot(-63);
-    LeftDT.move_voltage(-5000);
-    RightDT.move_voltage(-5000);
-    pros::delay(60);
+    LeftDT.move_voltage(-6000);
+    RightDT.move_voltage(-6000);
+    pros::delay(120);
     pivot(-63);
     stopMotors();
 }
@@ -260,7 +253,7 @@ void betterskillz(){
     backWing.set_value(1);
 
     // matchloading
-    const int MATCHLOAD_TIME = 28000; //in ms (27500)
+    const int MATCHLOAD_TIME = 28000; //in ms (28000)
     long long timer = 0;
     float hitterSpeed = 0.70;
     while(timer < MATCHLOAD_TIME) {
@@ -269,15 +262,16 @@ void betterskillz(){
         intake.move_voltage(-12000 * hitterSpeed);
         timer += 10;
         pros::delay(10);
-        if(timer > MATCHLOAD_TIME - 1000){
-            backWing.set_value(0);
-        }
+        // if(timer > MATCHLOAD_TIME - 1000){
+        //     backWing.set_value(0);
+        // }
     }
+    backWing.set_value(0);
     cata.move_voltage(0);
     intake.move_voltage(0);
     
     stopMotors();
-    pros::delay(50);
+    pros::delay(500);
 
 
     // Go to alley
@@ -379,7 +373,7 @@ void betterskillz(){
     pivot(-135); 
     driveTime(3000);
     pivot(-45);
-    driveTime(600);
+    driveTime(480);
     // go push from far corner.
     LeftDT.move_voltage(12000);
     RightDT.move_voltage(4500);
