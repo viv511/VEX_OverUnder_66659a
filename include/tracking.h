@@ -1,5 +1,4 @@
 #include "main.h"
-#include "waypoint.h"
 
 #pragma once
 
@@ -9,11 +8,6 @@ void initializeTracking();
 void tracking();
 
 float avgDist();
-
-Waypoint getCurrentPose();
-void setStart(float sX, float sY);
-
 float getLeft();
 float getRight();
-
 void set();

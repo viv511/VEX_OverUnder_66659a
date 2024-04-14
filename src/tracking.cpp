@@ -27,10 +27,6 @@ float deltaTheta = 0;
 float lastAngle = 0;
 float currentAngle = 0;
 
-Waypoint robotPose = Waypoint(0, 0, 0);
-Waypoint lastRobotPose = Waypoint(0, 0, 0);
-
-float prevVel = 0;
 
 void initializeTracking() {
     inertial.reset();
@@ -57,38 +53,11 @@ void tracking() {
 
     while(true) {
         currentAngle = inertial.get_rotation();
-        leftCurrent = leftRot.get_position(); // rotation sensors are flipped
+        leftCurrent = leftRot.get_position(); 
         rightCurrent = rightRot.get_position() * -1;
 
         leftChange = (leftCurrent - leftLast) * RATIO;
         rightChange = (rightCurrent - rightLast) * RATIO;
-
-        /*
-        Approximating X and Y position using two parallel wheels:
-        
-        Infinite small segement is a linear path.
-        Because it is linear, L and R dist is the same. To better approx. this, let's average dL and dR at dT.
-
-        By calculating the angular offset and applying sin and cos to theta, we find the offset in x and y.
-        */
-
-        // deltaDist = (leftChange + rightChange) / 2;
-        // deltaTheta = (currentAngle - lastAngle);
-
-        // float distTravelled = distance(robotPose, lastRobotPose);
-
-        // robotPose.x += (sin(currentAngle) * deltaDist);
-        // robotPose.y += (cos(currentAngle) * deltaDist);
-        // robotPose.setTheta(currentAngle * radToDeg);
-        // robotPose.setVel(distTravelled / TIME_INTERVAL); //Derivative of Odometry = Velocity
-
-        // float acceleration = (robotPose.getVel() - prevVel) / TIME_INTERVAL;
-        // prevVel = robotPose.getVel();
-
-        // lastRobotPose.setX(robotPose.getX());
-        // lastRobotPose.setY(robotPose.getY());
-
-        // lastAngle = currentAngle;
 
         leftAbsolute += leftChange;
         rightAbsolute += rightChange;
@@ -109,14 +78,8 @@ float getLeft() {
     return leftAbsolute;
 }
 
-
 float getRight() {
     return rightAbsolute;
-}
-
-void setStart(float sX, float sY) {
-    robotPose.setX(sX);
-    robotPose.setY(sY);
 }
 
 float avgDist() {
@@ -127,9 +90,3 @@ void set() {
     leftAbsolute = 0;
     rightAbsolute = 0;
 }
-
-Waypoint getCurrentPose() {
-    return (Waypoint)robotPose;
-}
-
-

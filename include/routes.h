@@ -5,13 +5,6 @@
 
 using namespace pros;
 
-void defenseRoute();
-void defensiveRush();
-void offensiveSneak();
-void skillz3();
-void startOfSkillz();
-void betterskillz();
-void offensiveRush();
-
+void exampleRoute();
 
 #endif

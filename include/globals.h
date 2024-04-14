@@ -11,9 +11,8 @@ extern Motor MR;
 extern Motor BL;
 extern Motor BR;
 
-extern Motor cata;
-
-extern Motor intake;
+extern Motor intakeLeft;
+extern Motor intakeRight;
 
 extern Controller controller;
 
@@ -23,10 +22,9 @@ extern Rotation rightRot;
 
 extern ADIDigitalOut wings;
 extern ADIDigitalOut backWing;
-// extern ADIDigitalOut intakePiston;
-extern ADIDigitalOut lineSensor;
 
 extern Motor_Group LeftDT;
 extern Motor_Group RightDT;
+extern Motor_Group intake;
 
 #endif

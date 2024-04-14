@@ -70,6 +70,7 @@ void initialize(void);
 void disabled(void);
 void competition_initialize(void);
 void opcontrol(void);
+
 #ifdef __cplusplus
 }
 #endif
@@ -82,12 +83,8 @@ void opcontrol(void);
 #include "globals.h"
 #include "pid.h"
 #include "tracking.h"
-#include "cata.h"
 #include "autofuncs.h"
 #include "routes.h"
-// #include "profile.h"
-#include "waypoint.h"
-#include "pursuit.h"
 
 #endif
 

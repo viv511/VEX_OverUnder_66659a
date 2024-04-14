@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "666OverUnder",
+    "project_name": "666_WORLDS_OU",
     "target": "v5",
     "templates": {
       "kernel": {
