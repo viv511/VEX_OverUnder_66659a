@@ -23,6 +23,7 @@ void initialize()
 {
 	wings.set_value(false);
 	backWing.set_value(false);
+	hang.set_value(false);
 
 	pros::lcd::initialize();
 	pros::Task trackRobot(tracking);
@@ -35,11 +36,13 @@ void initialize()
 void disabled() {
 	wings.set_value(false);
 	backWing.set_value(false);
+	hang.set_value(false);
 }
 
 void competition_initialize() {
 	wings.set_value(false);
 	backWing.set_value(false);
+	hang.set_value(false);
 }
 
 void autonomous() { 
@@ -99,6 +102,22 @@ void opcontrol() {
 			intake.move_voltage(0);
 		}
 		
+		if((controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) && !elevationLast)) {
+			elevationState = !elevationState;
+			elevationLast = true;
+		}
+		else if(!(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))) {
+			elevationLast = false;
+		}
+
+		if(elevationState) {
+			hang.set_value(true);
+		}
+		else {
+			hang.set_value(false);
+		}
+
+
 		pros::delay(10);
 	}
 }

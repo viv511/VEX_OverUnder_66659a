@@ -13,12 +13,13 @@ Motor intakeRight(6, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_DEGREES);
 
 Controller controller(E_CONTROLLER_MASTER);
 
-IMU inertial(17); 
+IMU inertial(12); 
 Rotation leftRot(9); 
 Rotation rightRot(19);
 
-ADIDigitalOut wings('G');
-ADIDigitalOut backWing('F');
+ADIDigitalOut wings('H');
+ADIDigitalOut backWing('A');
+ADIDigitalOut hang('B');
 
 Motor_Group LeftDT ({FL, ML, BL});
 Motor_Group RightDT ({FR, MR, BR});
