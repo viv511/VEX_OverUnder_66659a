@@ -141,25 +141,25 @@ void PID::turnLookupPID(float t) {
 void PID::moveLookupPID(float t) {
     t = fabs(t);
     if(t <= 6){
-        setConstants(200*fabs(this->target), 0, 100); // good
+        setConstants(250*fabs(this->target), 0, 100); // good 
     }
     else if(t <= 12){
-        setConstants(75*fabs(this->target), 0, 200); // good
+        setConstants(75*fabs(this->target), 0, 200); // ok?
     }   
     else if(t <= 15) {
-        setConstants(50*fabs(this->target), 0, 200); // good
+        setConstants(85*fabs(this->target), 0, 250); // not good
     }
     else if(t <= 26){
-        setConstants(30*fabs(this->target), 0, 200); // good
+        setConstants(30*fabs(this->target), 0, 200); // not good
     }
     else if(t <= 40) {
-        setConstants(20*fabs(this->target), 0, 200); // good
+        setConstants(20*fabs(this->target), 0, 200); // not good
     }
     else if (t <= 52){
-        setConstants(10*fabs(this->target), 0, 200); // good
+        setConstants(10*fabs(this->target), 0, 200); // not good
     }
     else {
-        setConstants(7*fabs(this->target), 0, 200); // good
+        setConstants(7*fabs(this->target), 0, 200); // not good
     }
     
    

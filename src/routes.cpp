@@ -62,3 +62,17 @@ void exampleRoute() {
 
         //Wings will stay open until you tell them to close by setting the value to false.
 }
+
+void defensive_wp(){
+    backWing.set_value(true);
+    driveDist(4);
+    pivot(-46);
+    backWing.set_value(false);
+    driveDist(36);
+    intake.move_voltage(-12000);
+    delay(1000);
+    intake.move_voltage(0);
+    
+ 
+
+}

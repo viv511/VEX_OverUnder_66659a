@@ -46,7 +46,7 @@ void competition_initialize() {
 }
 
 void autonomous() { 
-	
+	defensive_wp();
 }
 
 void opcontrol() {
@@ -117,6 +117,9 @@ void opcontrol() {
 			hang.set_value(false);
 		}
 
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+			pivot(20);
+		}
 
 		pros::delay(10);
 	}
