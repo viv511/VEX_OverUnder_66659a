@@ -46,7 +46,8 @@ void competition_initialize() {
 }
 
 void autonomous() { 
-	defensive_wp();
+	// defensive_wp();
+	safe_offensive();
 }
 
 void opcontrol() {
