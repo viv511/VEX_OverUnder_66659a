@@ -18,7 +18,7 @@ Rotation leftRot(9);
 Rotation rightRot(19);
 
 ADIDigitalOut wings('H');
-ADIDigitalOut backWing('A');
+ADIDigitalOut backWing('C');
 ADIDigitalOut hang('B');
 
 Motor_Group LeftDT ({FL,ML,BL});

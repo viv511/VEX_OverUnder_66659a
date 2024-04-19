@@ -77,55 +77,36 @@ void defensive_wp(){
 void safe_offensive() {
    intake.move_voltage(12000);
    driveTime(150);
-   driveDist(-48);
+   delay(500);
+   intake.move_voltage(0);
+   driveDist(-33);
    pivot(-45);
    backWing.set_value(true);
+   driveDist(-27);
+   delay(100);
+   backWing.set_value(false);
+   pivot(-83);
+   pivot(100);
+   intake.move_voltage(-12000);
+   driveTime(-50);
+   delay(50);
+   intake.move_voltage(0);
+   driveTime(400);
+   driveTime(-260);
+   intake.move_voltage(-12000);
+   driveTime(500);
+   delay(500);
    driveDist(-20);
-   pivot(90);
+   driveDist(8);
 
-   backWing.set_value(false);
-   driveTime(-1300);
-   driveTime(500);
-   driveTime(-1300);
-   driveTime(600);
-   
-   /*
-   pivot(-45);
-   driveTime(-1300);
-   driveTime(500);
-   driveTime(-1300);
-   driveTime(600);
-
-   pivot(90);
-   intake.move_voltage(-12000);
-   driveTime(1500);
+   pivot(15);
    intake.move_voltage(12000);
-
-   
-   driveDist(-17); 
-   pivot(20);
-   intake.move_voltage(12000);
-   driveDist(67);
-   delay(300);
-   pivot(155);
-   driveDist(20);
-
-
+   driveDist(51);
+   intake.move_voltage(0);
+   pivot(160);
    intake.move_voltage(-12000);
-   pivot(25);
-   intake.move_voltage(12000);
-   driveDist(25);
-   pivot(0);
-
-   backWing.set_value(true);
-   driveTime(-2000);
-   driveTime(1750);
-   backWing.set_value(false);
-   pivot(180);
-   intake.move_voltage(-12000);
-   driveTime(1200);
-   driveTime(-2000);
- */
+   driveTime(15000);
+   driveDist(-5);
 }
 
 
