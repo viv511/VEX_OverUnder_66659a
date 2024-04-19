@@ -78,19 +78,24 @@ void safe_offensive() {
    intake.move_voltage(12000);
    driveTime(150);
    driveDist(-48);
-   pivot(135);
-   driveDist(10);
+   pivot(-45);
    backWing.set_value(true);
+   driveDist(-20);
    pivot(90);
 
    backWing.set_value(false);
-
-
+   driveTime(-1300);
+   driveTime(500);
+   driveTime(-1300);
+   driveTime(600);
+   
+   /*
    pivot(-45);
    driveTime(-1300);
    driveTime(500);
    driveTime(-1300);
    driveTime(600);
+
    pivot(90);
    intake.move_voltage(-12000);
    driveTime(1500);
@@ -120,9 +125,41 @@ void safe_offensive() {
    intake.move_voltage(-12000);
    driveTime(1200);
    driveTime(-2000);
+ */
+}
 
 
+void offensive_rush(){
+   intake.move_voltage(120000);
+   driveDist(66);
+   delay(100);
+   pivot(45);
+   intake.move_voltage(-120000);
+   wings.set_value(true);
+   intake.move_voltage(0);
+   driveDist(48);
+   driveDist(-48);
+   driveDist(48);
+   driveDist(-48);
+   driveTime(-12000);
 
+   pivot(180);
+   intake.move_voltage(120000);
+   driveDist(60);
+
+   intake.move_voltage(-120000);
+   pivot(180);
+   driveDist(60);
+   intake.move_voltage(0);
+   driveTime(15000);
+   driveTime(-10000);
+   driveDist(-5);
+
+   pivot(45);
+   intake.move_voltage(120000);
+   driveDist(45);
 
 
 }
+
+

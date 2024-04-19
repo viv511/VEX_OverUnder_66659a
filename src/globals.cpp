@@ -21,8 +21,8 @@ ADIDigitalOut wings('H');
 ADIDigitalOut backWing('A');
 ADIDigitalOut hang('B');
 
-Motor_Group LeftDT ({FL, ML, BL});
-Motor_Group RightDT ({FR, MR, BR});
+Motor_Group LeftDT ({FL,ML,BL});
+Motor_Group RightDT ({FR,MR,BR});
 Motor_Group intake({intakeLeft, intakeRight});
 
 
