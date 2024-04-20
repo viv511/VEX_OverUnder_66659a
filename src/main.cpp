@@ -119,7 +119,7 @@ void opcontrol() {
 		}
 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-			pivot(20);
+			turn(-40);
 		}
 
 		pros::delay(10);

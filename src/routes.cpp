@@ -80,33 +80,43 @@ void safe_offensive() {
    delay(500);
    intake.move_voltage(0);
    driveDist(-33);
-   pivot(-45);
-   backWing.set_value(true);
-   driveDist(-27);
-   delay(100);
-   backWing.set_value(false);
-   pivot(-83);
-   pivot(100);
-   intake.move_voltage(-12000);
-   driveTime(-50);
-   delay(50);
-   intake.move_voltage(0);
-   driveTime(400);
-   driveTime(-260);
-   intake.move_voltage(-12000);
-   driveTime(500);
-   delay(500);
-   driveDist(-20);
-   driveDist(8);
 
-   pivot(15);
+    pivot(-45);
+    backWing.set_value(true);
+    delay(125);
+    driveDist(-17);
+    turn(-45);
+    pivot(-40);
+    backWing.set_value(false);
+    driveDist(-16.125);
+    pivot(-90);
+    driveTime(-600);
+    driveTime(200);
+    pivot(90);
+
+
+   intake.move_voltage(-12000);
+   delay(250);
+   
+   driveTime(500);
+   delay(10);
+   intake.move_voltage(0);
+   driveDist(-12);
+   //4 triball go bye bye
+
+   pivot(18);
    intake.move_voltage(12000);
    driveDist(51);
-   intake.move_voltage(0);
-   pivot(160);
+   pivot(150);
    intake.move_voltage(-12000);
-   driveTime(15000);
-   driveDist(-5);
+   delay(150);
+   pivot(58);
+   intake.move_voltage(12000);
+   driveDist(17.5);
+   pivot(0);
+   backWing.set_value(true);
+
+   //driveDist(-5);
 }
 
 

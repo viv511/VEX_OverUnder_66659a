@@ -86,7 +86,7 @@ void PID::setTarget(float t) {
     */
 
     if(this->isTurn == true) {
-        turnLookupPID(this->target);
+        turnLookupPID(this->target - inertial.get_rotation());
     }
     else {
         moveLookupPID(this->target);
@@ -112,7 +112,7 @@ void PID::turnLookupPID(float t) {
         setConstants(330, 0, t*32); 
     }
     else if(t <= 80) {
-        setConstants(342, 0, t*30); 
+        setConstants(342, 0, t*30);
     }
     else if(t <= 90) {
         setConstants(350, 1.5, t*27); 
@@ -202,7 +202,7 @@ float PID::calculateOutput(float current) {
         this->integral = 0;
     }
 
-    this->output = (this->kP * this->error) + (this->kI*this->integral) + (this->kD * this->derivative);
+    this->output = (this->kP * this->error) + (this->kI * this->integral) + (this->kD * this->derivative);
     this->previousError = this->error;
 
     updateTimers();
