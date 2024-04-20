@@ -65,13 +65,16 @@ void exampleRoute() {
 
 void defensive_wp(){
     backWing.set_value(true);
-    driveDist(4);
-    pivot(-46);
+    pivot(-100);
+    delay(500);
+    pivot(-35);
     backWing.set_value(false);
-    driveDist(36);
     intake.move_voltage(-12000);
+    driveDist(40);
+    pivot(-46);
     delay(1000);
     intake.move_voltage(0);
+
 }
 
 void safe_offensive() {
