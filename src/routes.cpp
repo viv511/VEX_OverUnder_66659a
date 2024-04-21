@@ -81,46 +81,49 @@ void safe_offensive() {
     //intake is gud
    
     intake.move_voltage(12000);
-    driveTime(180);
+    driveTime(250);
     delay(750);
     intake.move_voltage(0);
 
     //bot goes to curve
+    driveTime(-70);
     driveDist(-32.4);
     pivot(-32.5);
     
+    
     backWing.set_value(true);
-    driveDist(-8);
+    driveDist(-12);
     pivot(-45);
 
-    //bot get ball333
+    //bot get ball
     driveDist(-15);
     delay(125);
-    
     pivot(-78);
     backWing.set_value(false);
     driveTime(-600);
-    driveDist(12);
+    driveDist(8);
     pivot(100);
     intake.move_voltage(-12000);
-    
-   
+    delay(125);
     driveTime(500);
-    delay(100);
     intake.move_voltage(0);
     driveDist(-15);
     //3 triball go bye bye
 
-    pivot(17.5);
+    pivot(17);
     intake.move_voltage(12000);
     driveDist(52);
     delay(200);
     intake.move_voltage(0);
-    pivot(150);
+    pivot(130);
+    wings.set_value(true);
+    driveDist(25);
+    pivot(180);
     intake.move_voltage(-12000);
     delay(150);
-    driveTime(1000);
-    driveTime(-400);
+    driveTime(1200);
+    driveTime(-600);
+    wings.set_value(false);
 }
 
 void defensive_rush() {
@@ -166,16 +169,14 @@ void offensive_rush(){
    intake.move_voltage(12000);
    driveDist(66);
    delay(100);
-   pivot(45);
-   intake.move_voltage(-12000);
+   pivot(135);
    wings.set_value(true);
-   intake.move_voltage(0);
-   driveDist(48);
-   driveDist(-48);
-   driveDist(48);
-   driveDist(-48);
-   driveTime(-12000);
-
+   intake.move_voltage(-12000);
+   driveTime(750);
+   driveTime(-600);
+   driveTime(600);
+   driveTime(-450);
+/*
    pivot(180);
    intake.move_voltage(120000);
    driveDist(60);
@@ -192,7 +193,7 @@ void offensive_rush(){
    intake.move_voltage(120000);
    driveDist(45);
 
-
+*/
 }
 
 
