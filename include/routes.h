@@ -7,7 +7,8 @@ using namespace pros;
 
 void exampleRoute();
 
-void defensive_wp();
+void defensive_wp(); 
+void defensive_rush();
 void safe_offensive();
 void offensive_rush();
 #endif
