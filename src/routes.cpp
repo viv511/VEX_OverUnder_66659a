@@ -86,7 +86,7 @@ void safe_offensive() {
     intake.move_voltage(0);
 
     //bot goes to curve
-    driveTime(-70);
+    driveTime(-70); //What is the point of this???
     driveDist(-32.4);
     pivot(-32.5);
     
@@ -166,34 +166,51 @@ void defensive_rush() {
 
 
 void offensive_rush(){
-   intake.move_voltage(12000);
-   driveDist(66);
-   delay(100);
-   pivot(135);
-   wings.set_value(true);
-   intake.move_voltage(-12000);
-   driveTime(750);
-   driveTime(-600);
-   driveTime(600);
-   driveTime(-450);
-/*
-   pivot(180);
-   intake.move_voltage(120000);
-   driveDist(60);
+    wings.set_value(true);
+    pros::delay(400);
+    wings.set_value(false);
 
-   intake.move_voltage(-120000);
-   pivot(180);
-   driveDist(60);
-   intake.move_voltage(0);
-   driveTime(15000);
-   driveTime(-10000);
-   driveDist(-5);
+    LeftDT.move_voltage(-12000);
+    RightDT.move_voltage(-10000);
+    pros::delay(500);
+    LeftDT.move_voltage(0);
+    RightDT.move_voltage(0);
+    pivot(-10);
+    driveTime(-1000);
+    backWing.set_value(true);
+    pivot(120);
+    backWing.set_value(false);
 
-   pivot(45);
-   intake.move_voltage(120000);
-   driveDist(45);
-
-*/
+    intake.move_voltage(12000);
+    driveDist(10);
+    pivot(-90);
+    wings.set_value(true);
+    intake.move_voltage(-12000);
+    driveDist(30);
+    intake.move_voltage(0);
+    driveDist(-5);
+    pivot(60);
+    intake.move_voltage(12000);
+    driveDist(30);
+    pivot(-60);
+    driveDist(45);
+    pivot(-160);
+    intake.move_voltage(-12000);
+    driveDist(-10);
+    pivot(90);
+    intake.move_voltage(12000);
+    driveDist(40);
+    driveDist(-40);
+    pivot(45);
+    backWing.set_value(true);
+    driveDist(-20);
+    backWing.set_value(false);
+    pivot(0);
+    driveTime(-1000);
+    driveTime(500);
+    pivot(180);
+    intake.move_voltage(-12000);
+    driveTime(1000);
 }
 
 
