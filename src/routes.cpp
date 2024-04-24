@@ -96,10 +96,10 @@ void safe_offensive() {
     // +1 Balls
 
     driveTime(100);
-    turn(-180);
+    pivot(90);
     intake.move_voltage(-12000);
-    delay(200);
-    driveTime(700);
+    delay(300);
+    driveTime(800);
     intake.move_voltage(0);
     // +1 Ball
 
@@ -119,19 +119,19 @@ void safe_offensive() {
 
 
     intake.move_voltage(0);
-    pivot(55);
+    pivot(45);
     intake.move_voltage(12000);
     driveTime(400);
 
     pivot(180);
     wings.set_value(true);
-     intake.move_voltage(-12000);
+    intake.move_voltage(-12000);
     delay(250);
     driveTime(1500);
     wings.set_value(false);
     intake.move_voltage(0);
    
-    driveTime(-100);
+    driveTime(-500);
     
 
 }
