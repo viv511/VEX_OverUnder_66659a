@@ -78,52 +78,62 @@ void defensive_wp(){
 }
 
 void safe_offensive() {
-    //intake is gud
-   
     intake.move_voltage(12000);
-    driveTime(250);
-    delay(750);
+    pros::delay(650);
     intake.move_voltage(0);
 
-    //bot goes to curve
-    driveTime(-70); //What is the point of this???
-    driveDist(-32.4);
-    pivot(-32.5);
-    
-    
-    backWing.set_value(true);
-    driveDist(-12);
+    driveDist(-36);
+
     pivot(-45);
+    backWing.set_value(1);
+    driveTime(-390);
+    
+    backWing.set_value(0);
+    pivot(-85);
+    
+    //wings.set_value(0);
+    driveTime(-650);
+    // +1 Balls
 
-    //bot get ball
-    driveDist(-15);
-    delay(125);
-    pivot(-78);
-    backWing.set_value(false);
-    driveTime(-600);
-    driveDist(8);
-    pivot(100);
+    driveTime(100);
+    turn(-180);
     intake.move_voltage(-12000);
-    delay(125);
-    driveTime(500);
+    delay(200);
+    driveTime(700);
     intake.move_voltage(0);
-    driveDist(-15);
-    //3 triball go bye bye
+    // +1 Ball
 
-    pivot(17);
+    driveDist(-17); 
+    pivot(19);
+    
     intake.move_voltage(12000);
     driveDist(52);
-    delay(200);
     intake.move_voltage(0);
-    pivot(130);
-    wings.set_value(true);
-    driveDist(25);
-    pivot(180);
+    pivot(150);
+   
+    
     intake.move_voltage(-12000);
-    delay(150);
-    driveTime(1200);
-    driveTime(-600);
+    
+    driveDist(10);
+    delay(100);
+
+
+    intake.move_voltage(0);
+    pivot(55);
+    intake.move_voltage(12000);
+    driveTime(400);
+
+    pivot(180);
+    wings.set_value(true);
+     intake.move_voltage(-12000);
+    delay(250);
+    driveTime(1500);
     wings.set_value(false);
+    intake.move_voltage(0);
+   
+    driveTime(-100);
+    
+
 }
 
 void defensive_rush() {
@@ -135,30 +145,35 @@ void defensive_rush() {
     intake.move_voltage(-12000);
     delay(150);
     intake.move_voltage(0);
+
+    // backWing.set_value(true);
+    // pivot(-45);
+    // pivot(93);
+    // backWing.set_value(false);
+
+
+    driveTime(-100);
     RightDT.move_voltage(-12000);
     LeftDT.move_voltage(-3500);
     delay(230);
     LeftDT.move_voltage(-4700);
-    delay(140);
-    LeftDT.move_voltage(-6100);
-    delay(470);
+    delay(160);
+    LeftDT.move_voltage(-6500);
+    delay(350);
     LeftDT.move_voltage(-12000);
-    delay(150);
+    delay(250);
     stopMotors();
     pivot(157);
     driveTime(80);
     RightDT.move_voltage(12000);
     LeftDT.move_voltage(4700);
-    delay(240);
-    backWing.set_value(true);
-    delay(530);
-    backWing.set_value(false);
+    delay(770);
     LeftDT.move_voltage(12000);
     delay(100);
 
     pivot(72);
     intake.move_voltage(-12000);
-    driveTime(630);
+    driveTime(560);
     intake.move_voltage(0);
 
 

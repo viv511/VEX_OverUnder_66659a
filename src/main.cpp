@@ -46,10 +46,9 @@ void competition_initialize() {
 }
 
 void autonomous() { 
-	 //defensive_wp();
+	//  defensive_wp();
 	 //safe_offensive();
-	 //defensive_rush();
-	 offensive_rush();
+	 defensive_rush();
 }
 
 void opcontrol() {
@@ -91,14 +90,15 @@ void opcontrol() {
 			wings.set_value(false);
 		}
 
-		
+		//intake
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 		{
-			intake.move_voltage(-12000);
+			intake.move_voltage(12000);
 		}
+		// outtake
 		else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
-			intake.move_voltage(12000);
+			intake.move_voltage(-12000);
 		}
 		else
 		{
