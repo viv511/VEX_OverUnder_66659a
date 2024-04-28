@@ -9,6 +9,7 @@ void exampleRoute();
 
 void defensive_wp(); 
 void defensive_rush();
+void dummy();
 void safe_offensive();
 void offensive_rush();
 #endif

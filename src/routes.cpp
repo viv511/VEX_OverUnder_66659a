@@ -64,6 +64,7 @@ void exampleRoute() {
 }
 
 void defensive_wp(){
+    
     backWing.set_value(true);
     pivot(-100);
     delay(500);
@@ -78,11 +79,12 @@ void defensive_wp(){
 }
 
 void safe_offensive() {
+    // driveTime(150);
     intake.move_voltage(12000);
     pros::delay(650);
     intake.move_voltage(0);
 
-    driveDist(-36);
+    driveDist(-33);
 
     pivot(-45);
     backWing.set_value(1);
@@ -95,11 +97,11 @@ void safe_offensive() {
     driveTime(-650);
     // +1 Balls
 
-    driveTime(100);
-    pivot(90);
+    driveTime(225);
+    pivot(105);
     intake.move_voltage(-12000);
-    delay(300);
-    driveTime(800);
+    delay(200);
+    driveTime(700);
     intake.move_voltage(0);
     // +1 Ball
 
@@ -119,9 +121,10 @@ void safe_offensive() {
 
 
     intake.move_voltage(0);
-    pivot(45);
+    pivot(55);
     intake.move_voltage(12000);
-    driveTime(400);
+    driveTime(450);
+    delay(100);
 
     pivot(180);
     wings.set_value(true);
@@ -131,34 +134,77 @@ void safe_offensive() {
     wings.set_value(false);
     intake.move_voltage(0);
    
-    driveTime(-500);
+    driveTime(-1000);
     
 
+}
+void dummy(){
+    pivot(90);
+    delay(1000);
+    pivot(180);
+    delay(1000);
+    pivot(-90);
+    delay(1000);
+    pivot(0);
+    delay(1000);
+    pivot(90);
+    delay(1000);
+    pivot(180);
+    delay(1000);
+    pivot(-90);
+    delay(1000);
+    pivot(0);
+    delay(1000);
+    pivot(90);
+    delay(1000);
+    pivot(180);
+    delay(1000);
+    pivot(-90);
+    delay(1000);
+    pivot(0);
+    delay(1000);
 }
 
 void defensive_rush() {
     intake.move_voltage(12000);
-    driveDist(49);
+    // wings.set_value(1);
+    // delay(200);
+    // wings.set_value(0);
+    driveDist(52);
+    delay(100);
+    driveDist(-51);
     intake.move_voltage(0);
-    driveDist(-48);
-    pivot(93);
+
+    pivot(83);
+    driveDist(-8);
+    pivot(123);
+    backWing.set_value(1);
+    driveTime(150);
+    pivot(70);
+    backWing.set_value(0);
+    pivot(83);
     intake.move_voltage(-12000);
-    delay(150);
+    driveDist(10);
     intake.move_voltage(0);
+
+
+    pivot(97);
 
     // backWing.set_value(true);
     // pivot(-45);
     // pivot(93);
     // backWing.set_value(false);
 
-
-    driveTime(-100);
+    driveTime(-220);
     RightDT.move_voltage(-12000);
-    LeftDT.move_voltage(-3500);
+    LeftDT.move_voltage(-3800);
+    backWing.set_value(1);
     delay(230);
-    LeftDT.move_voltage(-4700);
-    delay(160);
-    LeftDT.move_voltage(-6500);
+    LeftDT.move_voltage(-4900);
+    delay(130);
+    
+    backWing.set_value(0);
+    LeftDT.move_voltage(-7000);
     delay(350);
     LeftDT.move_voltage(-12000);
     delay(250);
@@ -166,16 +212,21 @@ void defensive_rush() {
     pivot(157);
     driveTime(80);
     RightDT.move_voltage(12000);
-    LeftDT.move_voltage(4700);
-    delay(770);
+    LeftDT.move_voltage(4400);
+    delay(60);
+    // backWing.set_value(1);
+
+    delay(480);
+    // backWing.set_value(0);
+    delay(180);
     LeftDT.move_voltage(12000);
     delay(100);
 
-    pivot(72);
+    pivot(78);
     intake.move_voltage(-12000);
-    driveTime(560);
+    delay(250);
+    driveDist(32.2);
     intake.move_voltage(0);
-
 
 }
 

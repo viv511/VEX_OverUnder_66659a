@@ -47,8 +47,10 @@ void competition_initialize() {
 
 void autonomous() { 
 	//  defensive_wp();
-	safe_offensive();
-	//  defensive_rush();
+	// dummy();
+	// safe_offensive();
+	 defensive_rush();
+
 }
 
 void opcontrol() {
@@ -120,9 +122,19 @@ void opcontrol() {
 			hang.set_value(false);
 		}
 
-		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-			turn(-40);
-		}
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+		// 	turn(180);
+		// }
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+		// 	turn(165);
+		// }
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+		// 	turn(135);
+		// }
+		// if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+		// 	turn(150);
+		// }
+		
 
 		pros::delay(10);
 	}

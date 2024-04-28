@@ -97,7 +97,7 @@ void PID::turnLookupPID(float t) {
     t = fabs(t);
 
     if(t <= 15) {
-        setConstants(350, 5, t*15); 
+        setConstants(300, 5, t*15); 
     }
     else if(t <= 30) {
         setConstants(200, 5, t*26); 
@@ -124,16 +124,16 @@ void PID::turnLookupPID(float t) {
         setConstants(380, 0, t*24); 
     }
     else if(t <= 135) {
-        setConstants(400, 0, t*22); 
+        setConstants(370, 0, t*22); 
     }
     else if(t <= 150) {
-        setConstants(425, 0, t*25); 
+        setConstants(410, 0, t*23); 
     }
     else if(t <= 165) {
-        setConstants(450, 0, t*19); 
+        setConstants(400, 0, t*21); 
     }
     else {
-        setConstants(500, 0, t*21.5);
+        setConstants(460, 0, t*23);
     }
     // controller.rumble(".");
 }
@@ -141,25 +141,25 @@ void PID::turnLookupPID(float t) {
 void PID::moveLookupPID(float t) {
     t = fabs(t);
     if(t <= 6){
-        setConstants(250*fabs(this->target), 0, 100); // good 
+        setConstants(180*fabs(this->target), 0, 100); // good 
     }
     else if(t <= 12){
-        setConstants(75*fabs(this->target), 0, 200); // ok?
+        setConstants(58*fabs(this->target), 0, 160); // ok?
     }   
     else if(t <= 15) {
-        setConstants(85*fabs(this->target), 0, 250); // not good
+        setConstants(44*fabs(this->target), 0, 210); // not good
     }
     else if(t <= 26){
-        setConstants(30*fabs(this->target), 0, 200); // not good
+        setConstants(23*fabs(this->target), 0, 220); // not good
     }
     else if(t <= 40) {
-        setConstants(20*fabs(this->target), 0, 200); // not good
+        setConstants(13.5*fabs(this->target), 0, 220); // not good
     }
     else if (t <= 52){
-        setConstants(10*fabs(this->target), 0, 200); // not good
+        setConstants(7*fabs(this->target), 0, 200); // not good
     }
     else {
-        setConstants(7*fabs(this->target), 0, 200); // not good
+        setConstants(5*fabs(this->target), 0, 200); // not good
     }
     
    
